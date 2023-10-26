@@ -1,0 +1,10 @@
+---
+spec_version: "1.0"
+qualityGates:
+  performance:
+    throughput:
+      error: 
+        failed: 100
+        unestable: 80
+        response:
+          unstable: 60

@@ -75,7 +75,7 @@ spec:
                         }
                         script {
                             container('kubectl') {
-                                withKubeConfig([credentialsId: "$KUBERNETES_CLUSTER_CRED_ID"]) {
+                                withKubeConfig([credentialsId: "$KUBERNETES_CLUSTER_CRED_ID", serverUrl: 'https://api.k8s.my-company.com']) {
                                     sh 'kubectl version'
                                 }
                             }  

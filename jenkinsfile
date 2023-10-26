@@ -58,7 +58,7 @@ spec:
 
         // credentials
         KUBERNETES_CLUSTER_CRED_ID = 'workshop_prueba'
-        CONTAINER_REGISTRY_CRED = credentials("docker-hub-$IMAGE_ORG")
+        CONTAINER_REGISTRY_CRED = credentials("docker-hub-mpetb")
     }
     
     stages {

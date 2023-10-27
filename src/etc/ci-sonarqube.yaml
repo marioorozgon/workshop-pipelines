@@ -1,19 +1,4 @@
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: ci-sonarqube-data-pv
-  labels:
-    type: local
-spec:
-  storageClassName: local-path
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/data/ci-sonarqube-data"
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: ci-sonarqube-data-pvc
@@ -28,21 +13,6 @@ spec:
       storage: 10Gi
 ---
 apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: ci-sonarqube-extensions-pv
-  labels:
-    type: local
-spec:
-  storageClassName: local-path
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/data/ci-sonarqube-extensions"
----
-apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: ci-sonarqube-extensions-pvc
@@ -55,21 +25,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
----
-apiVersion: v1
-kind: PersistentVolume
-metadata:
-  name: ci-sonarqube-esdata-pv
-  labels:
-    type: local
-spec:
-  storageClassName: local-path
-  capacity:
-    storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/data/ci-sonarqube-esdata"
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -99,6 +54,8 @@ spec:
       labels:
         app: ci-sonarqube-data
     spec:
+      securityContext:
+        runAsUser: 999
       containers:
         - name: postgres
           image: docker.io/postgres:13.7
@@ -114,8 +71,8 @@ spec:
               value: "sonarqube"
             - name: POSTGRES_PASSWORD
               value: "sonar99sonar"
-          securityContext:
-            runAsUser: 501
+            - name: "PGDATA"
+              value: "/var/lib/postgresql/data/pg"
           volumeMounts:
             - name: ci-sonarqube-data
               mountPath: /var/lib/postgresql/data
@@ -149,9 +106,20 @@ spec:
       labels:
         app: ci-sonarqube
     spec:
+      securityContext:
+        fsGroup: 1000
+        runAsUser: 1000
+      initContainers:
+        - name: sysctl
+          image: docker.io/busybox
+          securityContext:
+            privileged: true
+            runAsUser: 0
+          command: ['sh', '-c', 'sysctl -w vm.max_map_count=262144']
       containers:
         - name: sonarqube
           image: docker.io/sonarqube:9.9.1-community
+          #command: [ "sleep", "10000" ]
           resources:
             requests:
               cpu: "0.5"
@@ -168,6 +136,8 @@ spec:
               value: "sonar99sonar"
             - name: SONAR_WEB_CONTEXT
               value: "/sonarqube"
+            - name: ES_JAVA_OPTS
+              value: -Xms512m -Xmx512m
           volumeMounts:
             - name: ci-sonarqube-extensions
               mountPath: /opt/sonarqube/extensions

@@ -1,7 +1,16 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\src",
+    "\\src\\etc",
+    "\\src\\main",
+    "\\src\\main\\java",
+    "\\src\\main\\java\\deors",
+    "\\src\\main\\java\\deors\\demos",
+    "\\src\\main\\java\\deors\\demos\\java",
+    "\\src\\main\\java\\deors\\demos\\java\\pipeline",
+    "\\src\\main\\resources"
   ],
-  "SelectedNode": "\\quality-gates.yaml",
+  "SelectedNode": "\\src\\etc\\sonar.properties",
   "PreviewInSolutionExplorer": false
 }

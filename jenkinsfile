@@ -56,20 +56,18 @@ spec:
             steps {
                 script {
                     def xml = readFile 'katalon.xml'
-                    def xmlContents = new XmlParser().parseText(xml)
                     def testResults = []
 
-                    xmlContents.each { testsuites ->
-                        testsuites.testsuite.each { testsuite ->
-                            testsuite.testcase.each { testcase ->
-                                testResults.add([
-                                    name: testcase.@name.text(),
-                                    classname: testcase.@classname.text(),
-                                    time: testcase.@time.toBigDecimal(),
-                                    status: testcase.@status.text()
-                                ])
-                            }
-                        }
+                    def rootNode = new XmlSlurper().parseText(xml)
+                    def testcases = rootNode.'**'.findAll { it.name() == 'testcase' }
+
+                    testcases.each { testcase ->
+                        testResults.add([
+                            name: testcase.@name.text(),
+                            classname: testcase.@classname.text(),
+                            time: testcase.@time.toBigDecimal(),
+                            status: testcase.@status.text()
+                        ])
                     }
 
                     echo "Parsed ${testResults.size()} test results"

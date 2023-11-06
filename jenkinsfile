@@ -52,7 +52,8 @@ spec:
 
     stages {
          
-        steps {
+        stage('Parse Katalon XML') {
+            steps {
                 script {
                     def xml = readFile 'katalon.xml'
                     def xmlContents = new XmlParser().parseText(xml)

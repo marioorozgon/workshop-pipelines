@@ -55,7 +55,9 @@ spec:
         stage('Parse Katalon XML') {
             steps {
                 script {
-                    sh 'python parser.py'
+                    dir("${WORKSPACE}") {  // Cambia WORKSPACE por la ruta adecuada si es necesario
+                        sh 'python parser.py'
+                    }
                 }
             }
     }

@@ -52,6 +52,7 @@ spec:
 
     stages {
        
+        stages {
         stage('Parse Katalon XML') {
             steps {
                 script {
@@ -73,23 +74,6 @@ spec:
                 }
             }
         }
-    }
-/*
-        stage('Send to Prometheus') {
-            steps {
-                prometheus([
-                    jobName: 'katalon',
-                    scrapeInterval: '1m',
-                    scrapeTimeout: '10s',
-                    metricsPath: '/metrics',
-                    pushGatewayUrl: 'http://prometheus-pushgateway:9091',
-                    pushGatewayJobName: 'katalon',
-                    credentialsId: 'prometheus-pushgateway-credentials'
-                ]) {
-                    sh 'cat katalon.prom | curl --data-binary @- http://prometheus-pushgateway:9091/metrics/job/katalon'
-                }
-            }
-        }*/
     }
 }
 

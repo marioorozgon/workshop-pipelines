@@ -71,7 +71,7 @@ spec:
                 }
             }
         }
-
+/*
         stage('Send to Prometheus') {
             steps {
                 prometheus([
@@ -86,7 +86,7 @@ spec:
                     sh 'cat katalon.prom | curl --data-binary @- http://prometheus-pushgateway:9091/metrics/job/katalon'
                 }
             }
-        }
+        }*/
     }
 }
 

@@ -52,28 +52,40 @@ spec:
 
     stages {
        
-        stages {
         stage('Parse Katalon XML') {
             steps {
                 script {
                     def xml = readFile 'katalon.xml'
-                    def xmlContents = new XmlParser().parseText(xml)
-                    def testResults = []
-
-                    xmlContents.testsuite.testcase.each { testcase ->
-                        testResults.add([
-                            name: testcase.@name.text(),
-                            classname: testcase.@classname.text(),
-                            time: testcase.@time.toBigDecimal(),
-                            status: testcase.@status.text()
-                        ])
+                    def xmlContents = new XmlSlurper().parseText(xml)
+                    def testResults = xmlContents.'**'.findAll { it.name() == 'testcase' }.collect {
+                        [
+                            name: it.@name.text(),
+                            classname: it.@classname.text(),
+                            time: it.@time.toBigDecimal(),
+                            status: it.@status.text()
+                        ]
                     }
-
                     echo "Parsed ${testResults.size()} test results"
                     writeFile file: 'katalon.prom', text: toPrometheusFormat(testResults)
                 }
             }
-        }
+    }
+/*
+        stage('Send to Prometheus') {
+            steps {
+                prometheus([
+                    jobName: 'katalon',
+                    scrapeInterval: '1m',
+                    scrapeTimeout: '10s',
+                    metricsPath: '/metrics',
+                    pushGatewayUrl: 'http://prometheus-pushgateway:9091',
+                    pushGatewayJobName: 'katalon',
+                    credentialsId: 'prometheus-pushgateway-credentials'
+                ]) {
+                    sh 'cat katalon.prom | curl --data-binary @- http://prometheus-pushgateway:9091/metrics/job/katalon'
+                }
+            }
+        }*/
     }
 }
 

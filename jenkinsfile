@@ -59,7 +59,7 @@ spec:
                     def xmlContents = new XmlParser().parseText(xml)
                     def testResults = []
 
-                    xmlContents.testsuite.testcase.each { testcase ->
+                    xmlContents.testcase.each { testcase ->
                         testResults.add([
                             name: testcase.@name.text(),
                             classname: testcase.@classname.text(),
@@ -67,6 +67,7 @@ spec:
                             status: testcase.@status.text()
                         ])
                     }
+
                     echo "Parsed ${testResults.size()} test results"
                     writeFile file: 'katalon.prom', text: toPrometheusFormat(testResults)
                 }

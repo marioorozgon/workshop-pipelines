@@ -59,13 +59,15 @@ spec:
                     def xmlContents = new XmlParser().parseText(xml)
                     def testResults = []
 
-                    xmlContents.testsuite.testcase.each { testcase ->
-                        testResults.add([
-                            name: testcase.@name.text(),
-                            classname: testcase.@classname.text(),
-                            time: testcase.@time.toBigDecimal(),
-                            status: testcase.@status.text()
-                        ])
+                    xmlContents.testsuite.each { testsuite ->
+                        testsuite.testcase.each { testcase ->
+                            testResults.add([
+                                name: testcase.@name.text(),
+                                classname: testcase.@classname.text(),
+                                time: testcase.@time.toBigDecimal(),
+                                status: testcase.@status.text()
+                            ])
+                        }
                     }
 
                     echo "Parsed ${testResults.size()} test results"

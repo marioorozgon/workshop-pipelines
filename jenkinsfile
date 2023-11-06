@@ -55,23 +55,7 @@ spec:
         stage('Parse Katalon XML') {
             steps {
                 script {
-                    def xml = readFile 'katalon.xml'
-                    def testResults = []
-
-                    def rootNode = new XmlSlurper().parseText(xml)
-                    def testcases = rootNode.'**'.findAll { it.name() == 'testcase' }
-
-                    testcases.each { testcase ->
-                        testResults.add([
-                            name: testcase.@name.text(),
-                            classname: testcase.@classname.text(),
-                            time: testcase.@time.toBigDecimal(),
-                            status: testcase.@status.text()
-                        ])
-                    }
-
-                    echo "Parsed ${testResults.size()} test results"
-                    writeFile file: 'katalon.prom', text: toPrometheusFormat(testResults)
+                    sh 'python parse_xml.py'
                 }
             }
     }
@@ -92,12 +76,4 @@ spec:
             }
         }*/
     }
-}
-
-def toPrometheusFormat(testResults) {
-    testResults.collect { result ->
-        """
-        katalon_test_duration_seconds{classname="${result.classname}",name="${result.name}",status="${result.status}"} ${result.time}
-        """.trim()
-    }.join('\n')
 }

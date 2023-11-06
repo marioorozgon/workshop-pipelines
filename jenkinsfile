@@ -52,10 +52,8 @@ spec:
 
     stages {
          
-        stage('Parse Katalon XML') {
-            steps {
+        steps {
                 script {
-					// Analizar el archivo "katalon.xml" en el directorio del proyecto
                     def xml = readFile 'katalon.xml'
                     def xmlContents = new XmlParser().parseText(xml)
                     def testResults = xmlContents.'**'.findAll { it.name() == 'testcase' }.collect {

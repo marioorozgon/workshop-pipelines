@@ -56,7 +56,7 @@ spec:
             steps {
                 script {
                     def xml = readFile 'katalon.xml'
-                    def xmlContents = new XmlParser().parseText(xml)
+                    def xmlContents = new XmlSlurper().parseText(xml)
                     def testResults = xmlContents.'**'.findAll { it.name() == 'testcase' }.collect {
                         [
                             name: it.@name,

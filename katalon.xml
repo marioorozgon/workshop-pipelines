@@ -4,12 +4,6 @@
       <properties>
          <property name="deviceName" value=""/>
       </properties>
-      <testcase name="Test Cases/Host/01 - HostRun - Seur8as" time="69.385" classname="Test Cases/Host/01 - HostRun - Seur8as" status="PASSED">
-         <system-out><![CDATA[2023-09-15 18:00:50 - [TEST_CASE][PASSED] - Test Cases/Host/01 - HostRun - Seur8as: Test Cases/Host/01 - HostRun - Seur8as
-
-2023-09-15 18:00:50 - [TEST_STEP][PASSED] - operativaHost = <not implemented yet for class: org.codehaus.groovy.ast.expr.EmptyExpression>: null]]></system-out>
-         <system-err><![CDATA[]]></system-err>
-      </testcase>
       <testcase name="Test Cases/Host/01 - HostRun - Seur8as" time="53.299" classname="Test Cases/Host/01 - HostRun - Seur8as" status="PASSED">
          <system-out><![CDATA[2023-09-15 18:01:59 - [TEST_CASE][PASSED] - Test Cases/Host/01 - HostRun - Seur8as: Test Cases/Host/01 - HostRun - Seur8as
 

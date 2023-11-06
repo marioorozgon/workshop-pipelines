@@ -51,7 +51,7 @@ spec:
     }
 
     stages {
-         
+       
         stage('Parse Katalon XML') {
             steps {
                 script {
@@ -59,17 +59,17 @@ spec:
                     def xmlContents = new XmlSlurper().parseText(xml)
                     def testResults = xmlContents.'**'.findAll { it.name() == 'testcase' }.collect {
                         [
-                            name: it.@name,
-                            classname: it.@classname,
+                            name: it.@name.text(),
+                            classname: it.@classname.text(),
                             time: it.@time.toBigDecimal(),
-                            status: it.@status
+                            status: it.@status.text()
                         ]
                     }
                     echo "Parsed ${testResults.size()} test results"
                     writeFile file: 'katalon.prom', text: toPrometheusFormat(testResults)
                 }
             }
-        }
+    }
 /*
         stage('Send to Prometheus') {
             steps {

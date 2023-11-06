@@ -59,7 +59,7 @@ spec:
                     def xmlContents = new XmlParser().parseText(xml)
                     def testResults = []
 
-                    xmlContents.testcase.each { testcase ->
+                    xmlContents.testsuite.testcase.each { testcase ->
                         testResults.add([
                             name: testcase.@name.text(),
                             classname: testcase.@classname.text(),

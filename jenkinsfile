@@ -1,5 +1,6 @@
 // Sacamos los metodos de parseo fuera del pipeline 
 //TODO ver si se puede pasar a una propia clase groovy
+import groovy.util.slurpersupport.GPathResult
 
 // Esta función parsea el XML y extrae las métricas
 def parseXml(String xmlContent) {

@@ -80,7 +80,7 @@ spec:
     }
 
     environment {
-          PUSHGATEWAY_URL = 'http://localhost:9000' 
+          
     }
 
     stages {
@@ -115,8 +115,8 @@ spec:
                       
                       def prometheusData = readFile('katalon.prom').trim()
                       if (prometheusData) {
-                        def pushgatewayHost = '127.0.0.1'
-                        def pushgatewayPort = '9091' // Puerto actualizado para Pushgateway
+                        //def pushgatewayHost = '127.0.0.1'
+                        //def pushgatewayPort = '9091' 
                         def pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon"
                         def response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()
                         echo "Response from Pushgateway: ${response}"

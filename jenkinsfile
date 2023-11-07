@@ -19,7 +19,7 @@ def parseXml(String xmlContent) {
     return testSuites
 }
 
-def constructPrometheusData(Map metrics) {
+def constructPrometheusData(List testSuites) {
      StringBuilder prometheusData = new StringBuilder()
 
     testSuites.each { suite ->

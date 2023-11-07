@@ -3,34 +3,70 @@
 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
-    // Sacamos las metricas y las convertimos en tipos serializables
-    def metrics = [
-        totalTests: parsedXml.'@tests'.text().toInteger(),
-        totalFailures: parsedXml.'@failures'.text().toInteger(),
-        totalErrors: parsedXml.'@errors'.text().toInteger(),
-        totalTime: parsedXml.'@time'.text().toFloat()
-    ]
-    return metrics
+    
+    def suites = parsedXml.'testsuite'.collect { suite ->
+        def suiteData = [
+            name: suite.'@name'.text(),
+            timestamp: suite.'@timestamp'.text(),
+            time: suite.'@time'.text().toFloat(),
+            tests: suite.'@tests'.text().toInt(),
+            skipped: suite.'@skipped'.text().toInt(),
+            failures: suite.'@failures'.text().toInt(),
+            errors: suite.'@errors'.text().toInt(),
+            testcases: []
+        ]
+        
+        suite.testcase.each { tc ->
+            def testcaseData = [
+                name: tc.'@name'.text(),
+                time: tc.'@time'.text().toFloat(),
+                status: tc.'@status'?.text() ?: 'OK',
+                failure: null,
+                error: null
+            ]
+            
+            if (tc.failure.size() > 0) {
+                testcaseData.failure = [
+                    message: tc.failure.'@message'.text(),
+                    type: tc.failure.'@type'.text()
+                ]
+            }
+            
+            if (tc.error.size() > 0) {
+                testcaseData.error = [
+                    message: tc.error.'@message'.text(),
+                    type: tc.error.'@type'.text()
+                ]
+            }
+            
+            suiteData.testcases << testcaseData
+        }
+        
+        return suiteData
+    }
+    
+    return suites
 }
 
-def constructPrometheusData(Map metrics) {
-    return """
-# HELP katalon_total_tests Total number of tests
-# TYPE katalon_total_tests gauge
-katalon_total_tests ${metrics.totalTests}
+def constructPrometheusData(List suiteMetrics) {
+    def prometheusData = new StringBuilder()
+    
+    suiteMetrics.each { suite ->
+        suite.testcases.each { testcase ->
+            def statusValue = (testcase.status == 'OK') ? 1 : 0
+            prometheusData.append("""
+# HELP katalon_testcase_duration_seconds Duration of testcase in seconds
+# TYPE katalon_testcase_duration_seconds gauge
+katalon_testcase_duration_seconds{name="${testcase.name}", status="${testcase.status}"} ${testcase.time}
 
-# HELP katalon_total_failures Total number of failed tests
-# TYPE katalon_total_failures gauge
-katalon_total_failures ${metrics.totalFailures}
-
-# HELP katalon_total_errors Total number of errors in tests
-# TYPE katalon_total_errors gauge
-katalon_total_errors ${metrics.totalErrors}
-
-# HELP katalon_total_time Total time of test suite execution
-# TYPE katalon_total_time gauge
-katalon_total_time ${metrics.totalTime}
-"""
+# HELP katalon_testcase_status Testcase status
+# TYPE katalon_testcase_status gauge
+katalon_testcase_status{name="${testcase.name}", message="${testcase.failure?.message ?: testcase.error?.message ?: 'OK'}"} $statusValue
+""")
+        }
+    }
+    
+    return prometheusData.toString()
 }
 
 pipeline {

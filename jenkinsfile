@@ -29,56 +29,38 @@ def parseXml(String xmlContent) {
 
 def constructPrometheusData(Map parsedData) {
     // Attributes from the root 'testsuites' element
-    def testSuitesAttributes = parsedData.testSuitesAttributes
-    // List of parsed 'testsuite' elements
-    def testSuites = parsedData.testSuites
+    def testSuitesAttributes = parsedData.testsuitesAttributes
 
     // Construct Prometheus data for 'testsuites' level
     def prometheusData = """
-# HELP katalon_testsuites_total Total de pruebas para todos los testsuites
-# TYPE katalon_testsuites_total gauge
-katalon_testsuites_total{name="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalTests}
-
-# HELP katalon_testsuites_failures Total de fallos para todos los testsuites
-# TYPE katalon_testsuites_failures gauge
-katalon_testsuites_failures{name="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalFailures}
-
-# HELP katalon_testsuites_errors Total de errores para todos los testsuites
-# TYPE katalon_testsuites_errors gauge
-katalon_testsuites_errors{name="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalErrors}
-
-# HELP katalon_testsuites_time Tiempo total de ejecución para todos los testsuites
-# TYPE katalon_testsuites_time gauge
-katalon_testsuites_time{name="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalTime}
+# HELP katalon_testsuites_info Información global de los testsuites
+# TYPE katalon_testsuites_info gauge
+katalon_testsuites_info{name="${testSuitesAttributes.name}", total_time="${testSuitesAttributes.time}", total_tests="${testSuitesAttributes.tests}", total_failures="${testSuitesAttributes.failures}", total_errors="${testSuitesAttributes.errors}"} 1
 """
 
-    // Append Prometheus data for each 'testsuite' level
-    testSuites.each { suite ->
+    // Append Prometheus data for 'testsuite' level
+    parsedData.testsuites.each { testsuite ->
         prometheusData += """
 # HELP katalon_testsuite_info Información de la suite de pruebas individual
 # TYPE katalon_testsuite_info gauge
-katalon_testsuite_info{name="${suite.name}", timestamp="${suite.timestamp}", total_tests="${suite.totalTests}", skipped="${suite.skipped}", total_failures="${suite.totalFailures}", total_errors="${suite.totalErrors}", total_time="${suite.totalTime}"} 1
-
-# HELP katalon_testsuite_duration Duración de la suite de pruebas individual
-# TYPE katalon_testsuite_duration gauge
-katalon_testsuite_duration{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.totalTime}
-
-# HELP katalon_testsuite_tests Total de pruebas en la suite de pruebas individual
-# TYPE katalon_testsuite_tests gauge
-katalon_testsuite_tests{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.totalTests}
-
-# HELP katalon_testsuite_skipped Total de pruebas omitidas en la suite de pruebas individual
-# TYPE katalon_testsuite_skipped gauge
-katalon_testsuite_skipped{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.skipped}
-
-# HELP katalon_testsuite_failures Total de fallos en la suite de pruebas individual
-# TYPE katalon_testsuite_failures gauge
-katalon_testsuite_failures{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.totalFailures}
-
-# HELP katalon_testsuite_errors Total de errores en la suite de pruebas individual
-# TYPE katalon_testsuite_errors gauge
-katalon_testsuite_errors{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.totalErrors}
+katalon_testsuite_info{name="${testsuite.name}", timestamp="${testsuite.timestamp}", total_tests="${testsuite.tests}", skipped="${testsuite.skipped}", total_failures="${testsuite.failures}", total_errors="${testsuite.errors}", total_time="${testsuite.time}"} 1
 """
+
+        // Append Prometheus data for each 'testcase' level
+        testsuite.testcases.each { testcase ->
+            // Convert the status to a numeric value. PASSED = 0, FAILED = 1, ERROR = 2
+            int statusValue = (testcase.status == "PASSED") ? 0 : (testcase.status == "FAILED") ? 1 : 2
+            
+            prometheusData += """
+# HELP katalon_testcase_duration Duración del testcase individual
+# TYPE katalon_testcase_duration gauge
+katalon_testcase_duration{name="${testcase.name}", classname="${testcase.classname}", status="${testcase.status}"} ${testcase.time}
+
+# HELP katalon_testcase_status Estado del testcase
+# TYPE katalon_testcase_status gauge
+katalon_testcase_status{name="${testcase.name}", classname="${testcase.classname}", status="${testcase.status}"} ${statusValue}
+"""
+        }
     }
 
     return prometheusData

@@ -23,9 +23,9 @@ def parseXml(String xmlContent) {
                 name: testcase.'@name'.text(),
                 time: testcase.'@time'.text().toFloat(),
                 status: testcase.'@status'?.text() ?: 'OK', // Si no hay 'status', asigna 'OK'
-                failureMessage: (testcase.'failure'*.text().join(', ') ?: 'OK'), // Join si hay multiples fallos
+                failureMessage: (testcase.'failure' ? testcase.'failure'.collect { it.text() }.join(', ') : 'OK'),
                 failureType: (testcase.'failure'*.@type.join(', ') ?: ''),
-                errorMessage: (testcase.'error'*.text().join(', ') ?: ''),
+                errorMessage: (testcase.'error' ? testcase.'error'.collect { it.text() }.join(', ') : ''),
                 errorType: (testcase.'error'*.@type.join(', ') ?: '')
             ]
             testsuiteMetrics.testcases << testcaseMetrics

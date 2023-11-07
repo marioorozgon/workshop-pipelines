@@ -124,7 +124,7 @@ spec:
                       if (prometheusData) {
                         //def pushgatewayHost = '127.0.0.1'
                         //def pushgatewayPort = '9091' 
-                        def pushgatewayUrl = ${PUSHGATEWAY_URL}
+                        def pushgatewayUrl = ${env.PUSHGATEWAY_URL}
                         def response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()
                         echo "Response from Pushgateway: ${response}"
                       } else {

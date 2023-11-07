@@ -55,12 +55,40 @@ spec:
         stage('Parse Katalon XML') {
             steps {
                 script {
-                    dir("${WORKSPACE}") {  // Cambia WORKSPACE por la ruta adecuada si es necesario
-                        sh 'python parser.py'
-                    }
+                    // Asumiendo que katalon.xml está en el directorio actual
+                    def katalonXml = readFile('katalon.xml')
+                    def parsedXml = new XmlSlurper().parseText(katalonXml)
+
+                    // Recogiendo las métricas del XML
+                    def totalTests = parsedXml.'@tests'.text().toInteger()
+                    def totalFailures = parsedXml.'@failures'.text().toInteger()
+                    def totalErrors = parsedXml.'@errors'.text().toInteger()
+                    def totalTime = parsedXml.'@time'.text().toFloat()
+
+                    // Aquí comienza la construcción del string para Prometheus
+                    def prometheusData = """
+# HELP katalon_total_tests Total number of tests
+# TYPE katalon_total_tests gauge
+katalon_total_tests ${totalTests}
+
+# HELP katalon_total_failures Total number of failed tests
+# TYPE katalon_total_failures gauge
+katalon_total_failures ${totalFailures}
+
+# HELP katalon_total_errors Total number of errors in tests
+# TYPE katalon_total_errors gauge
+katalon_total_errors ${totalErrors}
+
+# HELP katalon_total_time Total time of test suite execution
+# TYPE katalon_total_time gauge
+katalon_total_time ${totalTime}
+"""
+
+                    // Escribir las métricas en un archivo para Prometheus
+                    writeFile(file: 'katalon.prom', text: prometheusData)
                 }
             }
-    }
+        }
 /*
         stage('Send to Prometheus') {
             steps {

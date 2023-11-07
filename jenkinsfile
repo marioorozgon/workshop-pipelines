@@ -115,7 +115,7 @@ spec:
                       
                       def prometheusData = readFile('katalon.prom').trim()
                       if (prometheusData) {
-                        def pushgatewayHost = 'localhost'
+                        def pushgatewayHost = '127.0.0.1'
                         def pushgatewayPort = '9091' // Puerto actualizado para Pushgateway
                         def pushgatewayUrl = "http://${pushgatewayHost}:${pushgatewayPort}/metrics/job/katalon"
                         def response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()

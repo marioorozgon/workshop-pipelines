@@ -80,7 +80,7 @@ spec:
     }
 
     environment {
-          
+          //PUSHGATEWAY_URL = 'http://localhost:9091' 
     }
 
     stages {

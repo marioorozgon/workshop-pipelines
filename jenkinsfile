@@ -9,10 +9,10 @@ def parseXml(String xmlContent) {
             name: suite.'@name'.text(),
             timestamp: suite.'@timestamp'.text(),
             time: suite.'@time'.text().toFloat(),
-            tests: suite.'@tests'.text().toInt(),
-            skipped: suite.'@skipped'.text().toInt(),
-            failures: suite.'@failures'.text().toInt(),
-            errors: suite.'@errors'.text().toInt(),
+            tests: suite.'@tests'.text().toInteger(),
+            skipped: suite.'@skipped'.text().toInteger(),
+            failures: suite.'@failures'.text().toInteger(),
+            errors: suite.'@errors'.text().toInteger(),
             testcases: []
         ]
         

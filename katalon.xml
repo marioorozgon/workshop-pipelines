@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="GTI" time="641.872" tests="3" failures="0" errors="0">
+<testsuites name="GTI" time="641.872" tests="2" failures="0" errors="0">
    <testsuite name="GTI" tests="2" failures="0" errors="0" time="641.872" skipped="0" timestamp="2023-09-15 18:00:49" hostname="SEU2K19KAT01$ - seu2k19kat01.redseur.local" id="Test Suites/GTI">
       <properties>
          <property name="deviceName" value=""/>

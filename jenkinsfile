@@ -60,20 +60,20 @@ katalon_total_time ${metrics.testsuitesAttributes.totalTime}
 
     // Agrega las métricas de nivel de testsuite y testcase
     metrics.testsuite.each { suite ->
-        suite.testcase.each { case ->
+        suite.testcase.each { testCase ->  // Cambiado de 'case' a 'testCase'
             prometheusData.append("""
-# HELP katalon_testsuite_total_tests Total number of tests for ${suite.name}
-# TYPE katalon_testsuite_total_tests gauge
-katalon_testsuite_total_tests{name="${suite.name}",classname="${case.classname}"} ${suite.totalTests}
+    # HELP katalon_testsuite_total_tests Total number of tests for ${suite.name}
+    # TYPE katalon_testsuite_total_tests gauge
+    katalon_testsuite_total_tests{name="${suite.name}",classname="${testCase.classname}"} ${suite.totalTests}
 
-# HELP katalon_testcase_time Execution time for test case
-# TYPE katalon_testcase_time gauge
-katalon_testcase_time{name="${suite.name}",testcase="${case.name}",status="${case.status}"} ${case.time}
-""")
+    # HELP katalon_testcase_time Execution time for test case
+    # TYPE katalon_testcase_time gauge
+    katalon_testcase_time{name="${suite.name}",testcase="${testCase.name}",status="${testCase.status}"} ${testCase.time}
+    """)
         }
     }
     return prometheusData.toString()
-}
+    }
 
 pipeline {
     agent {

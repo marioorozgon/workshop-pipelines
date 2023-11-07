@@ -4,35 +4,23 @@
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
     // Extraemos las métricas de la cabecera <testsuites>
-    def testSuitesMetrics = [
+    def attributes = [
         name: parsedXml.'@name'.text(),
-        totalTime: parsedXml.'@time'.text().toFloat(),
-        totalTests: parsedXml.'@tests'.text().toInteger(),
-        totalFailures: parsedXml.'@failures'.text().toInteger(),
-        totalErrors: parsedXml.'@errors'.text().toInteger(),
+        time: parsedXml.'@time'.text(),
+        tests: parsedXml.'@tests'.text(),
+        failures: parsedXml.'@failures'.text(),
+        errors: parsedXml.'@errors'.text()
     ]
-    return testSuitesMetrics
+    return attributes
 }
 
 def constructPrometheusData(Map metrics) {
-    // Aquí estamos añadiendo el nombre de la suite como una etiqueta a cada métrica
-    return """
-# HELP testsuite_total_tests Total number of tests in the test suite
-# TYPE testsuite_total_tests gauge
-testsuite_total_tests{name="${metrics.name}"} ${metrics.totalTests}
-
-# HELP testsuite_total_failures Total number of failed tests in the test suite
-# TYPE testsuite_total_failures gauge
-testsuite_total_failures{name="${metrics.name}"} ${metrics.totalFailures}
-
-# HELP testsuite_total_errors Total number of errors in the test suite
-# TYPE testsuite_total_errors gauge
-testsuite_total_errors{name="${metrics.name}"} ${metrics.totalErrors}
-
-# HELP testsuite_total_time Total time of test suite execution in seconds
-# TYPE testsuite_total_time gauge
-testsuite_total_time{name="${metrics.name}"} ${metrics.totalTime}
+     def prometheusData = """
+# HELP testsuite_info Test Suite Information
+# TYPE testsuite_info gauge
+testsuite_info{name="${attributes.name}",tests="${attributes.tests}",failures="${attributes.failures}",errors="${attributes.errors}",time="${attributes.time}"} 1
 """
+    return prometheusData
 }
 
 pipeline {

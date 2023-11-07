@@ -28,34 +28,57 @@ def parseXml(String xmlContent) {
 }
 
 def constructPrometheusData(Map parsedData) {
+    // Attributes from the root 'testsuites' element
     def testSuitesAttributes = parsedData.testSuitesAttributes
+    // List of parsed 'testsuite' elements
     def testSuites = parsedData.testSuites
 
+    // Construct Prometheus data for 'testsuites' level
     def prometheusData = """
 # HELP katalon_testsuites_total Total de pruebas para todos los testsuites
 # TYPE katalon_testsuites_total gauge
-katalon_testsuites_total{testsuites="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalTests}
+katalon_testsuites_total{name="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalTests}
 
 # HELP katalon_testsuites_failures Total de fallos para todos los testsuites
 # TYPE katalon_testsuites_failures gauge
-katalon_testsuites_failures{testsuites="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalFailures}
+katalon_testsuites_failures{name="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalFailures}
 
 # HELP katalon_testsuites_errors Total de errores para todos los testsuites
 # TYPE katalon_testsuites_errors gauge
-katalon_testsuites_errors{testsuites="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalErrors}
+katalon_testsuites_errors{name="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalErrors}
 
 # HELP katalon_testsuites_time Tiempo total de ejecución para todos los testsuites
 # TYPE katalon_testsuites_time gauge
-katalon_testsuites_time{testsuites="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalTime}
+katalon_testsuites_time{name="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalTime}
 """
 
+    // Append Prometheus data for each 'testsuite' level
     testSuites.each { suite ->
         prometheusData += """
-        # HELP katalon_testsuite_info Información de la suite de pruebas individual
-        # TYPE katalon_testsuite_info gauge
-        katalon_testsuite_info{name="${suite.name}", timestamp="${suite.timestamp}", total_tests="${suite.totalTests}", skipped="${suite.skipped}", total_failures="${suite.totalFailures}", total_errors="${suite.totalErrors}"} 1
-        """
-        // ... (como antes) ...
+# HELP katalon_testsuite_info Información de la suite de pruebas individual
+# TYPE katalon_testsuite_info gauge
+katalon_testsuite_info{name="${suite.name}", timestamp="${suite.timestamp}", total_tests="${suite.totalTests}", skipped="${suite.skipped}", total_failures="${suite.totalFailures}", total_errors="${suite.totalErrors}", total_time="${suite.totalTime}"} 1
+
+# HELP katalon_testsuite_duration Duración de la suite de pruebas individual
+# TYPE katalon_testsuite_duration gauge
+katalon_testsuite_duration{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.totalTime}
+
+# HELP katalon_testsuite_tests Total de pruebas en la suite de pruebas individual
+# TYPE katalon_testsuite_tests gauge
+katalon_testsuite_tests{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.totalTests}
+
+# HELP katalon_testsuite_skipped Total de pruebas omitidas en la suite de pruebas individual
+# TYPE katalon_testsuite_skipped gauge
+katalon_testsuite_skipped{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.skipped}
+
+# HELP katalon_testsuite_failures Total de fallos en la suite de pruebas individual
+# TYPE katalon_testsuite_failures gauge
+katalon_testsuite_failures{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.totalFailures}
+
+# HELP katalon_testsuite_errors Total de errores en la suite de pruebas individual
+# TYPE katalon_testsuite_errors gauge
+katalon_testsuite_errors{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.totalErrors}
+"""
     }
 
     return prometheusData

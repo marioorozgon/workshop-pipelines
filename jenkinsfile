@@ -80,9 +80,7 @@ spec:
     }
 
     environment {
-        PUSHGATEWAY_URL = 'pushgateway:9091'
-        WEBSITE_URL = 'https://www.accenture.com/es-es'
-        JOB_NAME = 'accenture_es_es'
+          PUSHGATEWAY_URL = 'http://localhost:9000' 
     }
 
     stages {
@@ -111,21 +109,20 @@ spec:
             }
         }
 
-        /*
         stage('Send to Prometheus') {
-            steps {
-                prometheus([
-                    jobName: 'katalon',
-                    scrapeInterval: '1m',
-                    scrapeTimeout: '10s',
-                    metricsPath: '/metrics',
-                    pushGatewayUrl: 'http://prometheus-pushgateway:9091',
-                    pushGatewayJobName: 'katalon',
-                    credentialsId: 'prometheus-pushgateway-credentials'
-                ]) {
-                    sh 'cat katalon.prom | curl --data-binary @- http://prometheus-pushgateway:9091/metrics/job/katalon'
-                }
-            }
-        }*/
+              steps {
+                  script {
+                      
+                      def prometheusData = readFile('katalon.prom').trim()
+                      if (prometheusData) {
+                          // Usamos curl para enviar las métricas a Pushgateway
+                          def response = sh(script: "curl -X POST --data-binary @katalon.prom ${env.PUSHGATEWAY_URL}/metrics/job/katalon", returnStdout: true).trim()
+                          echo "Response from Pushgateway: ${response}"
+                      } else {
+                          error("Prometheus data está vacío, no envía al Pushgateway")
+                      }
+                  }
+              }
+          }
     }
 }

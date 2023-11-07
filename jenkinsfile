@@ -53,13 +53,15 @@ katalon_testsuite_info{name="${ts.name}",tests="${ts.tests}",failures="${ts.fail
 """
     }
 
-    // Agrega la métrica para testcase
-    metrics.testcase.each { tc ->
-        prometheusData += """
+    // HELP y TYPE para testcase solo una vez
+    prometheusData += """
 # HELP katalon_testcase_info Test Case Information
 # TYPE katalon_testcase_info gauge
-katalon_testcase_info{name="${tc.name}",time="${tc.time}",status="${tc.status}"} 1
 """
+    
+    // Agrega la métrica para cada testcase sin repetir HELP y TYPE
+    metrics.testcase.each { tc ->
+        prometheusData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\"} 1\n"
     }
 
     return prometheusData

@@ -65,15 +65,15 @@ testsuite_${suite.name}_total_errors ${suite.errors}
 """)
 
         // Añade métricas de testcase
-        suite.testcases.each { case ->
+        suite.testcases.each { testCase ->
             prometheusDataBuilder.append("""
-# HELP testcase_${case.name}_time Execution time for ${case.name}
-# TYPE testcase_${case.name}_time gauge
-testcase_${case.name}_time ${case.time}
+# HELP testcase_${testCase.name}_time Execution time for ${testCase.name}
+# TYPE testcase_${testCase.name}_time gauge
+testcase_${testCase.name}_time ${testCase.time}
 
-# HELP testcase_${case.name}_status Status for ${case.name}
-# TYPE testcase_${case.name}_status gauge
-testcase_${case.name}_status ${case.status == 'OK' ? 1 : 0}  # Assuming 'OK' status is 1, others are 0
+# HELP testcase_${testCase.name}_status Status for ${testCase.name}
+# TYPE testcase_${testCase.name}_status gauge
+testcase_${testCase.name}_status ${testCase.status == 'OK' ? 1 : 0}  # Assuming 'OK' status is 1, others are 0
 
 """)
         }

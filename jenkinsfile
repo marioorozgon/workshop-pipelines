@@ -1,72 +1,85 @@
 // Sacamos los metodos de parseo fuera del pipeline 
 //TODO ver si se puede pasar a una propia clase groovy
 
+import groovy.xml.XmlSlurper
+
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
-    
-    def suites = parsedXml.'testsuite'.collect { suite ->
-        def suiteData = [
-            name: suite.'@name'.text(),
-            timestamp: suite.'@timestamp'.text(),
-            time: suite.'@time'.text().toFloat(),
-            tests: suite.'@tests'.text().toInteger(),
-            skipped: suite.'@skipped'.text().toInteger(),
-            failures: suite.'@failures'.text().toInteger(),
-            errors: suite.'@errors'.text().toInteger(),
+    def metricsList = []
+
+    // Itera sobre cada <testsuite>
+    parsedXml.'testsuite'.each { testsuite ->
+        def testsuiteMetrics = [
+            name: testsuite.'@name'.text(),
+            timestamp: testsuite.'@timestamp'.text(),
+            time: testsuite.'@time'.text().toFloat(),
+            tests: testsuite.'@tests'.text().toInteger(),
+            skipped: testsuite.'@skipped'.text().toInteger(),
+            failures: testsuite.'@failures'.text().toInteger(),
+            errors: testsuite.'@errors'.text().toInteger(),
             testcases: []
         ]
-        
-        suite.testcase.each { tc ->
-            def testcaseData = [
-                name: tc.'@name'.text(),
-                time: tc.'@time'.text().toFloat(),
-                status: tc.'@status'?.text() ?: 'OK',
-                failure: null,
-                error: null
+
+        // Itera sobre cada <testcase> dentro del <testsuite>
+        testsuite.'testcase'.each { testcase ->
+            def testcaseMetrics = [
+                name: testcase.'@name'.text(),
+                time: testcase.'@time'.text().toFloat(),
+                status: testcase.'@status'?.text() ?: 'OK', // Si no hay 'status', asigna 'OK'
+                failureMessage: (testcase.'failure'*.text().join(', ') ?: 'OK'), // Join si hay multiples fallos
+                failureType: (testcase.'failure'*.@type.join(', ') ?: ''),
+                errorMessage: (testcase.'error'*.text().join(', ') ?: ''),
+                errorType: (testcase.'error'*.@type.join(', ') ?: '')
             ]
-            
-            if (tc.failure.size() > 0) {
-                testcaseData.failure = [
-                    message: tc.failure.'@message'.text(),
-                    type: tc.failure.'@type'.text()
-                ]
-            }
-            
-            if (tc.error.size() > 0) {
-                testcaseData.error = [
-                    message: tc.error.'@message'.text(),
-                    type: tc.error.'@type'.text()
-                ]
-            }
-            
-            suiteData.testcases << testcaseData
+            testsuiteMetrics.testcases << testcaseMetrics
         }
-        
-        return suiteData
+
+        metricsList << testsuiteMetrics
     }
-    
-    return suites
+
+    return metricsList
 }
 
-def constructPrometheusData(List suiteMetrics) {
-    def prometheusData = new StringBuilder()
-    
-    suiteMetrics.each { suite ->
-        suite.testcases.each { testcase ->
-            def statusValue = (testcase.status == 'OK') ? 1 : 0
-            prometheusData.append("""
-# HELP katalon_testcase_duration_seconds Duration of testcase in seconds
-# TYPE katalon_testcase_duration_seconds gauge
-katalon_testcase_duration_seconds{name="${testcase.name}", status="${testcase.status}"} ${testcase.time}
+def constructPrometheusData(List metricsList) {
+    def prometheusDataBuilder = new StringBuilder()
 
-# HELP katalon_testcase_status Testcase status
-# TYPE katalon_testcase_status gauge
-katalon_testcase_status{name="${testcase.name}", message="${testcase.failure?.message ?: testcase.error?.message ?: 'OK'}"} $statusValue
+    // Añade métricas de testsuite
+    metricsList.each { suite ->
+        prometheusDataBuilder.append("""
+# HELP testsuite_${suite.name}_total_tests Total number of tests for ${suite.name}
+# TYPE testsuite_${suite.name}_total_tests gauge
+testsuite_${suite.name}_total_tests ${suite.tests}
+
+# HELP testsuite_${suite.name}_total_time Total time for ${suite.name}
+# TYPE testsuite_${suite.name}_total_time gauge
+testsuite_${suite.name}_total_time ${suite.time}
+
+# HELP testsuite_${suite.name}_total_failures Total number of failures for ${suite.name}
+# TYPE testsuite_${suite.name}_total_failures gauge
+testsuite_${suite.name}_total_failures ${suite.failures}
+
+# HELP testsuite_${suite.name}_total_errors Total number of errors for ${suite.name}
+# TYPE testsuite_${suite.name}_total_errors gauge
+testsuite_${suite.name}_total_errors ${suite.errors}
+
+""")
+
+        // Añade métricas de testcase
+        suite.testcases.each { case ->
+            prometheusDataBuilder.append("""
+# HELP testcase_${case.name}_time Execution time for ${case.name}
+# TYPE testcase_${case.name}_time gauge
+testcase_${case.name}_time ${case.time}
+
+# HELP testcase_${case.name}_status Status for ${case.name}
+# TYPE testcase_${case.name}_status gauge
+testcase_${case.name}_status ${case.status == 'OK' ? 1 : 0}  # Assuming 'OK' status is 1, others are 0
+
 """)
         }
     }
-    
-    return prometheusData.toString()
+
+    return prometheusDataBuilder.toString()
 }
 
 pipeline {

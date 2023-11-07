@@ -4,28 +4,26 @@ def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
     def metricsList = []
 
-    // Itera sobre cada <testsuite>
-    parsedXml.'testsuite'.each { testsuite ->
+    parsedXml.'**'.findAll { it.name() == 'testsuite' }.each { testsuite ->
         def testsuiteMetrics = [
-            name: testsuite.'@name'.text(),
-            timestamp: testsuite.'@timestamp'.text(),
-            time: testsuite.'@time'.text().toFloat(),
-            tests: testsuite.'@tests'.text().toInteger(),
-            skipped: testsuite.'@skipped'.text().toInteger(),
-            failures: testsuite.'@failures'.text().toInteger(),
-            errors: testsuite.'@errors'.text().toInteger(),
+            name: testsuite.@name.text(),
+            timestamp: testsuite.@timestamp.text(),
+            time: testsuite.@time.text().toFloat(),
+            tests: testsuite.@tests.text().toInteger(),
+            skipped: testsuite.@skipped.text().toInteger(),
+            failures: testsuite.@failures.text().toInteger(),
+            errors: testsuite.@errors.text().toInteger(),
             testcases: []
         ]
 
-        // Itera sobre cada <testcase> dentro del <testsuite>
-        testsuite.'testcase'.each { testcase ->
+        testsuite.'**'.findAll { it.name() == 'testcase' }.each { testcase ->
             def testcaseMetrics = [
-                name: testcase.'@name'.text(),
-                time: testcase.'@time'.text().toFloat(),
-                status: testcase.'@status'?.text() ?: 'OK', // Si no hay 'status', asigna 'OK'
-                failureMessage: (testcase.'failure' ? testcase.'failure'.collect { it.text() }.join(', ') : 'OK'),
+                name: testcase.@name.text(),
+                time: testcase.@time.text().toFloat(),
+                status: testcase.@status?.text() ?: 'OK',
+                failureMessage: (testcase.'failure'*.text().join(', ') ?: 'OK'),
                 failureType: (testcase.'failure'*.@type.join(', ') ?: ''),
-                errorMessage: (testcase.'error' ? testcase.'error'.collect { it.text() }.join(', ') : ''),
+                errorMessage: (testcase.'error'*.text().join(', ') ?: ''),
                 errorType: (testcase.'error'*.@type.join(', ') ?: '')
             ]
             testsuiteMetrics.testcases << testcaseMetrics

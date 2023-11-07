@@ -1,4 +1,5 @@
-// Define the methods outside of the pipeline block to avoid serialization issues
+// Sacamos los metodos de parseo fuera del pipeline 
+//TODO ver si se puede pasar a una propia clase groovy
 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
@@ -92,14 +93,20 @@ spec:
                     // Asumiendo que katalon.xml está en el directorio actual
                     def katalonXml = readFile('katalon.xml')
 
-                    // Use the parseXml method to parse the XML
+                    // Utiliza el método parseXml para parsear el XML
                     def metrics = parseXml(katalonXml)
 
-                    // Construct the Prometheus data string with the metrics
+                    // Imprimir los resultados en la consola
+                    echo "Metrics parsed: ${metrics}"
+
+                    // Construye la cadena de datos para Prometheus con las métricas
                     def prometheusData = constructPrometheusData(metrics)
 
-                    // Write the metrics to a file
+                    // Escribe las métricas en un archivo
                     writeFile(file: 'katalon.prom', text: prometheusData)
+
+                    // También puedes imprimir el contenido de 'prometheusData'
+                    echo "Prometheus data:\n${prometheusData}"
                 }
             }
         }

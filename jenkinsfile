@@ -3,77 +3,87 @@
 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
-    def metrics = [
-        testsuitesAttributes: [
-            name: parsedXml.'@name'.text(),
-            totalTime: parsedXml.'@time'.text().toFloat(),
-            totalTests: parsedXml.'@tests'.text().toInteger(),
-            totalFailures: parsedXml.'@failures'.text().toInteger(),
-            totalErrors: parsedXml.'@errors'.text().toInteger()
-        ],
-        testsuite: parsedXml.testsuite.collect {
-            [
-                name: it.'@name'.text(),
-                totalTime: it.'@time'.text().toFloat(),
-                totalTests: it.'@tests'.text().toInteger(),
-                skipped: it.'@skipped'.text().toInteger(),
-                totalFailures: it.'@failures'.text().toInteger(),
-                totalErrors: it.'@errors'.text().toInteger(),
-                timestamp: it.'@timestamp'.text(),
-                hostname: it.'@hostname'.text(),
-                id: it.'@id'.text(),
-                testcase: it.testcase.collect {
-                    [
-                        name: it.'@name'.text(),
-                        time: it.'@time'.text().toFloat(),
-                        classname: it.'@classname'.text(),
-                        status: it.'@status'.text()
-                    ]
-                }
-            ]
+    def testSuites = parsedXml.'@'.collectEntries { [(it.key()): it.value().text()] }
+    def testSuitesMetrics = testSuites.collect { key, value ->
+        if (['tests', 'failures', 'errors'].contains(key)) {
+            value = value.toInteger()
+        } else if (['time'].contains(key)) {
+            value = value.toFloat()
         }
-    ]
-    return metrics
+        [(key): value]
+    }
+
+    // Lista de suites y casos
+    def suitesList = []
+    parsedXml.testsuite.each { suite ->
+        def suiteMetrics = suite.'@'.collectEntries { [(it.key()): it.value().text()] }
+        suiteMetrics.put('testcases', [])
+        suite.testcase.each { testcase ->
+            def testcaseMetrics = testcase.'@'.collectEntries { [(it.key()): it.value().text()] }
+            suiteMetrics.get('testcases').add(testcaseMetrics)
+        }
+        suitesList.add(suiteMetrics)
+    }
+    testSuitesMetrics.put('suites', suitesList)
+
+    return testSuitesMetrics
 }
 
 def constructPrometheusData(Map metrics) {
-    StringBuilder prometheusData = new StringBuilder()
+    // Inicia con los datos de testsuites
+    def prometheusData = """
+# HELP katalon_testsuites_total Total number of testsuites
+# TYPE katalon_testsuites_total gauge
+katalon_testsuites_total{name="${metrics.name}"} ${metrics.tests}
 
-    // Agrega las métricas de nivel de testsuites
-    prometheusData.append("""
-# HELP katalon_total_tests Total number of tests
-# TYPE katalon_total_tests gauge
-katalon_total_tests ${metrics.testsuitesAttributes.totalTests}
+# HELP katalon_testsuites_failures Total number of failures in testsuites
+# TYPE katalon_testsuites_failures gauge
+katalon_testsuites_failures{name="${metrics.name}"} ${metrics.failures}
 
-# HELP katalon_total_failures Total number of failed tests
-# TYPE katalon_total_failures gauge
-katalon_total_failures ${metrics.testsuitesAttributes.totalFailures}
+# HELP katalon_testsuites_errors Total number of errors in testsuites
+# TYPE katalon_testsuites_errors gauge
+katalon_testsuites_errors{name="${metrics.name}"} ${metrics.errors}
 
-# HELP katalon_total_errors Total number of errors in tests
-# TYPE katalon_total_errors gauge
-katalon_total_errors ${metrics.testsuitesAttributes.totalErrors}
+# HELP katalon_testsuites_time Total execution time for testsuites
+# TYPE katalon_testsuites_time gauge
+katalon_testsuites_time{name="${metrics.name}"} ${metrics.time}
+"""
 
-# HELP katalon_total_time Total time of test suite execution
-# TYPE katalon_total_time gauge
-katalon_total_time ${metrics.testsuitesAttributes.totalTime}
-""")
+    // Añade los datos de cada suite y cada caso de prueba
+    metrics.suites.each { suite ->
+        prometheusData += """
+# HELP katalon_testsuite_total Total number of tests for the suite
+# TYPE katalon_testsuite_total gauge
+katalon_testsuite_total{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.tests}
 
-    // Agrega las métricas de nivel de testsuite y testcase
-    metrics.testsuite.each { suite ->
-        suite.testcase.each { testCase ->  // Cambiado de 'case' a 'testCase'
-            prometheusData.append("""
-    # HELP katalon_testsuite_total_tests Total number of tests for ${suite.name}
-    # TYPE katalon_testsuite_total_tests gauge
-    katalon_testsuite_total_tests{name="${suite.name}",classname="${testCase.classname}"} ${suite.totalTests}
+# HELP katalon_testsuite_failures Total number of failures in the suite
+# TYPE katalon_testsuite_failures gauge
+katalon_testsuite_failures{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.failures}
 
-    # HELP katalon_testcase_time Execution time for test case
-    # TYPE katalon_testcase_time gauge
-    katalon_testcase_time{name="${suite.name}",testcase="${testCase.name}",status="${testCase.status}"} ${testCase.time}
-    """)
+# HELP katalon_testsuite_errors Total number of errors in the suite
+# TYPE katalon_testsuite_errors gauge
+katalon_testsuite_errors{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.errors}
+
+# HELP katalon_testsuite_time Total execution time for the suite
+# TYPE katalon_testsuite_time gauge
+katalon_testsuite_time{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.time}
+
+# HELP katalon_testsuite_skipped Total number of skipped tests in the suite
+# TYPE katalon_testsuite_skipped gauge
+katalon_testsuite_skipped{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.skipped}
+"""
+
+        suite.testcases.each { testcase ->
+            prometheusData += """
+# HELP katalon_testcase_time Execution time for test case
+# TYPE katalon_testcase_time gauge
+katalon_testcase_time{name="${suite.name}", testcase="${testcase.name}", status="${testcase.status}"} ${testcase.time}
+"""
         }
     }
-    return prometheusData.toString()
-    }
+
+    return prometheusData
+}
 
 pipeline {
     agent {

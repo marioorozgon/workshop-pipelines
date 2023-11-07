@@ -4,23 +4,49 @@
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
     // Sacamos las métricas directamente del elemento testsuites
-    def metrics = [
+    def testsuitesMetrics = [
         name: parsedXml.'@name'.text(),
         totalTests: parsedXml.'@tests'.text().toInteger(),
         totalFailures: parsedXml.'@failures'.text().toInteger(),
         totalErrors: parsedXml.'@errors'.text().toInteger(),
         totalTime: parsedXml.'@time'.text().toFloat()
     ]
-    return metrics
+    // Aquí asumimos que sólo hay un testsuite por testsuites, si hay más, necesitarás iterar
+    def testsuiteMetrics = parsedXml.testsuite.collect {
+        [
+            name: it.'@name'.text(),
+            tests: it.'@tests'.text().toInteger(),
+            failures: it.'@failures'.text().toInteger(),
+            errors: it.'@errors'.text().toInteger(),
+            time: it.'@time'.text().toFloat(),
+            skipped: it.'@skipped'.text().toInteger(),
+            timestamp: it.'@timestamp'.text(),
+            hostname: it.'@hostname'.text(),
+            id: it.'@id'.text()
+        ]
+    }
+    // Retorna ambos, testsuitesMetrics y testsuiteMetrics
+    return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics]
 }
 
 def constructPrometheusData(Map metrics) {
-   // Aquí construimos los datos para Prometheus con etiquetas para cada métrica
-    return """
+    // Inicia la cadena de texto de Prometheus
+    def prometheusData = """
 # HELP katalon_testsuites_info Test Suites Information
 # TYPE katalon_testsuites_info gauge
-katalon_testsuites_info{name="${metrics.name}",tests="${metrics.totalTests}",failures="${metrics.totalFailures}",errors="${metrics.totalErrors}",time="${metrics.totalTime}"} 1
+katalon_testsuites_info{name="${metrics.testsuites.name}",tests="${metrics.testsuites.totalTests}",failures="${metrics.testsuites.totalFailures}",errors="${metrics.testsuites.totalErrors}",time="${metrics.testsuites.totalTime}"} 1
 """
+
+    // Agrega la métrica para testsuite, sin hostname e id
+    metrics.testsuite.each { ts ->
+        prometheusData += """
+# HELP katalon_testsuite_info Test Suite Information
+# TYPE katalon_testsuite_info gauge
+katalon_testsuite_info{name="${ts.name}",tests="${ts.tests}",failures="${ts.failures}",errors="${ts.errors}",time="${ts.time}",skipped="${ts.skipped}",timestamp="${ts.timestamp}"} 1
+"""
+    }
+
+    return prometheusData
 }
 
 pipeline {

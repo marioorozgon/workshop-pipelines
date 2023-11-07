@@ -1,10 +1,9 @@
 // Sacamos los metodos de parseo fuera del pipeline 
-//TODO ver si se puede pasar a una propia clase groovy
-
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
-    // Sacamos las metricas y las convertimos en tipos serializables
+    // Extrayendo los atributos del elemento <testsuites>
     def metrics = [
+        name: parsedXml.'@name'.text(),
         totalTests: parsedXml.'@tests'.text().toInteger(),
         totalFailures: parsedXml.'@failures'.text().toInteger(),
         totalErrors: parsedXml.'@errors'.text().toInteger(),
@@ -17,24 +16,29 @@ def constructPrometheusData(Map metrics) {
     // Se asume que si no hay fallos ni errores, la prueba es OK.
     def totalOK = (metrics.totalFailures == 0 && metrics.totalErrors == 0) ? 1 : 0
 
+    // Construye la cadena de datos de Prometheus
     return """
+# HELP katalon_testsuite_info Información general sobre la suite de pruebas
+# TYPE katalon_testsuite_info gauge
+katalon_testsuite_info{name="${metrics.name}",total_tests="${metrics.totalTests}",total_failures="${metrics.totalFailures}",total_errors="${metrics.totalErrors}",total_time="${metrics.totalTime}"} 1
+
 # HELP katalon_test_ok Estado OK de las pruebas (1 para OK, 0 si hay fallos o errores)
 # TYPE katalon_test_ok gauge
 katalon_test_ok ${totalOK}
 
-# HELP katalon_total_tests Total number of tests
+# HELP katalon_total_tests Total número de test
 # TYPE katalon_total_tests gauge
 katalon_total_tests ${metrics.totalTests}
 
-# HELP katalon_total_failures Total number of failed tests
+# HELP katalon_total_failures Total número de test fallidos
 # TYPE katalon_total_failures gauge
 katalon_total_failures ${metrics.totalFailures}
 
-# HELP katalon_total_errors Total number of errors in tests
+# HELP katalon_total_errors Total número de errores en los test
 # TYPE katalon_total_errors gauge
 katalon_total_errors ${metrics.totalErrors}
 
-# HELP katalon_total_time Total time of test suite execution
+# HELP katalon_total_time Total tiempo de test suite ejecución
 # TYPE katalon_total_time gauge
 katalon_total_time ${metrics.totalTime}
 """
@@ -96,7 +100,7 @@ spec:
             steps {
                 script {
                     // katalon.xml está en el directorio actual
-                    def katalonXml = readFile('JUnit_Report_GTI_ERROR.xml')
+                    def katalonXml = readFile('katalon.xml')
 
                     // parseXml para parsear el XML
                     def metrics = parseXml(katalonXml)

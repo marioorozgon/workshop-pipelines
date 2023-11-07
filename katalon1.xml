@@ -1,0 +1,2619 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="SeurPRO" time="704.236" tests="6" failures="5" errors="0">
+   <testsuite name="SeurPRO" tests="6" failures="5" errors="0" time="704.236" skipped="0" timestamp="2023-08-17 11:00:51" hostname="SEU2K19KAT01$ - seu2k19kat01.redseur.local" id="Test Suites/SeurPRO">
+      <properties>
+         <property name="deviceName" value=""/>
+         <property name="devicePlatform" value=""/>
+         <property name="logFolder" value="C:\\Jenkins\\workspace\\Katalon_Seurpro_PRO\\Reports\\20230817_110044\\SeurPRO\\20230817_110045"/>
+         <property name="logFiles" value="C:\\Jenkins\\workspace\\Katalon_Seurpro_PRO\\Reports\\20230817_110044\\SeurPRO\\20230817_110045\\execution0.log"/>
+         <property name="attachments" value="C:\\Jenkins\\workspace\\Katalon_Seurpro_PRO\\Reports\\20230817_110044\\SeurPRO\\20230817_110045\\1692262958081.png, C:\\Jenkins\\workspace\\Katalon_Seurpro_PRO\\Reports\\20230817_110044\\SeurPRO\\20230817_110045\\1692262967151.png, C:\\Jenkins\\workspace\\Katalon_Seurpro_PRO\\Reports\\20230817_110044\\SeurPRO\\20230817_110045\\1692263325139.png"/>
+         <property name="hostName" value="SEU2K19KAT01$ - seu2k19kat01.redseur.local"/>
+         <property name="os" value="Windows Server 2019 64bit"/>
+         <property name="katalonVersion" value="8.1.0.208"/>
+         <property name="browser" value="Chrome 96.0.4664.45"/>
+         <property name="hostAddress" value="10.240.96.104"/>
+         <property name="sessionId" value="853bd33eaf0dd9cb068a1677922de29f"/>
+         <property name="seleniumVersion" value="3.141.59"/>
+         <property name="proxyInformation" value="ProxyInformation { proxyOption=NO_PROXY, proxyServerType=HTTP, username=, password=********, proxyServerAddress=, proxyServerPort=0, executionList=&quot;&quot;, isApplyToDesiredCapabilities=true }"/>
+         <property name="platform" value="Windows Server 2019"/>
+      </properties>
+      <testcase name="Test Cases/00 - Envio_nacional" time="120.919" classname="Test Cases/00 - Envio_nacional" status="PASSED">
+         <system-out><![CDATA[2023-08-17 11:00:52 - [TEST_CASE][PASSED] - Test Cases/00 - Envio_nacional: Test Cases/00 - Envio_nacional
+
+2023-08-17 11:00:52 - [TEST_STEP][PASSED] - try: Browser is closed
+
+2023-08-17 11:00:52 - [TEST_STEP][PASSED] - openBrowser("", STOP_ON_FAILURE): Browser is opened with url: ''
+
+2023-08-17 11:00:52 - [MESSAGE][INFO] - Starting 'Chrome' driver
+
+2023-08-17 11:00:53 - [MESSAGE][INFO] - Action delay is set to 0 milliseconds
+
+2023-08-17 11:00:56 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2023-08-17 11:00:56 - [TEST_STEP][PASSED] - maximizeWindow(): Current window maximized
+
+2023-08-17 11:00:56 - [MESSAGE][PASSED] - Current window maximized
+
+2023-08-17 11:00:56 - [TEST_STEP][PASSED] - navigateToUrl(url, STOP_ON_FAILURE): Navigate to 'https://www.seur.com/seurpro/app' successfully
+
+2023-08-17 11:00:57 - [MESSAGE][PASSED] - Navigate to 'https://www.seur.com/seurpro/app' successfully
+
+2023-08-17 11:00:57 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Usuario_username"), user, STOP_ON_FAILURE): Text 'pruebas-katalon' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Usuario_username'
+
+2023-08-17 11:01:41 - [MESSAGE][PASSED] - Text 'pruebas-katalon' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Usuario_username'
+
+2023-08-17 11:01:41 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Contrasea_password"), password, STOP_ON_FAILURE): Text 'PruebasSeur1' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:01:41 - [MESSAGE][PASSED] - Text 'PruebasSeur1' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:01:41 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password"), Keys.chord(ENTER)): Keys 'ENTER + ' sent to object: 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:01:43 - [MESSAGE][PASSED] - Keys 'ENTER + ' sent to object: 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:01:43 - [TEST_STEP][PASSED] - delay(5): Delayed 5 second(s)
+
+2023-08-17 11:01:48 - [MESSAGE][PASSED] - Delayed 5 second(s)
+
+2023-08-17 11:01:48 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/span_Solicitar recogida"), 60): Object 'Object Repository/Page_SeurPro/span_Solicitar recogida' is visible
+
+2023-08-17 11:01:48 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/span_Solicitar recogida' is visible
+
+2023-08-17 11:01:48 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/span_Solicitar recogida"), 60): Object 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clickable
+
+2023-08-17 11:01:49 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clickable
+
+2023-08-17 11:01:49 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Solicitar recogida"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clicked on
+
+2023-08-17 11:01:49 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clicked on
+
+2023-08-17 11:01:49 - [TEST_STEP][PASSED] - delay(5): Delayed 5 second(s)
+
+2023-08-17 11:01:54 - [MESSAGE][PASSED] - Delayed 5 second(s)
+
+2023-08-17 11:01:54 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_recogida"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_recogida' is clicked on
+
+2023-08-17 11:01:54 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_recogida' is clicked on
+
+2023-08-17 11:01:54 - [TEST_STEP][PASSED] - delay(10): Delayed 10 second(s)
+
+2023-08-17 11:02:04 - [MESSAGE][PASSED] - Delayed 10 second(s)
+
+2023-08-17 11:02:04 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:02:05 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:02:05 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:02:05 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:02:05 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:02:05 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:02:05 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), telefono, STOP_ON_FAILURE): Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:02:06 - [MESSAGE][PASSED] - Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:02:06 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:02:06 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:02:06 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:02:07 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:02:07 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), nombre, STOP_ON_FAILURE): Text 'José' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:02:07 - [MESSAGE][PASSED] - Text 'José' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:02:07 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:02:08 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:02:08 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:02:08 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:02:08 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), apellidos, STOP_ON_FAILURE): Text 'Molina' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:02:09 - [MESSAGE][PASSED] - Text 'Molina' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:02:09 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:02:09 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:02:09 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:02:10 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:02:10 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:02:10 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:02:10 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), direccion, STOP_ON_FAILURE): Text 'Calle Pruebas 1' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:02:10 - [MESSAGE][PASSED] - Text 'Calle Pruebas 1' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:02:10 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:02:11 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:02:11 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:02:11 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:02:11 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), email, STOP_ON_FAILURE): Text 'email1@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:02:12 - [MESSAGE][PASSED] - Text 'email1@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:02:12 - [TEST_STEP][PASSED] - delay(3): Delayed 3 second(s)
+
+2023-08-17 11:02:15 - [MESSAGE][PASSED] - Delayed 3 second(s)
+
+2023-08-17 11:02:15 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Ciudad"), 60): Object 'Object Repository/Page_SeurPro/input_Ciudad' is visible
+
+2023-08-17 11:02:15 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Ciudad' is visible
+
+2023-08-17 11:02:15 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Ciudad"), 60): Object 'Object Repository/Page_SeurPro/input_Ciudad' is clickable
+
+2023-08-17 11:02:15 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Ciudad' is clickable
+
+2023-08-17 11:02:15 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Ciudad"), ciudad, STOP_ON_FAILURE): Text 'Madrid' is set on object 'Object Repository/Page_SeurPro/input_Ciudad'
+
+2023-08-17 11:02:16 - [MESSAGE][PASSED] - Text 'Madrid' is set on object 'Object Repository/Page_SeurPro/input_Ciudad'
+
+2023-08-17 11:02:16 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Page_SeurPro/input_cod_postal"), 60): Object 'Object Repository/Page_SeurPro/input_cod_postal' is visible
+
+2023-08-17 11:02:17 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_cod_postal' is visible
+
+2023-08-17 11:02:17 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Page_SeurPro/input_cod_postal"), 60): Object 'Object Repository/Page_SeurPro/input_cod_postal' is clickable
+
+2023-08-17 11:02:17 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_cod_postal' is clickable
+
+2023-08-17 11:02:17 - [TEST_STEP][PASSED] - setText(findTestObject("Page_SeurPro/input_cod_postal"), codPostal, STOP_ON_FAILURE): Text '28001' is set on object 'Object Repository/Page_SeurPro/input_cod_postal'
+
+2023-08-17 11:02:18 - [MESSAGE][PASSED] - Text '28001' is set on object 'Object Repository/Page_SeurPro/input_cod_postal'
+
+2023-08-17 11:02:18 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Page_SeurPro/span_seleccion_ciudad-codPostal"), 60): Object 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is visible
+
+2023-08-17 11:02:18 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is visible
+
+2023-08-17 11:02:18 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Page_SeurPro/span_seleccion_ciudad-codPostal"), 60): Object 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is clickable
+
+2023-08-17 11:02:19 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is clickable
+
+2023-08-17 11:02:19 - [TEST_STEP][PASSED] - click(findTestObject("Page_SeurPro/span_seleccion_ciudad-codPostal"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is clicked on
+
+2023-08-17 11:02:19 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is clicked on
+
+2023-08-17 11:02:19 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_destino"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_destino' is clicked on
+
+2023-08-17 11:02:20 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_destino' is clicked on
+
+2023-08-17 11:02:20 - [TEST_STEP][PASSED] - delay(10): Delayed 10 second(s)
+
+2023-08-17 11:02:30 - [MESSAGE][PASSED] - Delayed 10 second(s)
+
+2023-08-17 11:02:30 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_bultos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_bultos' is clicked on
+
+2023-08-17 11:02:30 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_bultos' is clicked on
+
+2023-08-17 11:02:30 - [TEST_STEP][PASSED] - element1 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_bultos2"), 30): null
+
+2023-08-17 11:02:30 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='1'", Arrays.asList(element1)): Execute JavaScript 'arguments[0].value='1'' successfully
+
+2023-08-17 11:02:30 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='1'' successfully
+
+2023-08-17 11:02:30 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_bultos2"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_bultos2'
+
+2023-08-17 11:02:31 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_bultos2'
+
+2023-08-17 11:02:31 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_peso2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_peso2' is clicked on
+
+2023-08-17 11:02:31 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_peso2' is clicked on
+
+2023-08-17 11:02:31 - [TEST_STEP][PASSED] - element2 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_peso"), 30): null
+
+2023-08-17 11:02:31 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='2'", Arrays.asList(element2)): Execute JavaScript 'arguments[0].value='2'' successfully
+
+2023-08-17 11:02:31 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='2'' successfully
+
+2023-08-17 11:02:31 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_peso"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_peso'
+
+2023-08-17 11:02:32 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_peso'
+
+2023-08-17 11:02:32 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_largo2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_largo2' is clicked on
+
+2023-08-17 11:02:32 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_largo2' is clicked on
+
+2023-08-17 11:02:32 - [TEST_STEP][PASSED] - element3 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_largo"), 30): null
+
+2023-08-17 11:02:32 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='3'", Arrays.asList(element3)): Execute JavaScript 'arguments[0].value='3'' successfully
+
+2023-08-17 11:02:32 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='3'' successfully
+
+2023-08-17 11:02:32 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_largo"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_largo'
+
+2023-08-17 11:02:33 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_largo'
+
+2023-08-17 11:02:33 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_alto2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_alto2' is clicked on
+
+2023-08-17 11:02:33 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_alto2' is clicked on
+
+2023-08-17 11:02:33 - [TEST_STEP][PASSED] - element4 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_alto"), 30): null
+
+2023-08-17 11:02:33 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='4'", Arrays.asList(element4)): Execute JavaScript 'arguments[0].value='4'' successfully
+
+2023-08-17 11:02:34 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='4'' successfully
+
+2023-08-17 11:02:34 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_alto"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_alto'
+
+2023-08-17 11:02:34 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_alto'
+
+2023-08-17 11:02:34 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_ancho2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_ancho2' is clicked on
+
+2023-08-17 11:02:34 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_ancho2' is clicked on
+
+2023-08-17 11:02:34 - [TEST_STEP][PASSED] - element5 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_ancho"), 30): null
+
+2023-08-17 11:02:35 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='5'", Arrays.asList(element5)): Execute JavaScript 'arguments[0].value='5'' successfully
+
+2023-08-17 11:02:35 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='5'' successfully
+
+2023-08-17 11:02:35 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_ancho"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_ancho'
+
+2023-08-17 11:02:35 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_ancho'
+
+2023-08-17 11:02:35 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), 60): Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is visible
+
+2023-08-17 11:02:36 - [MESSAGE][PASSED] - Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is visible
+
+2023-08-17 11:02:36 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), 60): Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clickable
+
+2023-08-17 11:02:36 - [MESSAGE][PASSED] - Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clickable
+
+2023-08-17 11:02:36 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clicked on
+
+2023-08-17 11:02:36 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clicked on
+
+2023-08-17 11:02:36 - [TEST_STEP][PASSED] - waitForElementPresent(findTestObject("Object Repository/Page_SeurPro/label_tasacion_1_envioNacional"), 3): Object 'Object Repository/Page_SeurPro/label_tasacion_1_envioNacional' is present
+
+2023-08-17 11:02:37 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/label_tasacion_1_envioNacional' is present
+
+2023-08-17 11:02:37 - [TEST_STEP][PASSED] - takeScreenshot(): Taking screenshot successfully
+
+2023-08-17 11:02:38 - [MESSAGE][PASSED] - Taking screenshot successfully
+[[ATTACHMENT|C:\\Jenkins\\workspace\\Katalon_Seurpro_PRO\\Reports\\20230817_110044\\SeurPRO\\20230817_110045\\1692262958081.png]]
+
+2023-08-17 11:02:38 - [TEST_STEP][PASSED] - precioTasacion1 = getText(findTestObject("Object Repository/Page_SeurPro/label_tasacion_1_envioNacional")): Text of object 'Object Repository/Page_SeurPro/label_tasacion_1_envioNacional' is: '3,94€'
+
+2023-08-17 11:02:38 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_SeurPro/label_tasacion_1_envioNacional' is: '3,94€'
+
+2023-08-17 11:02:38 - [TEST_STEP][PASSED] - assert precioTasacion1.equalsIgnoreCase(precioTasacion): null
+
+2023-08-17 11:02:38 - [TEST_STEP][PASSED] - delay(2): Delayed 2 second(s)
+
+2023-08-17 11:02:40 - [MESSAGE][PASSED] - Delayed 2 second(s)
+
+2023-08-17 11:02:40 - [TEST_STEP][PASSED] - delay(2): Delayed 2 second(s)
+
+2023-08-17 11:02:42 - [MESSAGE][PASSED] - Delayed 2 second(s)
+
+2023-08-17 11:02:42 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Botones_Seur/Page_SeurPro/span_Siguiente"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/span_Siguiente' is clicked on
+
+2023-08-17 11:02:42 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/span_Siguiente' is clicked on
+
+2023-08-17 11:02:42 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_servicioscomplementarios"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_servicioscomplementarios' is clicked on
+
+2023-08-17 11:02:45 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_servicioscomplementarios' is clicked on
+
+2023-08-17 11:02:45 - [TEST_STEP][PASSED] - waitForElementPresent(findTestObject("Object Repository/Page_SeurPro/label_tasacion_2"), 3): Object 'Object Repository/Page_SeurPro/label_tasacion_2' is present
+
+2023-08-17 11:02:46 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/label_tasacion_2' is present
+
+2023-08-17 11:02:46 - [TEST_STEP][PASSED] - precioTasacion2 = getText(findTestObject("Object Repository/Page_SeurPro/label_tasacion_2")): Text of object 'Object Repository/Page_SeurPro/label_tasacion_2' is: '3,94 €'
+
+2023-08-17 11:02:46 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_SeurPro/label_tasacion_2' is: '3,94 €'
+
+2023-08-17 11:02:46 - [TEST_STEP][PASSED] - precioTasacion2 = precioTasacion2.replaceAll("\s", ""): null
+
+2023-08-17 11:02:46 - [TEST_STEP][PASSED] - assert precioTasacion2.equalsIgnoreCase(precioTasacion): null
+
+2023-08-17 11:02:46 - [TEST_STEP][PASSED] - assert precioTasacion1.equalsIgnoreCase(precioTasacion2): null
+
+2023-08-17 11:02:46 - [TEST_STEP][PASSED] - takeScreenshot(): Taking screenshot successfully
+
+2023-08-17 11:02:47 - [MESSAGE][PASSED] - Taking screenshot successfully
+[[ATTACHMENT|C:\\Jenkins\\workspace\\Katalon_Seurpro_PRO\\Reports\\20230817_110044\\SeurPRO\\20230817_110045\\1692262967151.png]]
+
+2023-08-17 11:02:47 - [TEST_STEP][PASSED] - delay(5): Delayed 5 second(s)
+
+2023-08-17 11:02:52 - [MESSAGE][PASSED] - Delayed 5 second(s)
+
+2023-08-17 11:02:52 - [TEST_STEP][PASSED] - closeBrowser(): Browser is closed
+
+2023-08-17 11:02:52 - [MESSAGE][PASSED] - Browser is closed
+
+2023-08-17 11:02:52 - [TEST_STEP][PASSED] - Finally: Browser is closed
+
+2023-08-17 11:02:52 - [TEST_STEP][PASSED] - closeBrowser(): Browser is closed
+
+2023-08-17 11:02:52 - [MESSAGE][PASSED] - Browser is closed]]></system-out>
+         <system-err><![CDATA[]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/01 - Envio_internacional" time="126.834" classname="Test Cases/01 - Envio_internacional" status="FAILED">
+         <failure type="FAILED" message="Test Cases/01 - Envio_internacional FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       44,32 €         false            44,04 €
+
+	at 01 - Envio_internacional.run(01 - Envio_internacional:145)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+"/>
+         <system-out><![CDATA[2023-08-17 11:02:53 - [TEST_CASE][FAILED] - Test Cases/01 - Envio_internacional: Test Cases/01 - Envio_internacional FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       44,32 €         false            44,04 €
+
+	at 01 - Envio_internacional.run(01 - Envio_internacional:145)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:02:53 - [TEST_STEP][PASSED] - try: null
+
+2023-08-17 11:02:53 - [TEST_STEP][PASSED] - openBrowser(""): Browser is opened with url: ''
+
+2023-08-17 11:02:53 - [MESSAGE][INFO] - Starting 'Chrome' driver
+
+2023-08-17 11:02:53 - [MESSAGE][INFO] - Action delay is set to 0 milliseconds
+
+2023-08-17 11:02:55 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2023-08-17 11:02:55 - [TEST_STEP][PASSED] - maximizeWindow(): Current window maximized
+
+2023-08-17 11:02:55 - [MESSAGE][PASSED] - Current window maximized
+
+2023-08-17 11:02:55 - [TEST_STEP][PASSED] - navigateToUrl(url, STOP_ON_FAILURE): Navigate to 'https://www.seur.com/seurpro/app' successfully
+
+2023-08-17 11:02:56 - [MESSAGE][PASSED] - Navigate to 'https://www.seur.com/seurpro/app' successfully
+
+2023-08-17 11:02:56 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Usuario_username"), user, STOP_ON_FAILURE): Text 'pruebas-katalon' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Usuario_username'
+
+2023-08-17 11:03:43 - [MESSAGE][PASSED] - Text 'pruebas-katalon' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Usuario_username'
+
+2023-08-17 11:03:43 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Contrasea_password"), password, STOP_ON_FAILURE): Text 'PruebasSeur1' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:03:44 - [MESSAGE][PASSED] - Text 'PruebasSeur1' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:03:44 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password"), Keys.chord(ENTER)): Keys 'ENTER + ' sent to object: 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:03:47 - [MESSAGE][PASSED] - Keys 'ENTER + ' sent to object: 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:03:47 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Solicitar recogida"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clicked on
+
+2023-08-17 11:03:52 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clicked on
+
+2023-08-17 11:03:52 - [TEST_STEP][PASSED] - delay(5): Delayed 5 second(s)
+
+2023-08-17 11:03:57 - [MESSAGE][PASSED] - Delayed 5 second(s)
+
+2023-08-17 11:03:57 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_recogida"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_recogida' is clicked on
+
+2023-08-17 11:03:57 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_recogida' is clicked on
+
+2023-08-17 11:03:57 - [TEST_STEP][PASSED] - delay(10): Delayed 10 second(s)
+
+2023-08-17 11:04:07 - [MESSAGE][PASSED] - Delayed 10 second(s)
+
+2023-08-17 11:04:07 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:04:08 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:04:08 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:04:08 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:04:08 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:04:08 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:04:08 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), telefono, STOP_ON_FAILURE): Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:04:09 - [MESSAGE][PASSED] - Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:04:09 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:04:09 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:04:09 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:04:10 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:04:10 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), nombre, STOP_ON_FAILURE): Text 'Juan' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:04:10 - [MESSAGE][PASSED] - Text 'Juan' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:04:10 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:04:11 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:04:11 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:04:11 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:04:11 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), apellidos, STOP_ON_FAILURE): Text 'Cazorla' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:04:12 - [MESSAGE][PASSED] - Text 'Cazorla' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:04:12 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:04:12 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:04:12 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:04:12 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:04:12 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:04:13 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:04:13 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), direccion, STOP_ON_FAILURE): Text 'Calle Pruebas 2' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:04:13 - [MESSAGE][PASSED] - Text 'Calle Pruebas 2' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:04:13 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:04:14 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:04:14 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:04:14 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:04:14 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), email, STOP_ON_FAILURE): Text 'email2@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:04:15 - [MESSAGE][PASSED] - Text 'email2@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:04:15 - [TEST_STEP][PASSED] - delay(3): Delayed 3 second(s)
+
+2023-08-17 11:04:18 - [MESSAGE][PASSED] - Delayed 3 second(s)
+
+2023-08-17 11:04:18 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Page_SeurPro/icono_seleccion_pais"), 60): Object 'Object Repository/Page_SeurPro/icono_seleccion_pais' is visible
+
+2023-08-17 11:04:18 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/icono_seleccion_pais' is visible
+
+2023-08-17 11:04:18 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Page_SeurPro/icono_seleccion_pais"), 60): Object 'Object Repository/Page_SeurPro/icono_seleccion_pais' is clickable
+
+2023-08-17 11:04:18 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/icono_seleccion_pais' is clickable
+
+2023-08-17 11:04:18 - [TEST_STEP][PASSED] - click(findTestObject("Page_SeurPro/icono_seleccion_pais"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/icono_seleccion_pais' is clicked on
+
+2023-08-17 11:04:19 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/icono_seleccion_pais' is clicked on
+
+2023-08-17 11:04:19 - [TEST_STEP][PASSED] - click(findTestObject("Page_SeurPro/span_ESTADOS UNIDOS"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_ESTADOS UNIDOS' is clicked on
+
+2023-08-17 11:04:19 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_ESTADOS UNIDOS' is clicked on
+
+2023-08-17 11:04:19 - [TEST_STEP][PASSED] - delay(2): Delayed 2 second(s)
+
+2023-08-17 11:04:21 - [MESSAGE][PASSED] - Delayed 2 second(s)
+
+2023-08-17 11:04:21 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Page_SeurPro/input_cod_postal"), 60): Object 'Object Repository/Page_SeurPro/input_cod_postal' is visible
+
+2023-08-17 11:04:21 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_cod_postal' is visible
+
+2023-08-17 11:04:21 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Page_SeurPro/input_cod_postal"), 60): Object 'Object Repository/Page_SeurPro/input_cod_postal' is clickable
+
+2023-08-17 11:04:22 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_cod_postal' is clickable
+
+2023-08-17 11:04:22 - [TEST_STEP][PASSED] - setText(findTestObject("Page_SeurPro/input_cod_postal"), codPostal, STOP_ON_FAILURE): Text '75001' is set on object 'Object Repository/Page_SeurPro/input_cod_postal'
+
+2023-08-17 11:04:22 - [MESSAGE][PASSED] - Text '75001' is set on object 'Object Repository/Page_SeurPro/input_cod_postal'
+
+2023-08-17 11:04:22 - [TEST_STEP][PASSED] - delay(3): Delayed 3 second(s)
+
+2023-08-17 11:04:25 - [MESSAGE][PASSED] - Delayed 3 second(s)
+
+2023-08-17 11:04:25 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Page_Log in to SEUR SSO/Page_SeurPro/cod_postal_10001_empirest"), 60): Object 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/cod_postal_10001_empirest' is visible
+
+2023-08-17 11:04:26 - [MESSAGE][PASSED] - Object 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/cod_postal_10001_empirest' is visible
+
+2023-08-17 11:04:26 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Page_Log in to SEUR SSO/Page_SeurPro/cod_postal_10001_empirest"), 60): Object 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/cod_postal_10001_empirest' is clickable
+
+2023-08-17 11:04:26 - [MESSAGE][PASSED] - Object 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/cod_postal_10001_empirest' is clickable
+
+2023-08-17 11:04:26 - [TEST_STEP][PASSED] - click(findTestObject("Page_Log in to SEUR SSO/Page_SeurPro/cod_postal_10001_empirest"), STOP_ON_FAILURE): Object: 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/cod_postal_10001_empirest' is clicked on
+
+2023-08-17 11:04:26 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/cod_postal_10001_empirest' is clicked on
+
+2023-08-17 11:04:26 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_destino"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_destino' is clicked on
+
+2023-08-17 11:04:27 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_destino' is clicked on
+
+2023-08-17 11:04:27 - [TEST_STEP][PASSED] - delay(10): Delayed 10 second(s)
+
+2023-08-17 11:04:37 - [MESSAGE][PASSED] - Delayed 10 second(s)
+
+2023-08-17 11:04:37 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_bultos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_bultos' is clicked on
+
+2023-08-17 11:04:37 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_bultos' is clicked on
+
+2023-08-17 11:04:37 - [TEST_STEP][PASSED] - element1 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_bultos2"), 30): null
+
+2023-08-17 11:04:37 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='1'", Arrays.asList(element1)): Execute JavaScript 'arguments[0].value='1'' successfully
+
+2023-08-17 11:04:37 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='1'' successfully
+
+2023-08-17 11:04:37 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_bultos2"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_bultos2'
+
+2023-08-17 11:04:38 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_bultos2'
+
+2023-08-17 11:04:38 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_peso2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_peso2' is clicked on
+
+2023-08-17 11:04:38 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_peso2' is clicked on
+
+2023-08-17 11:04:38 - [TEST_STEP][PASSED] - element2 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_peso"), 30): null
+
+2023-08-17 11:04:38 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='2'", Arrays.asList(element2)): Execute JavaScript 'arguments[0].value='2'' successfully
+
+2023-08-17 11:04:38 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='2'' successfully
+
+2023-08-17 11:04:38 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_peso"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_peso'
+
+2023-08-17 11:04:39 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_peso'
+
+2023-08-17 11:04:39 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_largo2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_largo2' is clicked on
+
+2023-08-17 11:04:39 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_largo2' is clicked on
+
+2023-08-17 11:04:39 - [TEST_STEP][PASSED] - element3 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_largo"), 30): null
+
+2023-08-17 11:04:39 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='3'", Arrays.asList(element3)): Execute JavaScript 'arguments[0].value='3'' successfully
+
+2023-08-17 11:04:39 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='3'' successfully
+
+2023-08-17 11:04:39 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_largo"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_largo'
+
+2023-08-17 11:04:40 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_largo'
+
+2023-08-17 11:04:40 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_alto2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_alto2' is clicked on
+
+2023-08-17 11:04:40 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_alto2' is clicked on
+
+2023-08-17 11:04:40 - [TEST_STEP][PASSED] - element4 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_alto"), 30): null
+
+2023-08-17 11:04:41 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='4'", Arrays.asList(element4)): Execute JavaScript 'arguments[0].value='4'' successfully
+
+2023-08-17 11:04:41 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='4'' successfully
+
+2023-08-17 11:04:41 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_alto"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_alto'
+
+2023-08-17 11:04:41 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_alto'
+
+2023-08-17 11:04:41 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_ancho2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_ancho2' is clicked on
+
+2023-08-17 11:04:41 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_ancho2' is clicked on
+
+2023-08-17 11:04:41 - [TEST_STEP][PASSED] - element5 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_ancho"), 30): null
+
+2023-08-17 11:04:42 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='5'", Arrays.asList(element5)): Execute JavaScript 'arguments[0].value='5'' successfully
+
+2023-08-17 11:04:42 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='5'' successfully
+
+2023-08-17 11:04:42 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_ancho"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_ancho'
+
+2023-08-17 11:04:42 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_ancho'
+
+2023-08-17 11:04:42 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), 60): Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is visible
+
+2023-08-17 11:04:43 - [MESSAGE][PASSED] - Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is visible
+
+2023-08-17 11:04:43 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), 60): Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clickable
+
+2023-08-17 11:04:43 - [MESSAGE][PASSED] - Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clickable
+
+2023-08-17 11:04:43 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clicked on
+
+2023-08-17 11:04:43 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clicked on
+
+2023-08-17 11:04:43 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Empresa comercial (venta)_mat-select-ar_a8f41a"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Empresa comercial (venta)_mat-select-ar_a8f41a' is clicked on
+
+2023-08-17 11:04:44 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Empresa comercial (venta)_mat-select-ar_a8f41a' is clicked on
+
+2023-08-17 11:04:44 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Envo particular"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Envo particular' is clicked on
+
+2023-08-17 11:04:45 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Envo particular' is clicked on
+
+2023-08-17 11:04:45 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Tipo de envo aduanero_mat-input-24"), valorAduanero, STOP_ON_FAILURE): Text '20' is set on object 'Object Repository/Page_SeurPro/input_Tipo de envo aduanero_mat-input-24'
+
+2023-08-17 11:04:46 - [MESSAGE][PASSED] - Text '20' is set on object 'Object Repository/Page_SeurPro/input_Tipo de envo aduanero_mat-input-24'
+
+2023-08-17 11:04:46 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Debidos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Debidos' is clicked on
+
+2023-08-17 11:04:47 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Debidos' is clicked on
+
+2023-08-17 11:04:47 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Pagados"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Pagados' is clicked on
+
+2023-08-17 11:04:47 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Pagados' is clicked on
+
+2023-08-17 11:04:47 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Debidos_mat-select-arrow-wrapper ng-tns_c01270"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Debidos_mat-select-arrow-wrapper ng-tns_c01270' is clicked on
+
+2023-08-17 11:04:48 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Debidos_mat-select-arrow-wrapper ng-tns_c01270' is clicked on
+
+2023-08-17 11:04:48 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Debidos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Debidos' is clicked on
+
+2023-08-17 11:04:49 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Debidos' is clicked on
+
+2023-08-17 11:04:49 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/button_Siguiente"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/button_Siguiente' is clicked on
+
+2023-08-17 11:04:49 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/button_Siguiente' is clicked on
+
+2023-08-17 11:04:49 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/div_Servicios complementarios_mat-checkbox-_cddad5"), STOP_ON_FAILURE): Object: 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/div_Servicios complementarios_mat-checkbox-_cddad5' is clicked on
+
+2023-08-17 11:04:50 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/div_Servicios complementarios_mat-checkbox-_cddad5' is clicked on
+
+2023-08-17 11:04:50 - [TEST_STEP][PASSED] - delay(3): Delayed 3 second(s)
+
+2023-08-17 11:04:53 - [MESSAGE][PASSED] - Delayed 3 second(s)
+
+2023-08-17 11:04:53 - [TEST_STEP][PASSED] - element6 = findWebElement(findTestObject("Page_SeurPro/input_Servicios complementarios_valor_declarado"), 30): null
+
+2023-08-17 11:04:54 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='15'", Arrays.asList(element6)): Execute JavaScript 'arguments[0].value='15'' successfully
+
+2023-08-17 11:04:54 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='15'' successfully
+
+2023-08-17 11:04:54 - [TEST_STEP][PASSED] - delay(5): Delayed 5 second(s)
+
+2023-08-17 11:04:59 - [MESSAGE][PASSED] - Delayed 5 second(s)
+
+2023-08-17 11:04:59 - [TEST_STEP][PASSED] - precioTasacion1 = getText(findTestObject("Object Repository/Page_SeurPro/label_tasacion_1_envioInternacional")): Text of object 'Object Repository/Page_SeurPro/label_tasacion_1_envioInternacional' is: '44,32 €'
+
+2023-08-17 11:04:59 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_SeurPro/label_tasacion_1_envioInternacional' is: '44,32 €'
+
+2023-08-17 11:04:59 - [TEST_STEP][PASSED] - assert precioTasacion1.equalsIgnoreCase(precioTasacion): null
+
+2023-08-17 11:04:59 - [TEST_STEP][FAILED] - Finally: Test Cases/01 - Envio_internacional FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       44,32 €         false            44,04 €
+
+	at 01 - Envio_internacional.run(01 - Envio_internacional:145)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:04:59 - [TEST_STEP][FAILED] - closeBrowser(): Test Cases/01 - Envio_internacional FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       44,32 €         false            44,04 €
+
+	at 01 - Envio_internacional.run(01 - Envio_internacional:145)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:05:00 - [MESSAGE][PASSED] - Browser is closed
+
+2023-08-17 11:05:00 - [MESSAGE][FAILED] - Test Cases/01 - Envio_internacional FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       44,32 €         false            44,04 €
+
+	at 01 - Envio_internacional.run(01 - Envio_internacional:145)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)]]></system-out>
+         <system-err><![CDATA[2023-08-17 11:02:53 - [TEST_CASE][FAILED] - Test Cases/01 - Envio_internacional: Test Cases/01 - Envio_internacional FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       44,32 €         false            44,04 €
+
+	at 01 - Envio_internacional.run(01 - Envio_internacional:145)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/02 - Envio_nacional_aduanas" time="108.749" classname="Test Cases/02 - Envio_nacional_aduanas" status="FAILED">
+         <failure type="FAILED" message="Test Cases/02 - Envio_nacional_aduanas FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       25,83 €         false            25,81 €
+
+	at 02 - Envio_nacional_aduanas.run(02 - Envio_nacional_aduanas:140)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+"/>
+         <system-out><![CDATA[2023-08-17 11:05:00 - [TEST_CASE][FAILED] - Test Cases/02 - Envio_nacional_aduanas: Test Cases/02 - Envio_nacional_aduanas FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       25,83 €         false            25,81 €
+
+	at 02 - Envio_nacional_aduanas.run(02 - Envio_nacional_aduanas:140)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:05:00 - [TEST_STEP][PASSED] - try: null
+
+2023-08-17 11:05:00 - [TEST_STEP][PASSED] - openBrowser(""): Browser is opened with url: ''
+
+2023-08-17 11:05:00 - [MESSAGE][INFO] - Starting 'Chrome' driver
+
+2023-08-17 11:05:00 - [MESSAGE][INFO] - Action delay is set to 0 milliseconds
+
+2023-08-17 11:05:02 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2023-08-17 11:05:02 - [TEST_STEP][PASSED] - maximizeWindow(): Current window maximized
+
+2023-08-17 11:05:02 - [MESSAGE][PASSED] - Current window maximized
+
+2023-08-17 11:05:02 - [TEST_STEP][PASSED] - navigateToUrl(url, STOP_ON_FAILURE): Navigate to 'https://www.seur.com/seurpro/app' successfully
+
+2023-08-17 11:05:04 - [MESSAGE][PASSED] - Navigate to 'https://www.seur.com/seurpro/app' successfully
+
+2023-08-17 11:05:04 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Usuario_username"), user, STOP_ON_FAILURE): Text 'pruebas-katalon' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Usuario_username'
+
+2023-08-17 11:05:47 - [MESSAGE][PASSED] - Text 'pruebas-katalon' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Usuario_username'
+
+2023-08-17 11:05:47 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Contrasea_password"), password, STOP_ON_FAILURE): Text 'PruebasSeur1' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:05:47 - [MESSAGE][PASSED] - Text 'PruebasSeur1' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:05:47 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password"), Keys.chord(ENTER)): Keys 'ENTER + ' sent to object: 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:05:49 - [MESSAGE][PASSED] - Keys 'ENTER + ' sent to object: 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:05:49 - [TEST_STEP][PASSED] - delay(5): Delayed 5 second(s)
+
+2023-08-17 11:05:54 - [MESSAGE][PASSED] - Delayed 5 second(s)
+
+2023-08-17 11:05:54 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/span_Solicitar recogida"), 60): Object 'Object Repository/Page_SeurPro/span_Solicitar recogida' is visible
+
+2023-08-17 11:05:54 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/span_Solicitar recogida' is visible
+
+2023-08-17 11:05:54 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/span_Solicitar recogida"), 60): Object 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clickable
+
+2023-08-17 11:05:54 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clickable
+
+2023-08-17 11:05:54 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Solicitar recogida"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clicked on
+
+2023-08-17 11:05:55 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clicked on
+
+2023-08-17 11:05:55 - [TEST_STEP][PASSED] - delay(5): Delayed 5 second(s)
+
+2023-08-17 11:06:00 - [MESSAGE][PASSED] - Delayed 5 second(s)
+
+2023-08-17 11:06:00 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_recogida"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_recogida' is clicked on
+
+2023-08-17 11:06:00 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_recogida' is clicked on
+
+2023-08-17 11:06:00 - [TEST_STEP][PASSED] - delay(10): Delayed 10 second(s)
+
+2023-08-17 11:06:10 - [MESSAGE][PASSED] - Delayed 10 second(s)
+
+2023-08-17 11:06:10 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:06:11 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:06:11 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:06:11 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:06:11 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:06:11 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:06:11 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:06:11 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:06:11 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:06:12 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:06:12 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), telefono, STOP_ON_FAILURE): Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:06:12 - [MESSAGE][PASSED] - Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:06:12 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:06:13 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:06:13 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:06:13 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:06:13 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), nombre, STOP_ON_FAILURE): Text 'José' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:06:13 - [MESSAGE][PASSED] - Text 'José' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:06:13 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:06:14 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:06:14 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:06:14 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:06:14 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), apellidos, STOP_ON_FAILURE): Text 'Molina' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:06:15 - [MESSAGE][PASSED] - Text 'Molina' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:06:15 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:06:15 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:06:15 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:06:16 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:06:16 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:06:16 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:06:16 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), direccion, STOP_ON_FAILURE): Text 'Calle Pruebas 1' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:06:16 - [MESSAGE][PASSED] - Text 'Calle Pruebas 1' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:06:16 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:06:17 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:06:17 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:06:17 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:06:17 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), email, STOP_ON_FAILURE): Text 'email1@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:06:18 - [MESSAGE][PASSED] - Text 'email1@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:06:18 - [TEST_STEP][PASSED] - delay(3): Delayed 3 second(s)
+
+2023-08-17 11:06:21 - [MESSAGE][PASSED] - Delayed 3 second(s)
+
+2023-08-17 11:06:21 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Page_SeurPro/input_cod_postal"), 60): Object 'Object Repository/Page_SeurPro/input_cod_postal' is visible
+
+2023-08-17 11:06:21 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_cod_postal' is visible
+
+2023-08-17 11:06:21 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Page_SeurPro/input_cod_postal"), 60): Object 'Object Repository/Page_SeurPro/input_cod_postal' is clickable
+
+2023-08-17 11:06:21 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_cod_postal' is clickable
+
+2023-08-17 11:06:21 - [TEST_STEP][PASSED] - setText(findTestObject("Page_SeurPro/input_cod_postal"), codPostal, STOP_ON_FAILURE): Text '38001' is set on object 'Object Repository/Page_SeurPro/input_cod_postal'
+
+2023-08-17 11:06:22 - [MESSAGE][PASSED] - Text '38001' is set on object 'Object Repository/Page_SeurPro/input_cod_postal'
+
+2023-08-17 11:06:22 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Page_SeurPro/span_tenerife"), 60): Object 'Object Repository/Page_SeurPro/span_tenerife' is visible
+
+2023-08-17 11:06:23 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/span_tenerife' is visible
+
+2023-08-17 11:06:23 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Page_SeurPro/span_tenerife"), 60): Object 'Object Repository/Page_SeurPro/span_tenerife' is clickable
+
+2023-08-17 11:06:23 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/span_tenerife' is clickable
+
+2023-08-17 11:06:23 - [TEST_STEP][PASSED] - click(findTestObject("Page_SeurPro/span_tenerife"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_tenerife' is clicked on
+
+2023-08-17 11:06:23 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_tenerife' is clicked on
+
+2023-08-17 11:06:23 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_destino"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_destino' is clicked on
+
+2023-08-17 11:06:24 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_destino' is clicked on
+
+2023-08-17 11:06:24 - [TEST_STEP][PASSED] - delay(10): Delayed 10 second(s)
+
+2023-08-17 11:06:34 - [MESSAGE][PASSED] - Delayed 10 second(s)
+
+2023-08-17 11:06:34 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_bultos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_bultos' is clicked on
+
+2023-08-17 11:06:34 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_bultos' is clicked on
+
+2023-08-17 11:06:34 - [TEST_STEP][PASSED] - element1 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_bultos2"), 30): null
+
+2023-08-17 11:06:34 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='1'", Arrays.asList(element1)): Execute JavaScript 'arguments[0].value='1'' successfully
+
+2023-08-17 11:06:34 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='1'' successfully
+
+2023-08-17 11:06:34 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_bultos2"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_bultos2'
+
+2023-08-17 11:06:35 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_bultos2'
+
+2023-08-17 11:06:35 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_peso2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_peso2' is clicked on
+
+2023-08-17 11:06:35 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_peso2' is clicked on
+
+2023-08-17 11:06:35 - [TEST_STEP][PASSED] - element2 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_peso"), 30): null
+
+2023-08-17 11:06:35 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='2'", Arrays.asList(element2)): Execute JavaScript 'arguments[0].value='2'' successfully
+
+2023-08-17 11:06:35 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='2'' successfully
+
+2023-08-17 11:06:35 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_peso"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_peso'
+
+2023-08-17 11:06:36 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_peso'
+
+2023-08-17 11:06:36 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_largo2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_largo2' is clicked on
+
+2023-08-17 11:06:36 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_largo2' is clicked on
+
+2023-08-17 11:06:36 - [TEST_STEP][PASSED] - element3 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_largo"), 30): null
+
+2023-08-17 11:06:37 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='3'", Arrays.asList(element3)): Execute JavaScript 'arguments[0].value='3'' successfully
+
+2023-08-17 11:06:37 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='3'' successfully
+
+2023-08-17 11:06:37 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_largo"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_largo'
+
+2023-08-17 11:06:37 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_largo'
+
+2023-08-17 11:06:37 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_alto2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_alto2' is clicked on
+
+2023-08-17 11:06:37 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_alto2' is clicked on
+
+2023-08-17 11:06:37 - [TEST_STEP][PASSED] - element4 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_alto"), 30): null
+
+2023-08-17 11:06:38 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='4'", Arrays.asList(element4)): Execute JavaScript 'arguments[0].value='4'' successfully
+
+2023-08-17 11:06:38 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='4'' successfully
+
+2023-08-17 11:06:38 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_alto"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_alto'
+
+2023-08-17 11:06:38 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_alto'
+
+2023-08-17 11:06:38 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_ancho2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_ancho2' is clicked on
+
+2023-08-17 11:06:38 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_ancho2' is clicked on
+
+2023-08-17 11:06:38 - [TEST_STEP][PASSED] - element5 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_ancho"), 30): null
+
+2023-08-17 11:06:39 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='5'", Arrays.asList(element5)): Execute JavaScript 'arguments[0].value='5'' successfully
+
+2023-08-17 11:06:39 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='5'' successfully
+
+2023-08-17 11:06:39 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_ancho"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_ancho'
+
+2023-08-17 11:06:39 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_ancho'
+
+2023-08-17 11:06:39 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), 60): Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is visible
+
+2023-08-17 11:06:40 - [MESSAGE][PASSED] - Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is visible
+
+2023-08-17 11:06:40 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), 60): Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clickable
+
+2023-08-17 11:06:40 - [MESSAGE][PASSED] - Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clickable
+
+2023-08-17 11:06:40 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clicked on
+
+2023-08-17 11:06:40 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clicked on
+
+2023-08-17 11:06:40 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Empresa comercial (venta)_mat-select-ar_a8f41a"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Empresa comercial (venta)_mat-select-ar_a8f41a' is clicked on
+
+2023-08-17 11:06:42 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Empresa comercial (venta)_mat-select-ar_a8f41a' is clicked on
+
+2023-08-17 11:06:42 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Envo particular"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Envo particular' is clicked on
+
+2023-08-17 11:06:42 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Envo particular' is clicked on
+
+2023-08-17 11:06:42 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Tipo de envo aduanero_mat-input-24"), "20", STOP_ON_FAILURE): Text '20' is set on object 'Object Repository/Page_SeurPro/input_Tipo de envo aduanero_mat-input-24'
+
+2023-08-17 11:06:44 - [MESSAGE][PASSED] - Text '20' is set on object 'Object Repository/Page_SeurPro/input_Tipo de envo aduanero_mat-input-24'
+
+2023-08-17 11:06:44 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Debidos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Debidos' is clicked on
+
+2023-08-17 11:06:44 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Debidos' is clicked on
+
+2023-08-17 11:06:44 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Pagados"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Pagados' is clicked on
+
+2023-08-17 11:06:45 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Pagados' is clicked on
+
+2023-08-17 11:06:45 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Debidos_mat-select-arrow-wrapper ng-tns_c01270"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Debidos_mat-select-arrow-wrapper ng-tns_c01270' is clicked on
+
+2023-08-17 11:06:46 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Debidos_mat-select-arrow-wrapper ng-tns_c01270' is clicked on
+
+2023-08-17 11:06:46 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Debidos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Debidos' is clicked on
+
+2023-08-17 11:06:46 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Debidos' is clicked on
+
+2023-08-17 11:06:46 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/button_Siguiente"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/button_Siguiente' is clicked on
+
+2023-08-17 11:06:47 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/button_Siguiente' is clicked on
+
+2023-08-17 11:06:47 - [TEST_STEP][PASSED] - precioTasacion1 = getText(findTestObject("Object Repository/Page_SeurPro/label_tasacion_1_envioNacionalAduanas1")): Text of object 'Object Repository/Page_SeurPro/label_tasacion_1_envioNacionalAduanas1' is: '25,83 €'
+
+2023-08-17 11:06:48 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_SeurPro/label_tasacion_1_envioNacionalAduanas1' is: '25,83 €'
+
+2023-08-17 11:06:48 - [TEST_STEP][PASSED] - assert precioTasacion1.equalsIgnoreCase(precioTasacion): null
+
+2023-08-17 11:06:48 - [TEST_STEP][FAILED] - Finally: Test Cases/02 - Envio_nacional_aduanas FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       25,83 €         false            25,81 €
+
+	at 02 - Envio_nacional_aduanas.run(02 - Envio_nacional_aduanas:140)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:06:48 - [TEST_STEP][FAILED] - closeBrowser(): Test Cases/02 - Envio_nacional_aduanas FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       25,83 €         false            25,81 €
+
+	at 02 - Envio_nacional_aduanas.run(02 - Envio_nacional_aduanas:140)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:06:48 - [MESSAGE][PASSED] - Browser is closed
+
+2023-08-17 11:06:48 - [MESSAGE][FAILED] - Test Cases/02 - Envio_nacional_aduanas FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       25,83 €         false            25,81 €
+
+	at 02 - Envio_nacional_aduanas.run(02 - Envio_nacional_aduanas:140)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)]]></system-out>
+         <system-err><![CDATA[2023-08-17 11:05:00 - [TEST_CASE][FAILED] - Test Cases/02 - Envio_nacional_aduanas: Test Cases/02 - Envio_nacional_aduanas FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       25,83 €         false            25,81 €
+
+	at 02 - Envio_nacional_aduanas.run(02 - Envio_nacional_aduanas:140)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/03 - Envio_nacional_Cliente_2" time="117.138" classname="Test Cases/03 - Envio_nacional_Cliente_2" status="FAILED">
+         <failure type="FAILED" message="Test Cases/03 - Envio_nacional_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       10,99€          false            10,97€
+
+	at 03 - Envio_nacional_Cliente_2.run(03 - Envio_nacional_Cliente_2:149)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+"/>
+         <system-out><![CDATA[2023-08-17 11:06:49 - [TEST_CASE][FAILED] - Test Cases/03 - Envio_nacional_Cliente_2: Test Cases/03 - Envio_nacional_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       10,99€          false            10,97€
+
+	at 03 - Envio_nacional_Cliente_2.run(03 - Envio_nacional_Cliente_2:149)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:06:49 - [TEST_STEP][PASSED] - try: null
+
+2023-08-17 11:06:49 - [TEST_STEP][PASSED] - openBrowser(""): Browser is opened with url: ''
+
+2023-08-17 11:06:49 - [MESSAGE][INFO] - Starting 'Chrome' driver
+
+2023-08-17 11:06:49 - [MESSAGE][INFO] - Action delay is set to 0 milliseconds
+
+2023-08-17 11:06:51 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2023-08-17 11:06:51 - [TEST_STEP][PASSED] - maximizeWindow(): Current window maximized
+
+2023-08-17 11:06:51 - [MESSAGE][PASSED] - Current window maximized
+
+2023-08-17 11:06:51 - [TEST_STEP][PASSED] - navigateToUrl(url, STOP_ON_FAILURE): Navigate to 'https://www.seur.com/seurpro/app' successfully
+
+2023-08-17 11:06:52 - [MESSAGE][PASSED] - Navigate to 'https://www.seur.com/seurpro/app' successfully
+
+2023-08-17 11:06:52 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_Log in to SEUR SSO/input_Usuario_username"), user, STOP_ON_FAILURE): Text 'pruebas-katalon2' is set on object 'Object Repository/Page_Log in to SEUR SSO/input_Usuario_username'
+
+2023-08-17 11:07:35 - [MESSAGE][PASSED] - Text 'pruebas-katalon2' is set on object 'Object Repository/Page_Log in to SEUR SSO/input_Usuario_username'
+
+2023-08-17 11:07:35 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password"), password, STOP_ON_FAILURE): Text 'PruebasSeur1' is set on object 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:07:35 - [MESSAGE][PASSED] - Text 'PruebasSeur1' is set on object 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:07:35 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password"), Keys.chord(ENTER)): Keys 'ENTER + ' sent to object: 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:07:37 - [MESSAGE][PASSED] - Keys 'ENTER + ' sent to object: 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:07:37 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Solicitar recogida"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clicked on
+
+2023-08-17 11:07:39 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clicked on
+
+2023-08-17 11:07:39 - [TEST_STEP][PASSED] - delay(5): Delayed 5 second(s)
+
+2023-08-17 11:07:44 - [MESSAGE][PASSED] - Delayed 5 second(s)
+
+2023-08-17 11:07:44 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_recogida"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_recogida' is clicked on
+
+2023-08-17 11:07:45 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_recogida' is clicked on
+
+2023-08-17 11:07:45 - [TEST_STEP][PASSED] - delay(10): Delayed 10 second(s)
+
+2023-08-17 11:07:55 - [MESSAGE][PASSED] - Delayed 10 second(s)
+
+2023-08-17 11:07:55 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:07:55 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:07:55 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:07:55 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:07:55 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:07:56 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:07:56 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), telefono, STOP_ON_FAILURE): Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:07:56 - [MESSAGE][PASSED] - Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:07:56 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:07:57 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:07:57 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:07:57 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:07:57 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), nombre, STOP_ON_FAILURE): Text 'Juan' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:07:58 - [MESSAGE][PASSED] - Text 'Juan' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:07:58 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:07:58 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:07:58 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:07:58 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:07:58 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), apellidos, STOP_ON_FAILURE): Text 'Cazorla' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:07:59 - [MESSAGE][PASSED] - Text 'Cazorla' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:07:59 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:07:59 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:07:59 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:08:00 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:08:00 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:08:00 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:08:00 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), direccion, STOP_ON_FAILURE): Text 'Calle Pruebas 2' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:08:01 - [MESSAGE][PASSED] - Text 'Calle Pruebas 2' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:08:01 - [TEST_STEP][PASSED] - delay(10): Delayed 10 second(s)
+
+2023-08-17 11:08:11 - [MESSAGE][PASSED] - Delayed 10 second(s)
+
+2023-08-17 11:08:11 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:08:11 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:08:11 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:08:11 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:08:11 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:08:12 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:08:12 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:08:12 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:08:12 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:08:12 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:08:12 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), telefono, STOP_ON_FAILURE): Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:08:13 - [MESSAGE][PASSED] - Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:08:13 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:08:13 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:08:13 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:08:14 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:08:14 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), nombre, STOP_ON_FAILURE): Text 'Juan' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:08:14 - [MESSAGE][PASSED] - Text 'Juan' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:08:14 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:08:15 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:08:15 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:08:15 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:08:15 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), apellidos, STOP_ON_FAILURE): Text 'Cazorla' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:08:16 - [MESSAGE][PASSED] - Text 'Cazorla' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:08:16 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:08:16 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:08:16 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:08:17 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:08:17 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:08:17 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:08:17 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), direccion, STOP_ON_FAILURE): Text 'Calle Pruebas 2' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:08:18 - [MESSAGE][PASSED] - Text 'Calle Pruebas 2' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:08:18 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:08:18 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:08:18 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:08:18 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:08:18 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), email, STOP_ON_FAILURE): Text 'email2@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:08:19 - [MESSAGE][PASSED] - Text 'email2@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:08:19 - [TEST_STEP][PASSED] - delay(3): Delayed 3 second(s)
+
+2023-08-17 11:08:22 - [MESSAGE][PASSED] - Delayed 3 second(s)
+
+2023-08-17 11:08:22 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Ciudad"), 60): Object 'Object Repository/Page_SeurPro/input_Ciudad' is visible
+
+2023-08-17 11:08:22 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Ciudad' is visible
+
+2023-08-17 11:08:22 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Ciudad"), 60): Object 'Object Repository/Page_SeurPro/input_Ciudad' is clickable
+
+2023-08-17 11:08:23 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Ciudad' is clickable
+
+2023-08-17 11:08:23 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Ciudad"), ciudad, STOP_ON_FAILURE): Text 'Madrid' is set on object 'Object Repository/Page_SeurPro/input_Ciudad'
+
+2023-08-17 11:08:23 - [MESSAGE][PASSED] - Text 'Madrid' is set on object 'Object Repository/Page_SeurPro/input_Ciudad'
+
+2023-08-17 11:08:23 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Page_SeurPro/input_cod_postal"), 60): Object 'Object Repository/Page_SeurPro/input_cod_postal' is visible
+
+2023-08-17 11:08:24 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_cod_postal' is visible
+
+2023-08-17 11:08:24 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Page_SeurPro/input_cod_postal"), 60): Object 'Object Repository/Page_SeurPro/input_cod_postal' is clickable
+
+2023-08-17 11:08:24 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_cod_postal' is clickable
+
+2023-08-17 11:08:24 - [TEST_STEP][PASSED] - setText(findTestObject("Page_SeurPro/input_cod_postal"), codPostal, STOP_ON_FAILURE): Text '28001' is set on object 'Object Repository/Page_SeurPro/input_cod_postal'
+
+2023-08-17 11:08:25 - [MESSAGE][PASSED] - Text '28001' is set on object 'Object Repository/Page_SeurPro/input_cod_postal'
+
+2023-08-17 11:08:25 - [TEST_STEP][PASSED] - click(findTestObject("Page_SeurPro/span_seleccion_ciudad-codPostal")): Object: 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is clicked on
+
+2023-08-17 11:08:26 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is clicked on
+
+2023-08-17 11:08:26 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_destino"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_destino' is clicked on
+
+2023-08-17 11:08:27 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_destino' is clicked on
+
+2023-08-17 11:08:27 - [TEST_STEP][PASSED] - delay(10): Delayed 10 second(s)
+
+2023-08-17 11:08:37 - [MESSAGE][PASSED] - Delayed 10 second(s)
+
+2023-08-17 11:08:37 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_bultos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_bultos' is clicked on
+
+2023-08-17 11:08:37 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_bultos' is clicked on
+
+2023-08-17 11:08:37 - [TEST_STEP][PASSED] - element1 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_bultos2"), 30): null
+
+2023-08-17 11:08:37 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='1'", Arrays.asList(element1)): Execute JavaScript 'arguments[0].value='1'' successfully
+
+2023-08-17 11:08:37 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='1'' successfully
+
+2023-08-17 11:08:37 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_bultos2"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_bultos2'
+
+2023-08-17 11:08:37 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_bultos2'
+
+2023-08-17 11:08:37 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_peso2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_peso2' is clicked on
+
+2023-08-17 11:08:38 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_peso2' is clicked on
+
+2023-08-17 11:08:38 - [TEST_STEP][PASSED] - element2 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_peso"), 30): null
+
+2023-08-17 11:08:38 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='2'", Arrays.asList(element2)): Execute JavaScript 'arguments[0].value='2'' successfully
+
+2023-08-17 11:08:38 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='2'' successfully
+
+2023-08-17 11:08:38 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_peso"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_peso'
+
+2023-08-17 11:08:39 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_peso'
+
+2023-08-17 11:08:39 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_largo2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_largo2' is clicked on
+
+2023-08-17 11:08:39 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_largo2' is clicked on
+
+2023-08-17 11:08:39 - [TEST_STEP][PASSED] - element3 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_largo"), 30): null
+
+2023-08-17 11:08:39 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='3'", Arrays.asList(element3)): Execute JavaScript 'arguments[0].value='3'' successfully
+
+2023-08-17 11:08:39 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='3'' successfully
+
+2023-08-17 11:08:39 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_largo"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_largo'
+
+2023-08-17 11:08:40 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_largo'
+
+2023-08-17 11:08:40 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_alto2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_alto2' is clicked on
+
+2023-08-17 11:08:40 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_alto2' is clicked on
+
+2023-08-17 11:08:40 - [TEST_STEP][PASSED] - element4 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_alto"), 30): null
+
+2023-08-17 11:08:40 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='4'", Arrays.asList(element4)): Execute JavaScript 'arguments[0].value='4'' successfully
+
+2023-08-17 11:08:40 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='4'' successfully
+
+2023-08-17 11:08:40 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_alto"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_alto'
+
+2023-08-17 11:08:41 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_alto'
+
+2023-08-17 11:08:41 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_ancho2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_ancho2' is clicked on
+
+2023-08-17 11:08:41 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_ancho2' is clicked on
+
+2023-08-17 11:08:41 - [TEST_STEP][PASSED] - element5 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_ancho"), 30): null
+
+2023-08-17 11:08:41 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='5'", Arrays.asList(element5)): Execute JavaScript 'arguments[0].value='5'' successfully
+
+2023-08-17 11:08:41 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='5'' successfully
+
+2023-08-17 11:08:41 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_ancho"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_ancho'
+
+2023-08-17 11:08:42 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_ancho'
+
+2023-08-17 11:08:42 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), 60): Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is visible
+
+2023-08-17 11:08:42 - [MESSAGE][PASSED] - Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is visible
+
+2023-08-17 11:08:42 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), 60): Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clickable
+
+2023-08-17 11:08:43 - [MESSAGE][PASSED] - Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clickable
+
+2023-08-17 11:08:43 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clicked on
+
+2023-08-17 11:08:43 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clicked on
+
+2023-08-17 11:08:43 - [TEST_STEP][PASSED] - waitForElementPresent(findTestObject("Object Repository/Page_SeurPro/label_tasacion_1_envioNacional"), 3): Object 'Object Repository/Page_SeurPro/label_tasacion_1_envioNacional' is present
+
+2023-08-17 11:08:44 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/label_tasacion_1_envioNacional' is present
+
+2023-08-17 11:08:44 - [TEST_STEP][PASSED] - takeScreenshot(): Taking screenshot successfully
+
+2023-08-17 11:08:45 - [MESSAGE][PASSED] - Taking screenshot successfully
+[[ATTACHMENT|C:\\Jenkins\\workspace\\Katalon_Seurpro_PRO\\Reports\\20230817_110044\\SeurPRO\\20230817_110045\\1692263325139.png]]
+
+2023-08-17 11:08:45 - [TEST_STEP][PASSED] - precioTasacion1 = getText(findTestObject("Object Repository/Page_SeurPro/label_tasacion_1_envioNacional")): Text of object 'Object Repository/Page_SeurPro/label_tasacion_1_envioNacional' is: '10,99€'
+
+2023-08-17 11:08:45 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_SeurPro/label_tasacion_1_envioNacional' is: '10,99€'
+
+2023-08-17 11:08:45 - [TEST_STEP][PASSED] - assert precioTasacion1.equalsIgnoreCase(precioTasacion): null
+
+2023-08-17 11:08:45 - [TEST_STEP][FAILED] - Finally: Test Cases/03 - Envio_nacional_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       10,99€          false            10,97€
+
+	at 03 - Envio_nacional_Cliente_2.run(03 - Envio_nacional_Cliente_2:149)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:08:45 - [TEST_STEP][FAILED] - closeBrowser(): Test Cases/03 - Envio_nacional_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       10,99€          false            10,97€
+
+	at 03 - Envio_nacional_Cliente_2.run(03 - Envio_nacional_Cliente_2:149)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:08:46 - [MESSAGE][PASSED] - Browser is closed
+
+2023-08-17 11:08:46 - [MESSAGE][FAILED] - Test Cases/03 - Envio_nacional_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       10,99€          false            10,97€
+
+	at 03 - Envio_nacional_Cliente_2.run(03 - Envio_nacional_Cliente_2:149)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)]]></system-out>
+         <system-err><![CDATA[2023-08-17 11:06:49 - [TEST_CASE][FAILED] - Test Cases/03 - Envio_nacional_Cliente_2: Test Cases/03 - Envio_nacional_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       10,99€          false            10,97€
+
+	at 03 - Envio_nacional_Cliente_2.run(03 - Envio_nacional_Cliente_2:149)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/04 - Envio_nacional_aduanas_Cliente_2" time="104.919" classname="Test Cases/04 - Envio_nacional_aduanas_Cliente_2" status="FAILED">
+         <failure type="FAILED" message="Test Cases/04 - Envio_nacional_aduanas_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       50,03 €         false            49,96 €
+
+	at 04 - Envio_nacional_aduanas_Cliente_2.run(04 - Envio_nacional_aduanas_Cliente_2:128)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+"/>
+         <system-out><![CDATA[2023-08-17 11:08:46 - [TEST_CASE][FAILED] - Test Cases/04 - Envio_nacional_aduanas_Cliente_2: Test Cases/04 - Envio_nacional_aduanas_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       50,03 €         false            49,96 €
+
+	at 04 - Envio_nacional_aduanas_Cliente_2.run(04 - Envio_nacional_aduanas_Cliente_2:128)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:08:46 - [TEST_STEP][PASSED] - try: null
+
+2023-08-17 11:08:46 - [TEST_STEP][PASSED] - openBrowser(""): Browser is opened with url: ''
+
+2023-08-17 11:08:46 - [MESSAGE][INFO] - Starting 'Chrome' driver
+
+2023-08-17 11:08:46 - [MESSAGE][INFO] - Action delay is set to 0 milliseconds
+
+2023-08-17 11:08:48 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2023-08-17 11:08:48 - [TEST_STEP][PASSED] - maximizeWindow(): Current window maximized
+
+2023-08-17 11:08:48 - [MESSAGE][PASSED] - Current window maximized
+
+2023-08-17 11:08:48 - [TEST_STEP][PASSED] - navigateToUrl(url, STOP_ON_FAILURE): Navigate to 'https://www.seur.com/seurpro/app' successfully
+
+2023-08-17 11:08:49 - [MESSAGE][PASSED] - Navigate to 'https://www.seur.com/seurpro/app' successfully
+
+2023-08-17 11:08:49 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_Log in to SEUR SSO/input_Usuario_username"), user, STOP_ON_FAILURE): Text 'pruebas-katalon2' is set on object 'Object Repository/Page_Log in to SEUR SSO/input_Usuario_username'
+
+2023-08-17 11:09:32 - [MESSAGE][PASSED] - Text 'pruebas-katalon2' is set on object 'Object Repository/Page_Log in to SEUR SSO/input_Usuario_username'
+
+2023-08-17 11:09:32 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password"), password, STOP_ON_FAILURE): Text 'PruebasSeur1' is set on object 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:09:33 - [MESSAGE][PASSED] - Text 'PruebasSeur1' is set on object 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:09:33 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password"), Keys.chord(ENTER)): Keys 'ENTER + ' sent to object: 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:09:34 - [MESSAGE][PASSED] - Keys 'ENTER + ' sent to object: 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:09:34 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Solicitar recogida"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clicked on
+
+2023-08-17 11:09:36 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clicked on
+
+2023-08-17 11:09:36 - [TEST_STEP][PASSED] - delay(5): Delayed 5 second(s)
+
+2023-08-17 11:09:41 - [MESSAGE][PASSED] - Delayed 5 second(s)
+
+2023-08-17 11:09:41 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_recogida"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_recogida' is clicked on
+
+2023-08-17 11:09:42 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_recogida' is clicked on
+
+2023-08-17 11:09:42 - [TEST_STEP][PASSED] - delay(10): Delayed 10 second(s)
+
+2023-08-17 11:09:52 - [MESSAGE][PASSED] - Delayed 10 second(s)
+
+2023-08-17 11:09:52 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:09:52 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:09:52 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:09:52 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:09:52 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:09:52 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:09:52 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), telefono, STOP_ON_FAILURE): Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:09:53 - [MESSAGE][PASSED] - Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:09:53 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:09:54 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:09:54 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:09:54 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:09:54 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), nombre, STOP_ON_FAILURE): Text 'José' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:09:54 - [MESSAGE][PASSED] - Text 'José' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:09:54 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:09:55 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:09:55 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:09:55 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:09:55 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), apellidos, STOP_ON_FAILURE): Text 'Molina' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:09:56 - [MESSAGE][PASSED] - Text 'Molina' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:09:56 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:09:56 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:09:56 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:09:56 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:09:56 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:09:57 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:09:57 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), direccion, STOP_ON_FAILURE): Text 'Calle Pruebas 1' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:09:57 - [MESSAGE][PASSED] - Text 'Calle Pruebas 1' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:09:57 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:09:58 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:09:58 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:09:58 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:09:58 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), email, STOP_ON_FAILURE): Text 'email1@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:09:59 - [MESSAGE][PASSED] - Text 'email1@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:09:59 - [TEST_STEP][PASSED] - delay(3): Delayed 3 second(s)
+
+2023-08-17 11:10:02 - [MESSAGE][PASSED] - Delayed 3 second(s)
+
+2023-08-17 11:10:02 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Page_SeurPro/input_cod_postal"), 60): Object 'Object Repository/Page_SeurPro/input_cod_postal' is visible
+
+2023-08-17 11:10:02 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_cod_postal' is visible
+
+2023-08-17 11:10:02 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Page_SeurPro/input_cod_postal"), 60): Object 'Object Repository/Page_SeurPro/input_cod_postal' is clickable
+
+2023-08-17 11:10:02 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_cod_postal' is clickable
+
+2023-08-17 11:10:02 - [TEST_STEP][PASSED] - setText(findTestObject("Page_SeurPro/input_cod_postal"), codPostal, STOP_ON_FAILURE): Text '38001' is set on object 'Object Repository/Page_SeurPro/input_cod_postal'
+
+2023-08-17 11:10:03 - [MESSAGE][PASSED] - Text '38001' is set on object 'Object Repository/Page_SeurPro/input_cod_postal'
+
+2023-08-17 11:10:03 - [TEST_STEP][PASSED] - click(findTestObject("Page_SeurPro/span_tenerife"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_tenerife' is clicked on
+
+2023-08-17 11:10:04 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_tenerife' is clicked on
+
+2023-08-17 11:10:04 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_destino"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_destino' is clicked on
+
+2023-08-17 11:10:04 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_destino' is clicked on
+
+2023-08-17 11:10:04 - [TEST_STEP][PASSED] - delay(10): Delayed 10 second(s)
+
+2023-08-17 11:10:14 - [MESSAGE][PASSED] - Delayed 10 second(s)
+
+2023-08-17 11:10:14 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_bultos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_bultos' is clicked on
+
+2023-08-17 11:10:14 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_bultos' is clicked on
+
+2023-08-17 11:10:14 - [TEST_STEP][PASSED] - element1 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_bultos2"), 30): null
+
+2023-08-17 11:10:15 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='1'", Arrays.asList(element1)): Execute JavaScript 'arguments[0].value='1'' successfully
+
+2023-08-17 11:10:15 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='1'' successfully
+
+2023-08-17 11:10:15 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_bultos2"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_bultos2'
+
+2023-08-17 11:10:15 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_bultos2'
+
+2023-08-17 11:10:15 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_peso2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_peso2' is clicked on
+
+2023-08-17 11:10:15 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_peso2' is clicked on
+
+2023-08-17 11:10:15 - [TEST_STEP][PASSED] - element2 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_peso"), 30): null
+
+2023-08-17 11:10:16 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='2'", Arrays.asList(element2)): Execute JavaScript 'arguments[0].value='2'' successfully
+
+2023-08-17 11:10:16 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='2'' successfully
+
+2023-08-17 11:10:16 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_peso"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_peso'
+
+2023-08-17 11:10:16 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_peso'
+
+2023-08-17 11:10:16 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_largo2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_largo2' is clicked on
+
+2023-08-17 11:10:17 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_largo2' is clicked on
+
+2023-08-17 11:10:17 - [TEST_STEP][PASSED] - element3 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_largo"), 30): null
+
+2023-08-17 11:10:17 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='3'", Arrays.asList(element3)): Execute JavaScript 'arguments[0].value='3'' successfully
+
+2023-08-17 11:10:17 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='3'' successfully
+
+2023-08-17 11:10:17 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_largo"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_largo'
+
+2023-08-17 11:10:17 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_largo'
+
+2023-08-17 11:10:17 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_alto2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_alto2' is clicked on
+
+2023-08-17 11:10:18 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_alto2' is clicked on
+
+2023-08-17 11:10:18 - [TEST_STEP][PASSED] - element4 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_alto"), 30): null
+
+2023-08-17 11:10:18 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='4'", Arrays.asList(element4)): Execute JavaScript 'arguments[0].value='4'' successfully
+
+2023-08-17 11:10:18 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='4'' successfully
+
+2023-08-17 11:10:18 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_alto"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_alto'
+
+2023-08-17 11:10:18 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_alto'
+
+2023-08-17 11:10:18 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_ancho2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_ancho2' is clicked on
+
+2023-08-17 11:10:19 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_ancho2' is clicked on
+
+2023-08-17 11:10:19 - [TEST_STEP][PASSED] - element5 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_ancho"), 30): null
+
+2023-08-17 11:10:19 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='5'", Arrays.asList(element5)): Execute JavaScript 'arguments[0].value='5'' successfully
+
+2023-08-17 11:10:19 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='5'' successfully
+
+2023-08-17 11:10:19 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_ancho"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_ancho'
+
+2023-08-17 11:10:19 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_ancho'
+
+2023-08-17 11:10:19 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), 60): Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is visible
+
+2023-08-17 11:10:20 - [MESSAGE][PASSED] - Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is visible
+
+2023-08-17 11:10:20 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), 60): Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clickable
+
+2023-08-17 11:10:20 - [MESSAGE][PASSED] - Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clickable
+
+2023-08-17 11:10:20 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clicked on
+
+2023-08-17 11:10:21 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clicked on
+
+2023-08-17 11:10:21 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Empresa comercial (venta)_mat-select-ar_a8f41a"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Empresa comercial (venta)_mat-select-ar_a8f41a' is clicked on
+
+2023-08-17 11:10:22 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Empresa comercial (venta)_mat-select-ar_a8f41a' is clicked on
+
+2023-08-17 11:10:22 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Envo particular"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Envo particular' is clicked on
+
+2023-08-17 11:10:23 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Envo particular' is clicked on
+
+2023-08-17 11:10:23 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Tipo de envo aduanero_mat-input-24"), valorAduanero, STOP_ON_FAILURE): Text '20' is set on object 'Object Repository/Page_SeurPro/input_Tipo de envo aduanero_mat-input-24'
+
+2023-08-17 11:10:25 - [MESSAGE][PASSED] - Text '20' is set on object 'Object Repository/Page_SeurPro/input_Tipo de envo aduanero_mat-input-24'
+
+2023-08-17 11:10:25 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Debidos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Debidos' is clicked on
+
+2023-08-17 11:10:25 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Debidos' is clicked on
+
+2023-08-17 11:10:25 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Pagados"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Pagados' is clicked on
+
+2023-08-17 11:10:26 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Pagados' is clicked on
+
+2023-08-17 11:10:26 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Debidos_mat-select-arrow-wrapper ng-tns_c01270"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Debidos_mat-select-arrow-wrapper ng-tns_c01270' is clicked on
+
+2023-08-17 11:10:27 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Debidos_mat-select-arrow-wrapper ng-tns_c01270' is clicked on
+
+2023-08-17 11:10:27 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Debidos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Debidos' is clicked on
+
+2023-08-17 11:10:28 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Debidos' is clicked on
+
+2023-08-17 11:10:28 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/button_Siguiente"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/button_Siguiente' is clicked on
+
+2023-08-17 11:10:29 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/button_Siguiente' is clicked on
+
+2023-08-17 11:10:29 - [TEST_STEP][PASSED] - precioTasacion1 = getText(findTestObject("Object Repository/Page_SeurPro/label_tasacion_1_envioNacionalAduanas1")): Text of object 'Object Repository/Page_SeurPro/label_tasacion_1_envioNacionalAduanas1' is: '50,03 €'
+
+2023-08-17 11:10:30 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_SeurPro/label_tasacion_1_envioNacionalAduanas1' is: '50,03 €'
+
+2023-08-17 11:10:30 - [TEST_STEP][PASSED] - assert precioTasacion1.equalsIgnoreCase(precioTasacion): null
+
+2023-08-17 11:10:30 - [TEST_STEP][FAILED] - Finally: Test Cases/04 - Envio_nacional_aduanas_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       50,03 €         false            49,96 €
+
+	at 04 - Envio_nacional_aduanas_Cliente_2.run(04 - Envio_nacional_aduanas_Cliente_2:128)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:10:30 - [TEST_STEP][FAILED] - closeBrowser(): Test Cases/04 - Envio_nacional_aduanas_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       50,03 €         false            49,96 €
+
+	at 04 - Envio_nacional_aduanas_Cliente_2.run(04 - Envio_nacional_aduanas_Cliente_2:128)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:10:31 - [MESSAGE][PASSED] - Browser is closed
+
+2023-08-17 11:10:31 - [MESSAGE][FAILED] - Test Cases/04 - Envio_nacional_aduanas_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       50,03 €         false            49,96 €
+
+	at 04 - Envio_nacional_aduanas_Cliente_2.run(04 - Envio_nacional_aduanas_Cliente_2:128)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)]]></system-out>
+         <system-err><![CDATA[2023-08-17 11:08:46 - [TEST_CASE][FAILED] - Test Cases/04 - Envio_nacional_aduanas_Cliente_2: Test Cases/04 - Envio_nacional_aduanas_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       50,03 €         false            49,96 €
+
+	at 04 - Envio_nacional_aduanas_Cliente_2.run(04 - Envio_nacional_aduanas_Cliente_2:128)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)]]></system-err>
+      </testcase>
+      <testcase name="Test Cases/05 - Envio_internacional_Cliente_2" time="123.878" classname="Test Cases/05 - Envio_internacional_Cliente_2" status="FAILED">
+         <failure type="FAILED" message="Test Cases/05 - Envio_internacional_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       93,02 €         false            92,43 €
+
+	at 05 - Envio_internacional_Cliente_2.run(05 - Envio_internacional_Cliente_2:155)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+"/>
+         <system-out><![CDATA[2023-08-17 11:10:31 - [TEST_CASE][FAILED] - Test Cases/05 - Envio_internacional_Cliente_2: Test Cases/05 - Envio_internacional_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       93,02 €         false            92,43 €
+
+	at 05 - Envio_internacional_Cliente_2.run(05 - Envio_internacional_Cliente_2:155)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:10:31 - [TEST_STEP][PASSED] - try: null
+
+2023-08-17 11:10:31 - [TEST_STEP][PASSED] - openBrowser(""): Browser is opened with url: ''
+
+2023-08-17 11:10:31 - [MESSAGE][INFO] - Starting 'Chrome' driver
+
+2023-08-17 11:10:31 - [MESSAGE][INFO] - Action delay is set to 0 milliseconds
+
+2023-08-17 11:10:33 - [MESSAGE][PASSED] - Browser is opened with url: ''
+
+2023-08-17 11:10:33 - [TEST_STEP][PASSED] - maximizeWindow(): Current window maximized
+
+2023-08-17 11:10:33 - [MESSAGE][PASSED] - Current window maximized
+
+2023-08-17 11:10:33 - [TEST_STEP][PASSED] - navigateToUrl(url, STOP_ON_FAILURE): Navigate to 'https://www.seur.com/seurpro/app' successfully
+
+2023-08-17 11:10:34 - [MESSAGE][PASSED] - Navigate to 'https://www.seur.com/seurpro/app' successfully
+
+2023-08-17 11:10:34 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Usuario_username"), user, STOP_ON_FAILURE): Text 'pruebas-katalon2' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Usuario_username'
+
+2023-08-17 11:11:17 - [MESSAGE][PASSED] - Text 'pruebas-katalon2' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Usuario_username'
+
+2023-08-17 11:11:17 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Contrasea_password"), password, STOP_ON_FAILURE): Text 'PruebasSeur1' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:11:18 - [MESSAGE][PASSED] - Text 'PruebasSeur1' is set on object 'Object Repository/Page_Log in to SEUR SSO/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:11:18 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password"), Keys.chord(ENTER)): Keys 'ENTER + ' sent to object: 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:11:19 - [MESSAGE][PASSED] - Keys 'ENTER + ' sent to object: 'Object Repository/Page_Log in to SEUR SSO/input_Contrasea_password'
+
+2023-08-17 11:11:19 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Solicitar recogida"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clicked on
+
+2023-08-17 11:11:22 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Solicitar recogida' is clicked on
+
+2023-08-17 11:11:22 - [TEST_STEP][PASSED] - delay(5): Delayed 5 second(s)
+
+2023-08-17 11:11:27 - [MESSAGE][PASSED] - Delayed 5 second(s)
+
+2023-08-17 11:11:27 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_recogida"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_recogida' is clicked on
+
+2023-08-17 11:11:27 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_recogida' is clicked on
+
+2023-08-17 11:11:27 - [TEST_STEP][PASSED] - delay(10): Delayed 10 second(s)
+
+2023-08-17 11:11:37 - [MESSAGE][PASSED] - Delayed 10 second(s)
+
+2023-08-17 11:11:37 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:11:37 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is visible
+
+2023-08-17 11:11:37 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), 60): Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:11:38 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/div_Telfono' is clickable
+
+2023-08-17 11:11:38 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:11:38 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Telfono' is clicked on
+
+2023-08-17 11:11:38 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/div_Telfono"), telefono, STOP_ON_FAILURE): Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:11:38 - [MESSAGE][PASSED] - Text '623434456' is set on object 'Object Repository/Page_SeurPro/div_Telfono'
+
+2023-08-17 11:11:38 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:11:39 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is visible
+
+2023-08-17 11:11:39 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), 60): Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:11:39 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Nombre' is clickable
+
+2023-08-17 11:11:39 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Nombre"), nombre, STOP_ON_FAILURE): Text 'José' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:11:40 - [MESSAGE][PASSED] - Text 'José' is set on object 'Object Repository/Page_SeurPro/input_Nombre'
+
+2023-08-17 11:11:40 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:11:40 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is visible
+
+2023-08-17 11:11:40 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), 60): Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:11:41 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Apellidos' is clickable
+
+2023-08-17 11:11:41 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Apellidos"), apellidos, STOP_ON_FAILURE): Text 'Molina' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:11:41 - [MESSAGE][PASSED] - Text 'Molina' is set on object 'Object Repository/Page_SeurPro/input_Apellidos'
+
+2023-08-17 11:11:41 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:11:42 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is visible
+
+2023-08-17 11:11:42 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), 60): Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:11:42 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clickable
+
+2023-08-17 11:11:42 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:11:42 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio' is clicked on
+
+2023-08-17 11:11:42 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio"), direccion, STOP_ON_FAILURE): Text 'Calle Pruebas 1' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:11:43 - [MESSAGE][PASSED] - Text 'Calle Pruebas 1' is set on object 'Object Repository/Page_SeurPro/input_Direccion_DestinoEnvio'
+
+2023-08-17 11:11:43 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:11:43 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:11:43 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:11:43 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:11:43 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), email, STOP_ON_FAILURE): Text 'email1@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:11:44 - [MESSAGE][PASSED] - Text 'email1@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:11:44 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:11:44 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is visible
+
+2023-08-17 11:11:44 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), 60): Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:11:45 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_E-mail' is clickable
+
+2023-08-17 11:11:45 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_E-mail"), email, STOP_ON_FAILURE): Text 'email1@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:11:45 - [MESSAGE][PASSED] - Text 'email1@email.com' is set on object 'Object Repository/Page_SeurPro/input_E-mail'
+
+2023-08-17 11:11:45 - [TEST_STEP][PASSED] - delay(3): Delayed 3 second(s)
+
+2023-08-17 11:11:48 - [MESSAGE][PASSED] - Delayed 3 second(s)
+
+2023-08-17 11:11:48 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Page_SeurPro/icono_seleccion_pais"), 60): Object 'Object Repository/Page_SeurPro/icono_seleccion_pais' is visible
+
+2023-08-17 11:11:49 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/icono_seleccion_pais' is visible
+
+2023-08-17 11:11:49 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Page_SeurPro/icono_seleccion_pais"), 60): Object 'Object Repository/Page_SeurPro/icono_seleccion_pais' is clickable
+
+2023-08-17 11:11:49 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/icono_seleccion_pais' is clickable
+
+2023-08-17 11:11:49 - [TEST_STEP][PASSED] - click(findTestObject("Page_SeurPro/icono_seleccion_pais"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/icono_seleccion_pais' is clicked on
+
+2023-08-17 11:11:49 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/icono_seleccion_pais' is clicked on
+
+2023-08-17 11:11:49 - [TEST_STEP][PASSED] - click(findTestObject("Page_SeurPro/span_ESTADOS UNIDOS"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_ESTADOS UNIDOS' is clicked on
+
+2023-08-17 11:11:50 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_ESTADOS UNIDOS' is clicked on
+
+2023-08-17 11:11:50 - [TEST_STEP][PASSED] - delay(2): Delayed 2 second(s)
+
+2023-08-17 11:11:52 - [MESSAGE][PASSED] - Delayed 2 second(s)
+
+2023-08-17 11:11:52 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Page_SeurPro/input_cod_postal"), 60): Object 'Object Repository/Page_SeurPro/input_cod_postal' is visible
+
+2023-08-17 11:11:52 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_cod_postal' is visible
+
+2023-08-17 11:11:52 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Page_SeurPro/input_cod_postal"), 60): Object 'Object Repository/Page_SeurPro/input_cod_postal' is clickable
+
+2023-08-17 11:11:52 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/input_cod_postal' is clickable
+
+2023-08-17 11:11:52 - [TEST_STEP][PASSED] - setText(findTestObject("Page_SeurPro/input_cod_postal"), codPostal, STOP_ON_FAILURE): Text '75001' is set on object 'Object Repository/Page_SeurPro/input_cod_postal'
+
+2023-08-17 11:11:53 - [MESSAGE][PASSED] - Text '75001' is set on object 'Object Repository/Page_SeurPro/input_cod_postal'
+
+2023-08-17 11:11:53 - [TEST_STEP][PASSED] - delay(3): Delayed 3 second(s)
+
+2023-08-17 11:11:56 - [MESSAGE][PASSED] - Delayed 3 second(s)
+
+2023-08-17 11:11:56 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Page_SeurPro/span_seleccion_ciudad-codPostal"), 60): Object 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is visible
+
+2023-08-17 11:11:56 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is visible
+
+2023-08-17 11:11:56 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Page_SeurPro/span_seleccion_ciudad-codPostal"), 60): Object 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is clickable
+
+2023-08-17 11:11:57 - [MESSAGE][PASSED] - Object 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is clickable
+
+2023-08-17 11:11:57 - [TEST_STEP][PASSED] - click(findTestObject("Page_SeurPro/span_seleccion_ciudad-codPostal"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is clicked on
+
+2023-08-17 11:11:57 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_seleccion_ciudad-codPostal' is clicked on
+
+2023-08-17 11:11:57 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_destino"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_destino' is clicked on
+
+2023-08-17 11:11:57 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_destino' is clicked on
+
+2023-08-17 11:11:57 - [TEST_STEP][PASSED] - delay(10): Delayed 10 second(s)
+
+2023-08-17 11:12:07 - [MESSAGE][PASSED] - Delayed 10 second(s)
+
+2023-08-17 11:12:07 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_bultos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_bultos' is clicked on
+
+2023-08-17 11:12:08 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_bultos' is clicked on
+
+2023-08-17 11:12:08 - [TEST_STEP][PASSED] - element1 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_bultos2"), 30): null
+
+2023-08-17 11:12:08 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='1'", Arrays.asList(element1)): Execute JavaScript 'arguments[0].value='1'' successfully
+
+2023-08-17 11:12:08 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='1'' successfully
+
+2023-08-17 11:12:08 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_bultos2"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_bultos2'
+
+2023-08-17 11:12:08 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_bultos2'
+
+2023-08-17 11:12:08 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_peso2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_peso2' is clicked on
+
+2023-08-17 11:12:09 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_peso2' is clicked on
+
+2023-08-17 11:12:09 - [TEST_STEP][PASSED] - element2 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_peso"), 30): null
+
+2023-08-17 11:12:09 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='2'", Arrays.asList(element2)): Execute JavaScript 'arguments[0].value='2'' successfully
+
+2023-08-17 11:12:09 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='2'' successfully
+
+2023-08-17 11:12:09 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_peso"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_peso'
+
+2023-08-17 11:12:09 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_peso'
+
+2023-08-17 11:12:09 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_largo2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_largo2' is clicked on
+
+2023-08-17 11:12:10 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_largo2' is clicked on
+
+2023-08-17 11:12:10 - [TEST_STEP][PASSED] - element3 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_largo"), 30): null
+
+2023-08-17 11:12:10 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='3'", Arrays.asList(element3)): Execute JavaScript 'arguments[0].value='3'' successfully
+
+2023-08-17 11:12:10 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='3'' successfully
+
+2023-08-17 11:12:10 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_largo"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_largo'
+
+2023-08-17 11:12:10 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_largo'
+
+2023-08-17 11:12:10 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_alto2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_alto2' is clicked on
+
+2023-08-17 11:12:11 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_alto2' is clicked on
+
+2023-08-17 11:12:11 - [TEST_STEP][PASSED] - element4 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_alto"), 30): null
+
+2023-08-17 11:12:11 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='4'", Arrays.asList(element4)): Execute JavaScript 'arguments[0].value='4'' successfully
+
+2023-08-17 11:12:11 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='4'' successfully
+
+2023-08-17 11:12:11 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_alto"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_alto'
+
+2023-08-17 11:12:12 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_alto'
+
+2023-08-17 11:12:12 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/input_ancho2"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/input_ancho2' is clicked on
+
+2023-08-17 11:12:12 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/input_ancho2' is clicked on
+
+2023-08-17 11:12:12 - [TEST_STEP][PASSED] - element5 = findWebElement(findTestObject("Object Repository/Page_SeurPro/input_ancho"), 30): null
+
+2023-08-17 11:12:12 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='5'", Arrays.asList(element5)): Execute JavaScript 'arguments[0].value='5'' successfully
+
+2023-08-17 11:12:12 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='5'' successfully
+
+2023-08-17 11:12:12 - [TEST_STEP][PASSED] - sendKeys(findTestObject("Object Repository/Page_SeurPro/input_ancho"), Keys.chord(TAB)): Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_ancho'
+
+2023-08-17 11:12:13 - [MESSAGE][PASSED] - Keys 'TAB + ' sent to object: 'Object Repository/Page_SeurPro/input_ancho'
+
+2023-08-17 11:12:13 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), 60): Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is visible
+
+2023-08-17 11:12:13 - [MESSAGE][PASSED] - Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is visible
+
+2023-08-17 11:12:13 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), 60): Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clickable
+
+2023-08-17 11:12:14 - [MESSAGE][PASSED] - Object 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clickable
+
+2023-08-17 11:12:14 - [TEST_STEP][PASSED] - click(findTestObject("Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio"), STOP_ON_FAILURE): Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clicked on
+
+2023-08-17 11:12:14 - [MESSAGE][PASSED] - Object: 'Object Repository/Botones_Seur/Page_SeurPro/button_Siguiente_comoestuenvio' is clicked on
+
+2023-08-17 11:12:14 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Empresa comercial (venta)_mat-select-ar_a8f41a"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Empresa comercial (venta)_mat-select-ar_a8f41a' is clicked on
+
+2023-08-17 11:12:17 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Empresa comercial (venta)_mat-select-ar_a8f41a' is clicked on
+
+2023-08-17 11:12:17 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Envo particular"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Envo particular' is clicked on
+
+2023-08-17 11:12:18 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Envo particular' is clicked on
+
+2023-08-17 11:12:18 - [TEST_STEP][PASSED] - setText(findTestObject("Object Repository/Page_SeurPro/input_Tipo de envo aduanero_mat-input-24"), valorAduanero, STOP_ON_FAILURE): Text '20' is set on object 'Object Repository/Page_SeurPro/input_Tipo de envo aduanero_mat-input-24'
+
+2023-08-17 11:12:20 - [MESSAGE][PASSED] - Text '20' is set on object 'Object Repository/Page_SeurPro/input_Tipo de envo aduanero_mat-input-24'
+
+2023-08-17 11:12:20 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Debidos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Debidos' is clicked on
+
+2023-08-17 11:12:20 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Debidos' is clicked on
+
+2023-08-17 11:12:20 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Pagados"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Pagados' is clicked on
+
+2023-08-17 11:12:21 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Pagados' is clicked on
+
+2023-08-17 11:12:21 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/div_Debidos_mat-select-arrow-wrapper ng-tns_c01270"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/div_Debidos_mat-select-arrow-wrapper ng-tns_c01270' is clicked on
+
+2023-08-17 11:12:22 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/div_Debidos_mat-select-arrow-wrapper ng-tns_c01270' is clicked on
+
+2023-08-17 11:12:22 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/span_Debidos"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/span_Debidos' is clicked on
+
+2023-08-17 11:12:23 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/span_Debidos' is clicked on
+
+2023-08-17 11:12:23 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_SeurPro/button_Siguiente"), STOP_ON_FAILURE): Object: 'Object Repository/Page_SeurPro/button_Siguiente' is clicked on
+
+2023-08-17 11:12:23 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_SeurPro/button_Siguiente' is clicked on
+
+2023-08-17 11:12:23 - [TEST_STEP][PASSED] - waitForElementVisible(findTestObject("Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/div_Servicios complementarios_mat-checkbox-_cddad5"), 60): Object 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/div_Servicios complementarios_mat-checkbox-_cddad5' is visible
+
+2023-08-17 11:12:25 - [MESSAGE][PASSED] - Object 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/div_Servicios complementarios_mat-checkbox-_cddad5' is visible
+
+2023-08-17 11:12:25 - [TEST_STEP][PASSED] - waitForElementClickable(findTestObject("Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/div_Servicios complementarios_mat-checkbox-_cddad5"), 60): Object 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/div_Servicios complementarios_mat-checkbox-_cddad5' is clickable
+
+2023-08-17 11:12:25 - [MESSAGE][PASSED] - Object 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/div_Servicios complementarios_mat-checkbox-_cddad5' is clickable
+
+2023-08-17 11:12:25 - [TEST_STEP][PASSED] - click(findTestObject("Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/div_Servicios complementarios_mat-checkbox-_cddad5"), STOP_ON_FAILURE): Object: 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/div_Servicios complementarios_mat-checkbox-_cddad5' is clicked on
+
+2023-08-17 11:12:25 - [MESSAGE][PASSED] - Object: 'Object Repository/Page_Log in to SEUR SSO/Page_SeurPro/div_Servicios complementarios_mat-checkbox-_cddad5' is clicked on
+
+2023-08-17 11:12:25 - [TEST_STEP][PASSED] - delay(3): Delayed 3 second(s)
+
+2023-08-17 11:12:28 - [MESSAGE][PASSED] - Delayed 3 second(s)
+
+2023-08-17 11:12:28 - [TEST_STEP][PASSED] - element6 = findWebElement(findTestObject("Page_SeurPro/input_Servicios complementarios_valor_declarado"), 30): null
+
+2023-08-17 11:12:29 - [TEST_STEP][PASSED] - executeJavaScript("arguments[0].value='15'", Arrays.asList(element6)): Execute JavaScript 'arguments[0].value='15'' successfully
+
+2023-08-17 11:12:29 - [MESSAGE][PASSED] - Execute JavaScript 'arguments[0].value='15'' successfully
+
+2023-08-17 11:12:29 - [TEST_STEP][PASSED] - delay(5): Delayed 5 second(s)
+
+2023-08-17 11:12:34 - [MESSAGE][PASSED] - Delayed 5 second(s)
+
+2023-08-17 11:12:34 - [TEST_STEP][PASSED] - precioTasacion1 = getText(findTestObject("Object Repository/Page_SeurPro/label_tasacion_1_envioInternacional")): Text of object 'Object Repository/Page_SeurPro/label_tasacion_1_envioInternacional' is: '93,02 €'
+
+2023-08-17 11:12:34 - [MESSAGE][PASSED] - Text of object 'Object Repository/Page_SeurPro/label_tasacion_1_envioInternacional' is: '93,02 €'
+
+2023-08-17 11:12:34 - [TEST_STEP][PASSED] - assert precioTasacion1.equalsIgnoreCase(precioTasacion): null
+
+2023-08-17 11:12:34 - [TEST_STEP][FAILED] - Finally: Test Cases/05 - Envio_internacional_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       93,02 €         false            92,43 €
+
+	at 05 - Envio_internacional_Cliente_2.run(05 - Envio_internacional_Cliente_2:155)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:12:34 - [TEST_STEP][FAILED] - closeBrowser(): Test Cases/05 - Envio_internacional_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       93,02 €         false            92,43 €
+
+	at 05 - Envio_internacional_Cliente_2.run(05 - Envio_internacional_Cliente_2:155)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)
+
+
+2023-08-17 11:12:35 - [MESSAGE][PASSED] - Browser is closed
+
+2023-08-17 11:12:35 - [MESSAGE][FAILED] - Test Cases/05 - Envio_internacional_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       93,02 €         false            92,43 €
+
+	at 05 - Envio_internacional_Cliente_2.run(05 - Envio_internacional_Cliente_2:155)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)]]></system-out>
+         <system-err><![CDATA[2023-08-17 11:10:31 - [TEST_CASE][FAILED] - Test Cases/05 - Envio_internacional_Cliente_2: Test Cases/05 - Envio_internacional_Cliente_2 FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       93,02 €         false            92,43 €
+
+	at 05 - Envio_internacional_Cliente_2.run(05 - Envio_internacional_Cliente_2:155)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)]]></system-err>
+      </testcase>
+      <system-out><![CDATA[2023-08-17 11:00:51 - [TEST_SUITE][FAILED] - SeurPRO: Test Cases/01 - Envio_internacional FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       44,32 €         false            44,04 €
+
+	at 01 - Envio_internacional.run(01 - Envio_internacional:145)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)]]></system-out>
+      <system-err><![CDATA[2023-08-17 11:00:51 - [TEST_SUITE][FAILED] - SeurPRO: Test Cases/01 - Envio_internacional FAILED.
+Reason:
+Assertion failed: 
+
+assert precioTasacion1.equalsIgnoreCase(precioTasacion)
+       |               |                |
+       44,32 €         false            44,04 €
+
+	at 01 - Envio_internacional.run(01 - Envio_internacional:145)
+	at com.kms.katalon.core.main.ScriptEngine.run(ScriptEngine.java:194)
+	at com.kms.katalon.core.main.ScriptEngine.runScriptAsRawText(ScriptEngine.java:119)
+	at com.kms.katalon.core.main.TestCaseExecutor.runScript(TestCaseExecutor.java:430)
+	at com.kms.katalon.core.main.TestCaseExecutor.doExecute(TestCaseExecutor.java:421)
+	at com.kms.katalon.core.main.TestCaseExecutor.processExecutionPhase(TestCaseExecutor.java:400)
+	at com.kms.katalon.core.main.TestCaseExecutor.accessMainPhase(TestCaseExecutor.java:392)
+	at com.kms.katalon.core.main.TestCaseExecutor.execute(TestCaseExecutor.java:273)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestCaseMainPhase(TestSuiteExecutor.java:202)
+	at com.kms.katalon.core.main.TestSuiteExecutor.accessTestSuiteMainPhase(TestSuiteExecutor.java:164)
+	at com.kms.katalon.core.main.TestSuiteExecutor.execute(TestSuiteExecutor.java:105)
+	at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
+	at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
+	at TempTestSuite1692262845684.run(TempTestSuite1692262845684.groovy:36)]]></system-err>
+   </testsuite>
+</testsuites>

@@ -1,88 +1,69 @@
 // Sacamos los metodos de parseo fuera del pipeline 
 //TODO ver si se puede pasar a una propia clase groovy
 
+// Esta función parsea el XML y extrae las métricas
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
-    def testSuites = parsedXml.'@'.collectEntries { [(it.key()): it.value().text()] }
-    def testSuitesMetrics = testSuites.collect { key, value ->
-        if (['tests', 'failures', 'errors'].contains(key)) {
-            value = value.toInteger()
-        } else if (['time'].contains(key)) {
-            value = value.toFloat()
-        }
-        [(key): value]
+    def testSuitesAttributes = [
+        name: parsedXml.'@name'.toString(),
+        totalTime: parsedXml.'@time'.toString(),
+        totalTests: parsedXml.'@tests'.toString(),
+        totalFailures: parsedXml.'@failures'.toString(),
+        totalErrors: parsedXml.'@errors'.toString()
+    ]
+
+    def testSuites = parsedXml.testsuite.collect { GPathResult suite ->
+        [
+            name: suite.'@name'.toString(),
+            timestamp: suite.'@timestamp'.toString(),
+            totalTime: suite.'@time'.toString(),
+            totalTests: suite.'@tests'.toString(),
+            skipped: suite.'@skipped'.toString(),
+            totalFailures: suite.'@failures'.toString(),
+            totalErrors: suite.'@errors'.toString(),
+            testcases: suite.testcase.collect { GPathResult tc ->
+                [
+                    name: tc.'@name'.toString(),
+                    time: tc.'@time'.toString(),
+                    classname: tc.'@classname'.toString(),
+                    status: tc.'@status'.toString()
+                ]
+            }
+        ]
     }
 
-    // Lista de suites y casos
-    def suitesList = []
-    parsedXml.testsuite.each { suite ->
-        def suiteMetrics = suite.'@'.collectEntries { [(it.key()): it.value().text()] }
-        suiteMetrics.put('testcases', [])
-        suite.testcase.each { testcase ->
-            def testcaseMetrics = testcase.'@'.collectEntries { [(it.key()): it.value().text()] }
-            suiteMetrics.get('testcases').add(testcaseMetrics)
-        }
-        suitesList.add(suiteMetrics)
-    }
-    testSuitesMetrics.put('suites', suitesList)
-
-    return testSuitesMetrics
+    return [testSuitesAttributes: testSuitesAttributes, testSuites: testSuites]
 }
 
+// Esta función construye los datos para Prometheus
 def constructPrometheusData(Map metrics) {
-    // Inicia con los datos de testsuites
-    def prometheusData = """
-# HELP katalon_testsuites_total Total number of testsuites
-# TYPE katalon_testsuites_total gauge
-katalon_testsuites_total{name="${metrics.name}"} ${metrics.tests}
+    StringBuilder prometheusData = new StringBuilder()
+    prometheusData.append("""
+# HELP katalon_testsuite_duration_seconds Duration of test suite
+# TYPE katalon_testsuite_duration_seconds gauge
+""")
 
-# HELP katalon_testsuites_failures Total number of failures in testsuites
-# TYPE katalon_testsuites_failures gauge
-katalon_testsuites_failures{name="${metrics.name}"} ${metrics.failures}
-
-# HELP katalon_testsuites_errors Total number of errors in testsuites
-# TYPE katalon_testsuites_errors gauge
-katalon_testsuites_errors{name="${metrics.name}"} ${metrics.errors}
-
-# HELP katalon_testsuites_time Total execution time for testsuites
-# TYPE katalon_testsuites_time gauge
-katalon_testsuites_time{name="${metrics.name}"} ${metrics.time}
-"""
-
-    // Añade los datos de cada suite y cada caso de prueba
-    metrics.suites.each { suite ->
-        prometheusData += """
-# HELP katalon_testsuite_total Total number of tests for the suite
-# TYPE katalon_testsuite_total gauge
-katalon_testsuite_total{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.tests}
-
-# HELP katalon_testsuite_failures Total number of failures in the suite
-# TYPE katalon_testsuite_failures gauge
-katalon_testsuite_failures{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.failures}
-
-# HELP katalon_testsuite_errors Total number of errors in the suite
-# TYPE katalon_testsuite_errors gauge
-katalon_testsuite_errors{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.errors}
-
-# HELP katalon_testsuite_time Total execution time for the suite
-# TYPE katalon_testsuite_time gauge
-katalon_testsuite_time{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.time}
-
-# HELP katalon_testsuite_skipped Total number of skipped tests in the suite
-# TYPE katalon_testsuite_skipped gauge
-katalon_testsuite_skipped{name="${suite.name}", timestamp="${suite.timestamp}"} ${suite.skipped}
-"""
-
-        suite.testcases.each { testcase ->
-            prometheusData += """
-# HELP katalon_testcase_time Execution time for test case
-# TYPE katalon_testcase_time gauge
-katalon_testcase_time{name="${suite.name}", testcase="${testcase.name}", status="${testcase.status}"} ${testcase.time}
-"""
-        }
+    metrics.testSuites.each { suite ->
+        prometheusData.append("katalon_testsuite_duration_seconds{name=\"${suite.name}\", timestamp=\"${suite.timestamp}\"} ${suite.totalTime}\n")
     }
 
-    return prometheusData
+    metrics.testSuitesAttributes.each { attr, value ->
+        prometheusData.append("""
+# HELP katalon_${attr}_total Total ${attr} of test suites
+# TYPE katalon_${attr}_total gauge
+katalon_${attr}_total ${value}
+""")
+    }
+
+    metrics.testSuites*.testcases.flatten().each { testcase ->
+        prometheusData.append("""
+# HELP katalon_testcase_duration_seconds Duration of test case
+# TYPE katalon_testcase_duration_seconds gauge
+katalon_testcase_duration_seconds{name="${testcase.name}", classname="${testcase.classname}", status="${testcase.status}"} ${testcase.time}
+""")
+    }
+
+    return prometheusData.toString()
 }
 
 pipeline {

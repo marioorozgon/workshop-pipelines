@@ -3,34 +3,76 @@
 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
-    // Sacamos las metricas y las convertimos en tipos serializables
     def metrics = [
-        totalTests: parsedXml.'@tests'.text().toInteger(),
-        totalFailures: parsedXml.'@failures'.text().toInteger(),
-        totalErrors: parsedXml.'@errors'.text().toInteger(),
-        totalTime: parsedXml.'@time'.text().toFloat()
+        testsuitesAttributes: [
+            name: parsedXml.'@name'.text(),
+            totalTime: parsedXml.'@time'.text().toFloat(),
+            totalTests: parsedXml.'@tests'.text().toInteger(),
+            totalFailures: parsedXml.'@failures'.text().toInteger(),
+            totalErrors: parsedXml.'@errors'.text().toInteger()
+        ],
+        testsuite: parsedXml.testsuite.collect {
+            [
+                name: it.'@name'.text(),
+                totalTime: it.'@time'.text().toFloat(),
+                totalTests: it.'@tests'.text().toInteger(),
+                skipped: it.'@skipped'.text().toInteger(),
+                totalFailures: it.'@failures'.text().toInteger(),
+                totalErrors: it.'@errors'.text().toInteger(),
+                timestamp: it.'@timestamp'.text(),
+                hostname: it.'@hostname'.text(),
+                id: it.'@id'.text(),
+                testcase: it.testcase.collect {
+                    [
+                        name: it.'@name'.text(),
+                        time: it.'@time'.text().toFloat(),
+                        classname: it.'@classname'.text(),
+                        status: it.'@status'.text()
+                    ]
+                }
+            ]
+        }
     ]
     return metrics
 }
 
 def constructPrometheusData(Map metrics) {
-    return """
+    StringBuilder prometheusData = new StringBuilder()
+
+    // Agrega las métricas de nivel de testsuites
+    prometheusData.append("""
 # HELP katalon_total_tests Total number of tests
 # TYPE katalon_total_tests gauge
-katalon_total_tests ${metrics.totalTests}
+katalon_total_tests ${metrics.testsuitesAttributes.totalTests}
 
 # HELP katalon_total_failures Total number of failed tests
 # TYPE katalon_total_failures gauge
-katalon_total_failures ${metrics.totalFailures}
+katalon_total_failures ${metrics.testsuitesAttributes.totalFailures}
 
 # HELP katalon_total_errors Total number of errors in tests
 # TYPE katalon_total_errors gauge
-katalon_total_errors ${metrics.totalErrors}
+katalon_total_errors ${metrics.testsuitesAttributes.totalErrors}
 
 # HELP katalon_total_time Total time of test suite execution
 # TYPE katalon_total_time gauge
-katalon_total_time ${metrics.totalTime}
-"""
+katalon_total_time ${metrics.testsuitesAttributes.totalTime}
+""")
+
+    // Agrega las métricas de nivel de testsuite y testcase
+    metrics.testsuite.each { suite ->
+        suite.testcase.each { case ->
+            prometheusData.append("""
+# HELP katalon_testsuite_total_tests Total number of tests for ${suite.name}
+# TYPE katalon_testsuite_total_tests gauge
+katalon_testsuite_total_tests{name="${suite.name}",classname="${case.classname}"} ${suite.totalTests}
+
+# HELP katalon_testcase_time Execution time for test case
+# TYPE katalon_testcase_time gauge
+katalon_testcase_time{name="${suite.name}",testcase="${case.name}",status="${case.status}"} ${case.time}
+""")
+        }
+    }
+    return prometheusData.toString()
 }
 
 pipeline {

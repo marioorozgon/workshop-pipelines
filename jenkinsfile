@@ -89,7 +89,7 @@ spec:
             steps {
                 script {
                     // katalon.xml está en el directorio actual
-                    def katalonXml = readFile('katalon.xml')
+                    def katalonXml = readFile('katalon1.xml')
 
                     // parseXml para parsear el XML
                     def metrics = parseXml(katalonXml)

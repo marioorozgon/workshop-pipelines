@@ -20,13 +20,20 @@ def parseXml(String xmlContent) {
             errors: it.'@errors'.text().toInteger(),
             time: it.'@time'.text().toFloat(),
             skipped: it.'@skipped'.text().toInteger(),
-            timestamp: it.'@timestamp'.text(),
-            hostname: it.'@hostname'.text(),
-            id: it.'@id'.text()
+            timestamp: it.'@timestamp'.text()
+        ]
+    }
+
+    // Recopilación de métricas de los testcase
+    def testcaseMetrics = parsedXml.testsuite.testcase.collect {
+        [
+            name: it.'@name'.text(),
+            time: it.'@time'.text().toFloat(),
+            status: it.'@status'.text()
         ]
     }
     // Retorna ambos, testsuitesMetrics y testsuiteMetrics
-    return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics]
+    return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
 }
 
 def constructPrometheusData(Map metrics) {
@@ -43,6 +50,15 @@ katalon_testsuites_info{name="${metrics.testsuites.name}",tests="${metrics.tests
 # HELP katalon_testsuite_info Test Suite Information
 # TYPE katalon_testsuite_info gauge
 katalon_testsuite_info{name="${ts.name}",tests="${ts.tests}",failures="${ts.failures}",errors="${ts.errors}",time="${ts.time}",skipped="${ts.skipped}",timestamp="${ts.timestamp}"} 1
+"""
+    }
+
+    // Agrega la métrica para testcase
+    metrics.testcase.each { tc ->
+        prometheusData += """
+# HELP katalon_testcase_info Test Case Information
+# TYPE katalon_testcase_info gauge
+katalon_testcase_info{name="${tc.name}",time="${tc.time}",status="${tc.status}"} 1
 """
     }
 

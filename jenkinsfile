@@ -3,37 +3,23 @@
 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
-    // Extrae los atributos del elemento 'testsuites'
-    def attributes = parsedXml.attributes()
-    
-    // Convertimos los valores a tipos serializables
+    // Sacamos las métricas directamente del elemento testsuites
     def metrics = [
-        totalTests: attributes.tests.text().toInteger(),
-        totalFailures: attributes.failures.text().toInteger(),
-        totalErrors: attributes.errors.text().toInteger(),
-        totalTime: attributes.time.text().toFloat(),
-        testName: attributes.name.text()
+        name: parsedXml.'@name'.text(),
+        totalTests: parsedXml.'@tests'.text().toInteger(),
+        totalFailures: parsedXml.'@failures'.text().toInteger(),
+        totalErrors: parsedXml.'@errors'.text().toInteger(),
+        totalTime: parsedXml.'@time'.text().toFloat()
     ]
     return metrics
 }
 
 def constructPrometheusData(Map metrics) {
+   // Aquí construimos los datos para Prometheus con etiquetas para cada métrica
     return """
-# HELP testsuite_total_tests Total number of tests for the suite
-# TYPE testsuite_total_tests gauge
-testsuite_total_tests{name="${metrics.testName}"} ${metrics.totalTests}
-
-# HELP testsuite_total_failures Total number of failed tests for the suite
-# TYPE testsuite_total_failures gauge
-testsuite_total_failures{name="${metrics.testName}"} ${metrics.totalFailures}
-
-# HELP testsuite_total_errors Total number of errors in tests for the suite
-# TYPE testsuite_total_errors gauge
-testsuite_total_errors{name="${metrics.testName}"} ${metrics.totalErrors}
-
-# HELP testsuite_total_time Total time of test suite execution
-# TYPE testsuite_total_time gauge
-testsuite_total_time{name="${metrics.testName}"} ${metrics.totalTime}
+# HELP katalon_testsuites_info Test Suites Information
+# TYPE katalon_testsuites_info gauge
+katalon_testsuites_info{name="${metrics.name}",tests="${metrics.totalTests}",failures="${metrics.totalFailures}",errors="${metrics.totalErrors}",time="${metrics.totalTime}"} 1
 """
 }
 

@@ -3,7 +3,7 @@
 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
-    // Extract the metrics and convert them to serializable types
+    // Sacamos las metricas y las convertimos en tipos serializables
     def metrics = [
         totalTests: parsedXml.'@tests'.text().toInteger(),
         totalFailures: parsedXml.'@failures'.text().toInteger(),
@@ -90,10 +90,10 @@ spec:
         stage('Parse Katalon XML') {
             steps {
                 script {
-                    // Asumiendo que katalon.xml está en el directorio actual
+                    // katalon.xml está en el directorio actual
                     def katalonXml = readFile('katalon.xml')
 
-                    // Utiliza el método parseXml para parsear el XML
+                    // parseXml para parsear el XML
                     def metrics = parseXml(katalonXml)
 
                     // Imprimir los resultados en la consola
@@ -105,7 +105,7 @@ spec:
                     // Escribe las métricas en un archivo
                     writeFile(file: 'katalon.prom', text: prometheusData)
 
-                    // También puedes imprimir el contenido de 'prometheusData'
+                    // imprimimos el contenido de 'prometheusData'
                     echo "Prometheus data:\n${prometheusData}"
                 }
             }

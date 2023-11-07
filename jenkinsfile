@@ -1,6 +1,14 @@
 // Sacamos los metodos de parseo fuera del pipeline 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
+    def testSuitesAttributes = [
+        name: parsedXml.'@name'.text(),
+        totalTime: parsedXml.'@time'.text().toFloat(),
+        totalTests: parsedXml.'@tests'.text().toInteger(),
+        totalFailures: parsedXml.'@failures'.text().toInteger(),
+        totalErrors: parsedXml.'@errors'.text().toInteger()
+    ]
+
     def testSuites = []
 
     // Iterar sobre cada <testsuite>
@@ -16,25 +24,41 @@ def parseXml(String xmlContent) {
         ]
         testSuites.add(suiteMetrics)
     }
-    return testSuites
+    return [testSuitesAttributes: testSuitesAttributes, testSuites: testSuites]
 }
 
-def constructPrometheusData(List testSuites) {
-     StringBuilder prometheusData = new StringBuilder()
+def constructPrometheusData(Map parsedData) {
+    def testSuitesAttributes = parsedData.testSuitesAttributes
+    def testSuites = parsedData.testSuites
+
+    def prometheusData = """
+# HELP katalon_testsuites_total Total de pruebas para todos los testsuites
+# TYPE katalon_testsuites_total gauge
+katalon_testsuites_total{testsuites="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalTests}
+
+# HELP katalon_testsuites_failures Total de fallos para todos los testsuites
+# TYPE katalon_testsuites_failures gauge
+katalon_testsuites_failures{testsuites="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalFailures}
+
+# HELP katalon_testsuites_errors Total de errores para todos los testsuites
+# TYPE katalon_testsuites_errors gauge
+katalon_testsuites_errors{testsuites="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalErrors}
+
+# HELP katalon_testsuites_time Tiempo total de ejecución para todos los testsuites
+# TYPE katalon_testsuites_time gauge
+katalon_testsuites_time{testsuites="${testSuitesAttributes.name}"} ${testSuitesAttributes.totalTime}
+"""
 
     testSuites.each { suite ->
-        def totalOK = (suite.totalFailures == 0 && suite.totalErrors == 0) ? 1 : 0
-        
-        prometheusData.append("""
+        prometheusData += """
         # HELP katalon_testsuite_info Información de la suite de pruebas individual
         # TYPE katalon_testsuite_info gauge
-        katalon_testsuite_info{name="${suite.name}", timestamp="${suite.timestamp}", total_time="${suite.totalTime}", total_tests="${suite.totalTests}", skipped="${suite.skipped}", total_failures="${suite.totalFailures}", total_errors="${suite.totalErrors}"} 1
-        """)
-        
-        // Continuar añadiendo más métricas si es necesario...
+        katalon_testsuite_info{name="${suite.name}", timestamp="${suite.timestamp}", total_tests="${suite.totalTests}", skipped="${suite.skipped}", total_failures="${suite.totalFailures}", total_errors="${suite.totalErrors}"} 1
+        """
+        // ... (como antes) ...
     }
-    
-    return prometheusData.toString()
+
+    return prometheusData
 }
 
 pipeline {

@@ -3,23 +3,34 @@
 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
-    def attributes = [
-        name: parsedXml.'@name'.text(),
-        time: parsedXml.'@time'.toDouble(),
-        tests: parsedXml.'@tests'.toInteger(),
-        failures: parsedXml.'@failures'.toInteger(),
-        errors: parsedXml.'@errors'.toInteger()
+    // Sacamos las metricas y las convertimos en tipos serializables
+    def metrics = [
+        totalTests: parsedXml.'@tests'.text().toInteger(),
+        totalFailures: parsedXml.'@failures'.text().toInteger(),
+        totalErrors: parsedXml.'@errors'.text().toInteger(),
+        totalTime: parsedXml.'@time'.text().toFloat()
     ]
-    return attributes
+    return metrics
 }
 
 def constructPrometheusData(Map metrics) {
-      def prometheusData = """
-# HELP testsuite_info Test Suite Information
-# TYPE testsuite_info gauge
-testsuite_info{name="${attributes.name}",tests="${attributes.tests}",failures="${attributes.failailures}",errors="${attributes.errors}",time="${attributes.time}"} 1
+    return """
+# HELP katalon_total_tests Total number of tests
+# TYPE katalon_total_tests gauge
+katalon_total_tests ${metrics.totalTests}
+
+# HELP katalon_total_failures Total number of failed tests
+# TYPE katalon_total_failures gauge
+katalon_total_failures ${metrics.totalFailures}
+
+# HELP katalon_total_errors Total number of errors in tests
+# TYPE katalon_total_errors gauge
+katalon_total_errors ${metrics.totalErrors}
+
+# HELP katalon_total_time Total time of test suite execution
+# TYPE katalon_total_time gauge
+katalon_total_time ${metrics.totalTime}
 """
-    return prometheusData
 }
 
 pipeline {
@@ -78,7 +89,7 @@ spec:
             steps {
                 script {
                     // katalon.xml está en el directorio actual
-                    def katalonXml = readFile('katalon.xml')
+                    def katalonXml = readFile('JUnit_Report_GTI_ERROR.xml')
 
                     // parseXml para parsear el XML
                     def metrics = parseXml(katalonXml)

@@ -57,37 +57,54 @@ spec:
                 script {
                     // Asumiendo que katalon.xml está en el directorio actual
                     def katalonXml = readFile('katalon.xml')
-                    def parsedXml = new XmlSlurper().parseText(katalonXml)
 
-                    // Recogiendo las métricas del XML
-                    def totalTests = parsedXml.'@tests'.text().toInteger()
-                    def totalFailures = parsedXml.'@failures'.text().toInteger()
-                    def totalErrors = parsedXml.'@errors'.text().toInteger()
-                    def totalTime = parsedXml.'@time'.text().toFloat()
+                    // Use a separate method to parse the XML
+                    // This prevents the non-serializable NodeChild objects from being serialized as part of the pipeline state
+                    def metrics = parseXml(katalonXml)
 
-                    // Aquí comienza la construcción del string para Prometheus
-                    def prometheusData = """
-# HELP katalon_total_tests Total number of tests
-# TYPE katalon_total_tests gauge
-katalon_total_tests ${totalTests}
+                    // Construct the Prometheus data string with the metrics
+                    def prometheusData = constructPrometheusData(metrics)
 
-# HELP katalon_total_failures Total number of failed tests
-# TYPE katalon_total_failures gauge
-katalon_total_failures ${totalFailures}
-
-# HELP katalon_total_errors Total number of errors in tests
-# TYPE katalon_total_errors gauge
-katalon_total_errors ${totalErrors}
-
-# HELP katalon_total_time Total time of test suite execution
-# TYPE katalon_total_time gauge
-katalon_total_time ${totalTime}
-"""
-
-                    // Escribir las métricas en un archivo para Prometheus
+                    // Write the metrics to a file
                     writeFile(file: 'katalon.prom', text: prometheusData)
                 }
             }
+        }
+
+        // Define outside of the pipeline block to avoid serialization issues
+        def parseXml(String xmlContent) {
+            def parsedXml = new XmlSlurper().parseText(xmlContent)
+
+            // Extract the metrics and convert them to serializable types
+            def metrics = [
+                totalTests: parsedXml.'@tests'.text().toInteger(),
+                totalFailures: parsedXml.'@failures'.text().toInteger(),
+                totalErrors: parsedXml.'@errors'.text().toInteger(),
+                totalTime: parsedXml.'@time'.text().toFloat()
+            ]
+
+            return metrics
+        }
+
+        // Separate method to construct the data string for Prometheus
+        def constructPrometheusData(Map metrics) {
+            return """
+        # HELP katalon_total_tests Total number of tests
+        # TYPE katalon_total_tests gauge
+        katalon_total_tests ${metrics.totalTests}
+
+        # HELP katalon_total_failures Total number of failed tests
+        # TYPE katalon_total_failures gauge
+        katalon_total_failures ${metrics.totalFailures}
+
+        # HELP katalon_total_errors Total number of errors in tests
+        # TYPE katalon_total_errors gauge
+        katalon_total_errors ${metrics.totalErrors}
+
+        # HELP katalon_total_time Total time of test suite execution
+        # TYPE katalon_total_time gauge
+        katalon_total_time ${metrics.totalTime}
+        """
         }
 /*
         stage('Send to Prometheus') {

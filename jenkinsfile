@@ -28,38 +28,51 @@ def parseXml(String xmlContent) {
 }
 
 def constructPrometheusData(Map parsedData) {
-    // Attributes from the root 'testsuites' element
-    def testSuitesAttributes = parsedData.testsuitesAttributes
+    // Inicializamos la cadena de datos de Prometheus
+    String prometheusData = ""
 
-    // Construct Prometheus data for 'testsuites' level
-    def prometheusData = """
+    // Comprobamos si los atributos de testsuites están presentes
+    if (parsedData.testsuitesAttributes) {
+        def testSuitesAttributes = parsedData.testsuitesAttributes
+        // Construct Prometheus data for 'testsuites' level
+        prometheusData += """
 # HELP katalon_testsuites_info Información global de los testsuites
 # TYPE katalon_testsuites_info gauge
-katalon_testsuites_info{name="${testSuitesAttributes.name}", total_time="${testSuitesAttributes.time}", total_tests="${testSuitesAttributes.tests}", total_failures="${testSuitesAttributes.failures}", total_errors="${testSuitesAttributes.errors}"} 1
+katalon_testsuites_info{name="${testSuitesAttributes.name ?: 'unknown'}", total_time="${testSuitesAttributes.time}", total_tests="${testSuitesAttributes.tests}", total_failures="${testSuitesAttributes.failures}", total_errors="${testSuitesAttributes.errors}"} 1
 """
+    }
 
-    // Append Prometheus data for 'testsuite' level
-    parsedData.testsuites.each { testsuite ->
-        prometheusData += """
+    // Comprobamos si la lista de testsuites está presente
+    if (parsedData.testsuites) {
+        parsedData.testsuites.each { testsuite ->
+            // Comprobamos que el testsuite actual no es null
+            if (testsuite) {
+                // Append Prometheus data for 'testsuite' level
+                prometheusData += """
 # HELP katalon_testsuite_info Información de la suite de pruebas individual
 # TYPE katalon_testsuite_info gauge
-katalon_testsuite_info{name="${testsuite.name}", timestamp="${testsuite.timestamp}", total_tests="${testsuite.tests}", skipped="${testsuite.skipped}", total_failures="${testsuite.failures}", total_errors="${testsuite.errors}", total_time="${testsuite.time}"} 1
+katalon_testsuite_info{name="${testsuite.name ?: 'unknown'}", timestamp="${testsuite.timestamp}", total_tests="${testsuite.tests}", skipped="${testsuite.skipped}", total_failures="${testsuite.failures}", total_errors="${testsuite.errors}", total_time="${testsuite.time}"} 1
 """
-
-        // Append Prometheus data for each 'testcase' level
-        testsuite.testcases.each { testcase ->
-            // Convert the status to a numeric value. PASSED = 0, FAILED = 1, ERROR = 2
-            int statusValue = (testcase.status == "PASSED") ? 0 : (testcase.status == "FAILED") ? 1 : 2
-            
-            prometheusData += """
+                // Comprobamos si la lista de testcases está presente
+                if (testsuite.testcases) {
+                    testsuite.testcases.each { testcase ->
+                        // Comprobamos que el testcase actual no es null
+                        if (testcase) {
+                            // Convert the status to a numeric value
+                            int statusValue = testcase.status == "PASSED" ? 0 : testcase.status == "FAILED" ? 1 : 2
+                            prometheusData += """
 # HELP katalon_testcase_duration Duración del testcase individual
 # TYPE katalon_testcase_duration gauge
-katalon_testcase_duration{name="${testcase.name}", classname="${testcase.classname}", status="${testcase.status}"} ${testcase.time}
+katalon_testcase_duration{name="${testcase.name ?: 'unknown'}", classname="${testcase.classname ?: 'unknown'}", status="${testcase.status}"} ${testcase.time}
 
 # HELP katalon_testcase_status Estado del testcase
 # TYPE katalon_testcase_status gauge
-katalon_testcase_status{name="${testcase.name}", classname="${testcase.classname}", status="${testcase.status}"} ${statusValue}
+katalon_testcase_status{name="${testcase.name ?: 'unknown'}", classname="${testcase.classname ?: 'unknown'}", status="${testcase.status}"} ${statusValue}
 """
+                        }
+                    }
+                }
+            }
         }
     }
 

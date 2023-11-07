@@ -3,33 +3,37 @@
 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
-    // Sacamos las metricas y las convertimos en tipos serializables
+    // Extrae los atributos del elemento 'testsuites'
+    def attributes = parsedXml.attributes()
+    
+    // Convertimos los valores a tipos serializables
     def metrics = [
-        totalTests: parsedXml.'@tests'.text().toInteger(),
-        totalFailures: parsedXml.'@failures'.text().toInteger(),
-        totalErrors: parsedXml.'@errors'.text().toInteger(),
-        totalTime: parsedXml.'@time'.text().toFloat()
+        totalTests: attributes.tests.text().toInteger(),
+        totalFailures: attributes.failures.text().toInteger(),
+        totalErrors: attributes.errors.text().toInteger(),
+        totalTime: attributes.time.text().toFloat(),
+        testName: attributes.name.text()
     ]
     return metrics
 }
 
 def constructPrometheusData(Map metrics) {
     return """
-# HELP katalon_total_tests Total number of tests
-# TYPE katalon_total_tests gauge
-katalon_total_tests ${metrics.totalTests}
+# HELP testsuite_total_tests Total number of tests for the suite
+# TYPE testsuite_total_tests gauge
+testsuite_total_tests{name="${metrics.testName}"} ${metrics.totalTests}
 
-# HELP katalon_total_failures Total number of failed tests
-# TYPE katalon_total_failures gauge
-katalon_total_failures ${metrics.totalFailures}
+# HELP testsuite_total_failures Total number of failed tests for the suite
+# TYPE testsuite_total_failures gauge
+testsuite_total_failures{name="${metrics.testName}"} ${metrics.totalFailures}
 
-# HELP katalon_total_errors Total number of errors in tests
-# TYPE katalon_total_errors gauge
-katalon_total_errors ${metrics.totalErrors}
+# HELP testsuite_total_errors Total number of errors in tests for the suite
+# TYPE testsuite_total_errors gauge
+testsuite_total_errors{name="${metrics.testName}"} ${metrics.totalErrors}
 
-# HELP katalon_total_time Total time of test suite execution
-# TYPE katalon_total_time gauge
-katalon_total_time ${metrics.totalTime}
+# HELP testsuite_total_time Total time of test suite execution
+# TYPE testsuite_total_time gauge
+testsuite_total_time{name="${metrics.testName}"} ${metrics.totalTime}
 """
 }
 

@@ -1,80 +1,43 @@
 // Sacamos los metodos de parseo fuera del pipeline 
 //TODO ver si se puede pasar a una propia clase groovy
+
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
-    def metricsList = []
-
-    parsedXml.'**'.findAll { it.name() == 'testsuite' }.each { testsuite ->
-        def testsuiteMetrics = [
-            name: testsuite.@name.text(),
-            timestamp: testsuite.@timestamp.text(),
-            time: testsuite.@time.text().toFloat(),
-            tests: testsuite.@tests.text().toInteger(),
-            skipped: testsuite.@skipped.text().toInteger(),
-            failures: testsuite.@failures.text().toInteger(),
-            errors: testsuite.@errors.text().toInteger(),
-            testcases: []
-        ]
-
-        testsuite.'**'.findAll { it.name() == 'testcase' }.each { testcase ->
-            def testcaseMetrics = [
-                name: testcase.@name.text(),
-                time: testcase.@time.text().toFloat(),
-                status: testcase.@status?.text() ?: 'OK',
-                failureMessage: (testcase.'failure'*.text().join(', ') ?: 'OK'),
-                failureType: (testcase.'failure'*.@type.join(', ') ?: ''),
-                errorMessage: (testcase.'error'*.text().join(', ') ?: ''),
-                errorType: (testcase.'error'*.@type.join(', ') ?: '')
-            ]
-            testsuiteMetrics.testcases << testcaseMetrics
-        }
-
-        metricsList << testsuiteMetrics
-    }
-
-    return metricsList
+    // Sacamos las metricas y las convertimos en tipos serializables
+    def metrics = [
+        totalTests: parsedXml.'@tests'.text().toInteger(),
+        totalFailures: parsedXml.'@failures'.text().toInteger(),
+        totalErrors: parsedXml.'@errors'.text().toInteger(),
+        totalTime: parsedXml.'@time'.text().toFloat()
+    ]
+    return metrics
 }
 
-def constructPrometheusData(List metricsList) {
-    def prometheusDataBuilder = new StringBuilder()
+def constructPrometheusData(Map metrics) {
+    // Se asume que si no hay fallos ni errores, la prueba es OK.
+    def totalOK = (metrics.totalFailures == 0 && metrics.totalErrors == 0) ? 1 : 0
 
-    // Añade métricas de testsuite
-    metricsList.each { suite ->
-        prometheusDataBuilder.append("""
-# HELP testsuite_${suite.name}_total_tests Total number of tests for ${suite.name}
-# TYPE testsuite_${suite.name}_total_tests gauge
-testsuite_${suite.name}_total_tests ${suite.tests}
+    return """
+# HELP katalon_test_ok Estado OK de las pruebas (1 para OK, 0 si hay fallos o errores)
+# TYPE katalon_test_ok gauge
+katalon_test_ok ${totalOK}
 
-# HELP testsuite_${suite.name}_total_time Total time for ${suite.name}
-# TYPE testsuite_${suite.name}_total_time gauge
-testsuite_${suite.name}_total_time ${suite.time}
+# HELP katalon_total_tests Total number of tests
+# TYPE katalon_total_tests gauge
+katalon_total_tests ${metrics.totalTests}
 
-# HELP testsuite_${suite.name}_total_failures Total number of failures for ${suite.name}
-# TYPE testsuite_${suite.name}_total_failures gauge
-testsuite_${suite.name}_total_failures ${suite.failures}
+# HELP katalon_total_failures Total number of failed tests
+# TYPE katalon_total_failures gauge
+katalon_total_failures ${metrics.totalFailures}
 
-# HELP testsuite_${suite.name}_total_errors Total number of errors for ${suite.name}
-# TYPE testsuite_${suite.name}_total_errors gauge
-testsuite_${suite.name}_total_errors ${suite.errors}
+# HELP katalon_total_errors Total number of errors in tests
+# TYPE katalon_total_errors gauge
+katalon_total_errors ${metrics.totalErrors}
 
-""")
-
-        // Añade métricas de testcase
-        suite.testcases.each { testCase ->
-            prometheusDataBuilder.append("""
-# HELP testcase_${testCase.name}_time Execution time for ${testCase.name}
-# TYPE testcase_${testCase.name}_time gauge
-testcase_${testCase.name}_time ${testCase.time}
-
-# HELP testcase_${testCase.name}_status Status for ${testCase.name}
-# TYPE testcase_${testCase.name}_status gauge
-testcase_${testCase.name}_status ${testCase.status == 'OK' ? 1 : 0}  # Assuming 'OK' status is 1, others are 0
-
-""")
-        }
-    }
-
-    return prometheusDataBuilder.toString()
+# HELP katalon_total_time Total time of test suite execution
+# TYPE katalon_total_time gauge
+katalon_total_time ${metrics.totalTime}
+"""
 }
 
 pipeline {

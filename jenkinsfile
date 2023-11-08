@@ -146,23 +146,51 @@ spec:
         stage('Parse Katalon XML') {
             steps {
                 script {
-                    // katalon.xml está en el directorio actual
-                    def katalonXml = readFile('JUnit_Report_GTI_ERROR.xml')
+                        // Carpeta en la raíz del proyecto que contiene los archivos XML
+                def xmlDirectory = new File('xml_reports')
 
-                    // parseXml para parsear el XML
+                // Lista para contener todas las métricas
+                def allMetrics = []
+
+                // Lista todos los archivos XML en el directorio
+                def xmlFiles = xmlDirectory.listFiles(new FilenameFilter() {
+                    public boolean accept(File dir, String name) {
+                        return name.endsWith('.xml')
+                    }
+                })
+
+                // Comprueba si se encontraron archivos XML
+                if (xmlFiles == null || xmlFiles.length == 0) {
+                    echo "No XML files found in ${xmlDirectory}"
+                    return // Salir temprano si no hay archivos
+                }
+
+                // Iterar sobre cada archivo XML
+                xmlFiles.each { file ->
+                    // Leer el contenido del archivo XML
+                    def katalonXml = readFile(file.absolutePath)
+
+                    // Parsear el XML
                     def metrics = parseXml(katalonXml)
+                    allMetrics.add(metrics)
 
                     // Imprimir los resultados en la consola
-                    echo "Metrics parsed: ${metrics}"
+                    echo "Metrics parsed for ${file.name}: ${metrics}"
+                }
 
-                    // Construye la cadena de datos para Prometheus con las métricas
-                    def prometheusData = constructPrometheusData(metrics)
+                // Inicializar la cadena de datos de Prometheus
+                def prometheusData = ''
 
-                    // Escribe las métricas en un archivo
-                    writeFile(file: 'katalon.prom', text: prometheusData)
+                // Construir la cadena de datos para Prometheus con todas las métricas
+                allMetrics.each { metrics ->
+                    prometheusData += constructPrometheusData(metrics)
+                }
 
-                    // imprimimos el contenido de 'prometheusData'
-                    echo "Prometheus data:\n${prometheusData}"
+                // Escribe las métricas combinadas en un archivo
+                writeFile(file: 'katalon.prom', text: prometheusData)
+
+                // Imprimir el contenido de 'prometheusData'
+                echo "Combined Prometheus data:\n${prometheusData}"
                 }
             }
         }

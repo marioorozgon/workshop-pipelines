@@ -146,51 +146,51 @@ spec:
         stage('Parse Katalon XML') {
             steps {
                 script {
-                        // Carpeta en la raíz del proyecto que contiene los archivos XML
-                def xmlDirectory = new File('xml_reports')
+                 // Carpeta en la raíz del proyecto que contiene los archivos XML
+                    def xmlReportsDir = new File('xml_reports')
 
-                // Lista para contener todas las métricas
-                def allMetrics = []
-
-                // Lista todos los archivos XML en el directorio
-                def xmlFiles = xmlDirectory.listFiles(new FilenameFilter() {
-                    public boolean accept(File dir, String name) {
-                        return name.endsWith('.xml')
+                    // Verifica si la carpeta existe
+                    if (!xmlReportsDir.exists() || !xmlReportsDir.isDirectory()) {
+                        echo "xml_reports directory does not exist or is not a directory"
+                        return
                     }
-                })
 
-                // Comprueba si se encontraron archivos XML
-                if (xmlFiles == null || xmlFiles.length == 0) {
-                    echo "No XML files found in ${xmlDirectory}"
-                    return // Salir temprano si no hay archivos
-                }
+                    // Lista todos los archivos XML en el directorio
+                    def xmlFiles = xmlReportsDir.listFiles(new FilenameFilter() {
+                        public boolean accept(File dir, String name) {
+                            return name.toLowerCase().endsWith('.xml')
+                        }
+                    })
 
-                // Iterar sobre cada archivo XML
-                xmlFiles.each { file ->
-                    // Leer el contenido del archivo XML
-                    def katalonXml = readFile(file.absolutePath)
+                    // Comprueba si se encontraron archivos XML
+                    if (xmlFiles == null || xmlFiles.length == 0) {
+                        echo "No XML files found in xml_reports directory"
+                        return
+                    }
 
-                    // Parsear el XML
-                    def metrics = parseXml(katalonXml)
-                    allMetrics.add(metrics)
+                    // Inicializar la cadena de datos de Prometheus
+                    def prometheusData = ''
 
-                    // Imprimir los resultados en la consola
-                    echo "Metrics parsed for ${file.name}: ${metrics}"
-                }
+                    // Iterar sobre cada archivo XML y procesar las métricas
+                    xmlFiles.each { file ->
+                        // Leer el contenido del archivo XML
+                        def katalonXml = readFile(file.getAbsolutePath())
 
-                // Inicializar la cadena de datos de Prometheus
-                def prometheusData = ''
+                        // Parsear el XML para obtener las métricas
+                        def metrics = parseXml(katalonXml)
 
-                // Construir la cadena de datos para Prometheus con todas las métricas
-                allMetrics.each { metrics ->
-                    prometheusData += constructPrometheusData(metrics)
-                }
+                        // Imprimir los resultados en la consola
+                        echo "Metrics parsed for ${file.name}: ${metrics}"
 
-                // Escribe las métricas combinadas en un archivo
-                writeFile(file: 'katalon.prom', text: prometheusData)
+                        // Construye la cadena de datos para Prometheus con las métricas
+                        prometheusData += constructPrometheusData(metrics)
+                    }
 
-                // Imprimir el contenido de 'prometheusData'
-                echo "Combined Prometheus data:\n${prometheusData}"
+                    // Escribe las métricas combinadas en un archivo
+                    writeFile(file: 'katalon.prom', text: prometheusData)
+
+                    // Imprimir el contenido de 'prometheusData'
+                    echo "Combined Prometheus data:\n${prometheusData}"
                 }
             }
         }

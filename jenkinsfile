@@ -141,27 +141,16 @@ spec:
           PUSHGATEWAY_URL = 'http://localhost:9091' 
     }
 
-    stages {
+        stages {
 
-      stage('Check Workspace') {
-        steps {
-            script {
-                // Imprime el directorio de trabajo actual
-                echo "Working Directory: ${pwd()}"
-
-                // Lista el contenido del directorio de trabajo
-                sh 'ls -la'
+          stage('List XML Reports') {
+            steps {
+                script {
+                    // Lista el contenido del directorio xml_reports
+                    sh 'ls -la xml_reports'
+                }
             }
         }
-      }
-      stage('List XML Reports') {
-        steps {
-            script {
-                // Lista el contenido del directorio xml_reports
-                sh 'ls -la xml_reports'
-            }
-        }
-    }
        
         stage('Parse Katalon XML') {
             steps {
@@ -196,7 +185,7 @@ spec:
             }
         }
 
-      /*  stage('Send to Prometheus') {
+        stage('Send to Prometheus') {
               steps {
                   script {
                       
@@ -212,6 +201,6 @@ spec:
                       }
                   }
               }
-          } */
+          } 
     }
 }

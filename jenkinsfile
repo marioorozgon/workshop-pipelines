@@ -207,7 +207,7 @@ spec:
                     }
 
                     // Escribe las métricas combinadas en un archivo
-                    writeFile(file: 'katalon.prom', text: prometheusData)
+                    //writeFile(file: 'katalon.prom', text: prometheusData)
 
                     // Imprimir el contenido de 'prometheusData'
                     echo "Combined Prometheus data:\n${prometheusData}"

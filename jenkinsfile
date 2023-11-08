@@ -147,7 +147,7 @@ spec:
             steps {
                 script {
                     // katalon.xml está en el directorio actual
-                    def katalonXml = readFile('JUnit_Report_WebRec_Error.xml')
+                    def katalonXml = readFile('JUnit_Report_WebRec_OK.xml')
 
                     // parseXml para parsear el XML
                     def metrics = parseXml(katalonXml)

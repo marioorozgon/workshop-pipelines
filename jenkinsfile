@@ -84,8 +84,7 @@ katalon_testsuite_info{name="${ts.name}",tests="${ts.tests}",failures="${ts.fail
         } else {
             // Agregamos detalles del error o fallo si el estado es ERROR o FAILED
             String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
-            prometheusData += ",${detailType}_type=\"${tc[detailType + 'Type']}\"; ${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} 0\n"
-
+            prometheusData += ",${detailType}_type=\"${tc[detailType + 'Type']}\"\n${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} 0\n"
         }
     }
 

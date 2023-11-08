@@ -25,12 +25,29 @@ def parseXml(String xmlContent) {
     }
 
     // Recopilación de métricas de los testcase
-    def testcaseMetrics = parsedXml.testsuite.testcase.collect {
-        [
-            name: it.'@name'.text(),
-            time: it.'@time'.text().toFloat(),
-            status: it.'@status'.text()
+    def testcaseMetrics = parsedXml.testsuite.testcase.collect { tc ->
+        def tcMetrics = [
+            name: tc.'@name'.text(),
+            time: tc.'@time'.text().toFloat(),
+            status: tc.'@status'.text()
         ]
+        
+        // Añadir campos adicionales basados en el estado
+        switch (tc.'@status'.text()) {
+            case 'PASSED':
+                tcMetrics['result'] = 'OK'
+                break
+            case 'ERROR':
+                tcMetrics['errorType'] = tc.error.'@type'.text()
+                tcMetrics['errorMessage'] = tc.error.'@message'.text()
+                break
+            case 'FAILED':
+                tcMetrics['failureType'] = tc.failure.'@type'.text()
+                tcMetrics['failureMessage'] = tc.failure.'@message'.text()
+                break
+        }
+        
+        return tcMetrics
     }
     // Retorna ambos, testsuitesMetrics y testsuiteMetrics
     return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
@@ -61,7 +78,14 @@ katalon_testsuite_info{name="${ts.name}",tests="${ts.tests}",failures="${ts.fail
     
     // Agrega la métrica para cada testcase sin repetir HELP y TYPE
     metrics.testcase.each { tc ->
-        prometheusData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\"} 1\n"
+        prometheusData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\""
+        if (tc.status == 'PASSED') {
+            prometheusData += ",result=\"OK\"} 1\n"
+        } else {
+            // Agregamos detalles del error o fallo si el estado es ERROR o FAILED
+            String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
+            prometheusData += ",${detailType}_type=\"${tc[detailType + 'Type']}\",${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} 0\n"
+        }
     }
 
     return prometheusData
@@ -123,7 +147,7 @@ spec:
             steps {
                 script {
                     // katalon.xml está en el directorio actual
-                    def katalonXml = readFile('JUnit_Report_WebRec_OK.xml')
+                    def katalonXml = readFile('JUnit_Report_GTI_ERROR.xml')
 
                     // parseXml para parsear el XML
                     def metrics = parseXml(katalonXml)

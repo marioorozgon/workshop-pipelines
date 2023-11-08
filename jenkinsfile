@@ -167,7 +167,9 @@ spec:
             steps {
                 script {
                  // Carpeta en la raíz del proyecto que contiene los archivos XML
-                    def xmlReportsDir = new File("${WORKSPACE}/xml_reports")
+                    //def xmlReportsDir = new File("${WORKSPACE}/xml_reports")
+                    def xmlReportsDir = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim()
+
 
                     // Verifica si la carpeta existe
                     if (!xmlReportsDir.exists() || !xmlReportsDir.isDirectory()) {

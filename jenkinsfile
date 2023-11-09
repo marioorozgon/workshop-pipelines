@@ -140,8 +140,6 @@ spec:
             }
         }
        
-        def uniqueId = 1699522125  // Declara uniqueId fuera del bucle antes de comenzar la iteración
-
         stage('Parse Katalon XML') {
             steps {
                 script {
@@ -156,19 +154,19 @@ spec:
 # TYPE katalon_testcase_info gauge
 """
 
-                    xmlFiles.each { filePath ->
+                    xmlFiles.eachWithIndex { filePath, index ->
                         def katalonXml = readFile(filePath)
                         def metrics = parseXml(katalonXml)
 
                         echo "Metrics parsed for ${filePath}: ${metrics}"
-             
+
+                        def uniqueId = 1699522125 + index // Usa el índice como parte del uniqueId
+
                         prometheusData += constructPrometheusMetrics(metrics, uniqueId.toString())
 
                         // Agrega una traza para mostrar el nombre del archivo y el valor de uniqueId
                         echo "Processing file: ${filePath}, uniqueId: ${uniqueId}"
 
-                        // Incrementa el valor de uniqueId
-                        uniqueId += 1
                     }
 
                     writeFile(file: 'katalon.prom', text: prometheusData)

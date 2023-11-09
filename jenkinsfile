@@ -54,24 +54,24 @@ def parseXml(String xmlContent) {
 }
 
 def constructPrometheusData(Map metrics) {
-    def prometheusData = ''
+   def prometheusData = ''
 
     // Métrica para testsuites
-    prometheusData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\"} 1\n"
+    prometheusData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\",run_id=\"${runId}\"} 1\n"
 
     // Métrica para cada testsuite
     metrics.testsuite.each { ts ->
-        prometheusData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\"} 1\n"
+        prometheusData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\",run_id=\"${runId}\"} 1\n"
     }
 
     // Métrica para cada testcase
     metrics.testcase.each { tc ->
-        prometheusData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\""
+        prometheusData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\",run_id=\"${runId}\""
         if (tc.status == 'PASSED') {
             prometheusData += ",result=\"OK\"} 1\n"
         } else {
             String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
-            prometheusData += ",${detailType}_type=\"${tc[detailType + 'Type']}\",${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} 0\n"
+            prometheusData += ",${detailType}_type=\"${tc[detailType + 'Type']}\",${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\",run_id=\"${runId}\"} 0\n"
         }
     }
 
@@ -142,6 +142,8 @@ spec:
         stage('Parse Katalon XML') {
             steps {
                 script {
+                    // Generar un timestamp único para esta ejecución
+            def runTimestamp = new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone('UTC'))
                     // Secciones HELP y TYPE para cada tipo de métrica, añadidas solo una vez
             def prometheusHelpType = """
 # HELP katalon_testsuites_info Test Suites Information

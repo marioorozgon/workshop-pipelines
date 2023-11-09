@@ -159,14 +159,15 @@ spec:
                         def metrics = parseXml(katalonXml)
 
                         echo "Metrics parsed for ${filePath}: ${metrics}"
-                        def uniqueId = Instant.now().epochSecond
+                        //def uniqueId = Instant.now().epochSecond
+                        def uniqueId = 1699522125
                         prometheusData += constructPrometheusMetrics(metrics, uniqueId.toString())
 
                         // Agrega una traza para mostrar el nombre del archivo y el valor de uniqueId
                         echo "Processing file: ${filePath}, uniqueId: ${uniqueId}"
 
                         // Incrementa el valor de uniqueId
-                        //uniqueId += 1
+                        uniqueId += 1
                     }
 
                     writeFile(file: 'katalon.prom', text: prometheusData)

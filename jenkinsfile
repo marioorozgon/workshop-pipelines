@@ -141,28 +141,46 @@ spec:
           PUSHGATEWAY_URL = 'http://localhost:9091' 
     }
 
-    stages {
+        stages {
+
+          stage('List XML Reports') {
+            steps {
+                script {
+                    // Lista el contenido del directorio xml_reports
+                    sh 'ls -la xml_reports'
+                }
+            }
+        }
        
         stage('Parse Katalon XML') {
             steps {
                 script {
-                    // katalon.xml está en el directorio actual
-                    def katalonXml = readFile('JUnit_Report_GTI_ERROR.xml')
+                    // Lista de archivos XML en la carpeta xml_reports
+                    def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
 
-                    // parseXml para parsear el XML
-                    def metrics = parseXml(katalonXml)
+                    // Inicializar la cadena de datos de Prometheus
+                    def prometheusData = ''
 
-                    // Imprimir los resultados en la consola
-                    echo "Metrics parsed: ${metrics}"
+                    // Iterar sobre cada archivo XML y procesar las métricas
+                    xmlFiles.each { filePath ->
+                        // Leer el contenido del archivo XML
+                        def katalonXml = readFile(filePath)
 
-                    // Construye la cadena de datos para Prometheus con las métricas
-                    def prometheusData = constructPrometheusData(metrics)
+                        // Parsear el XML para obtener las métricas
+                        def metrics = parseXml(katalonXml)
 
-                    // Escribe las métricas en un archivo
+                        // Imprimir los resultados en la consola
+                        echo "Metrics parsed for ${filePath}: ${metrics}"
+
+                        // Construye la cadena de datos para Prometheus con las métricas
+                        prometheusData += constructPrometheusData(metrics)
+                    }
+
+                    // Escribe las métricas combinadas en un archivo
                     writeFile(file: 'katalon.prom', text: prometheusData)
 
-                    // imprimimos el contenido de 'prometheusData'
-                    echo "Prometheus data:\n${prometheusData}"
+                    // Imprimir el contenido de 'prometheusData'
+                    echo "Combined Prometheus data:\n${prometheusData}"
                 }
             }
         }
@@ -183,6 +201,6 @@ spec:
                       }
                   }
               }
-          }
+          } 
     }
 }

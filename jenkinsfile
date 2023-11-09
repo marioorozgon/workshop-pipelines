@@ -143,13 +143,26 @@ spec:
             steps {
                 script {
                     def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
-                    def prometheusData = ''
 
+                    // Inicializar la cadena de datos de Prometheus solo con los encabezados
+                    def prometheusData = """
+# HELP katalon_testsuites_info Test Suites Information
+# TYPE katalon_testsuites_info gauge
+# HELP katalon_testsuite_info Test Suite Information
+# TYPE katalon_testsuite_info gauge
+# HELP katalon_testcase_info Test Case Information
+# TYPE katalon_testcase_info gauge
+"""
+
+                    // Iterar sobre cada archivo XML y procesar las métricas
                     xmlFiles.each { filePath ->
                         def katalonXml = readFile(filePath)
                         def metrics = parseXml(katalonXml)
+
                         echo "Metrics parsed for ${filePath}: ${metrics}"
-                        prometheusData += constructPrometheusData(metrics)
+
+                        // Añadir solo las métricas a prometheusData
+                        prometheusData += constructPrometheusMetrics(metrics)
                     }
 
                     writeFile(file: 'katalon.prom', text: prometheusData)

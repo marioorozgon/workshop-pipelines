@@ -53,7 +53,9 @@ def parseXml(String xmlContent) {
     return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
 }
 
-def constructPrometheusData(Map metrics) {
+def runId = "${System.currentTimeMillis()}" // Utilizando el timestamp actual como identificador
+
+def constructPrometheusData(Map metrics, runId) {
    def prometheusData = ''
 
     // Métrica para testsuites
@@ -138,6 +140,15 @@ spec:
                 }
             }
         }
+
+        stage('Setup') {
+            steps {
+                script {
+                    // Definiendo runId aquí
+                    env.runId = "${System.currentTimeMillis()}"
+                }
+            }
+        }
        
         stage('Parse Katalon XML') {
             steps {
@@ -164,7 +175,7 @@ spec:
                 def katalonXml = readFile(filePath)
                 def metrics = parseXml(katalonXml)
                 echo "Metrics parsed for ${filePath}: ${metrics}"
-                prometheusMetricData += constructPrometheusData(metrics)
+                prometheusMetricData += constructPrometheusData(metrics, env.runId)
             }
 
             // Combina las secciones HELP/TYPE con los datos de las métricas

@@ -142,16 +142,17 @@ spec:
         stage('Parse Katalon XML') {
             steps {
                 script {
+                    //Directorio de los xml
                     def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
                     
                     def prometheusData = """
-# HELP katalon_testsuites_info Test Suites Information
-# TYPE katalon_testsuites_info gauge
-# HELP katalon_testsuite_info Test Suite Information
-# TYPE katalon_testsuite_info gauge
-# HELP katalon_testcase_info Test Case Information
-# TYPE katalon_testcase_info gauge
-"""
+                        # HELP katalon_testsuites_info Test Suites Information
+                        # TYPE katalon_testsuites_info gauge
+                        # HELP katalon_testsuite_info Test Suite Information
+                        # TYPE katalon_testsuite_info gauge
+                        # HELP katalon_testcase_info Test Case Information
+                        # TYPE katalon_testcase_info gauge
+                        """
 
                     xmlFiles.eachWithIndex { filePath, index ->
                         def katalonXml = readFile(filePath)
@@ -159,11 +160,11 @@ spec:
 
                         echo "Metrics parsed for ${filePath}: ${metrics}"
 
-                        def uniqueId = 1 + index // Usa el índice como parte del uniqueId
+                        def uniqueId = 1 + index // Se usa el índice como parte del uniqueId que es necesario para cada envío
 
                         prometheusData += constructPrometheusMetrics(metrics, uniqueId.toString())
 
-                        // Agrega una traza para mostrar el nombre del archivo y el valor de uniqueId
+                        // Se agrega una traza para mostrar el nombre del archivo y el valor de uniqueId
                         echo "Processing file: ${filePath}, uniqueId: ${uniqueId}"
 
                     }

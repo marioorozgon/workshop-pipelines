@@ -1,10 +1,7 @@
-// Sacamos los metodos de parseo fuera del pipeline 
-//TODO ver si se puede pasar a una propia clase groovy
-import java.time.Instant
-
+// Se sacan los metodos de parseo fuera del pipeline 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
-    // Sacamos las métricas directamente del elemento testsuites
+    // Se sacan las métricas directamente del elemento testsuites
     def testsuitesMetrics = [
         name: parsedXml.'@name'.text(),
         totalTests: parsedXml.'@tests'.text().toInteger(),
@@ -12,7 +9,8 @@ def parseXml(String xmlContent) {
         totalErrors: parsedXml.'@errors'.text().toInteger(),
         totalTime: parsedXml.'@time'.text().toFloat()
     ]
-    // Aquí asumimos que sólo hay un testsuite por testsuites, si hay más, necesitarás iterar
+
+    // Aquí por ahora asumimos que sólo hay un testsuite por testsuites, si hay más a futuro, se necesitará iterar
     def testsuiteMetrics = parsedXml.testsuite.collect {
         [
             name: it.'@name'.text(),
@@ -25,7 +23,7 @@ def parseXml(String xmlContent) {
         ]
     }
 
-    // Recopilación de métricas de los testcase
+    // Recopilación de las métricas de los testcase
     def testcaseMetrics = parsedXml.testsuite.testcase.collect { tc ->
         def tcMetrics = [
             name: tc.'@name'.text(),
@@ -33,7 +31,7 @@ def parseXml(String xmlContent) {
             status: tc.'@status'.text()
         ]
         
-        // Añadir campos adicionales basados en el estado
+        // Añadimos los campos adicionales basados en el estado
         switch (tc.'@status'.text()) {
             case 'PASSED':
                 tcMetrics['result'] = 'OK'
@@ -50,10 +48,11 @@ def parseXml(String xmlContent) {
         
         return tcMetrics
     }
-    // Retorna ambos, testsuitesMetrics y testsuiteMetrics
+    // Se retornan: testsuitesMetrics y testsuiteMetrics y testcaseMetrics
     return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
 }
 
+//Metodo de preparación de datos para envío a prometheus
 def constructPrometheusMetrics(Map metrics, String uniqueId) {
     def metricData = ''
 
@@ -160,7 +159,7 @@ spec:
 
                         echo "Metrics parsed for ${filePath}: ${metrics}"
 
-                        def uniqueId = 1699522125 + index // Usa el índice como parte del uniqueId
+                        def uniqueId = 1 + index // Usa el índice como parte del uniqueId
 
                         prometheusData += constructPrometheusMetrics(metrics, uniqueId.toString())
 

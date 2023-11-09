@@ -66,7 +66,7 @@ def constructPrometheusData(Map metrics, runId) {
     }
 
     // Métrica para cada testcase
-    metrics.testcase.each { tc ->
+    /*metrics.testcase.each { tc ->
         prometheusData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\",run_id=\"${runId}\""
         if (tc.status == 'PASSED') {
             prometheusData += ",result=\"OK\"} 1\n"
@@ -74,7 +74,7 @@ def constructPrometheusData(Map metrics, runId) {
             String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
             prometheusData += ",${detailType}_type=\"${tc[detailType + 'Type']}\",${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\",run_id=\"${runId}\"} 0\n"
         }
-    }
+    }*/
 
     return prometheusData
 }

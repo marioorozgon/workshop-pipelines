@@ -147,11 +147,11 @@ spec:
                     
                     def prometheusData = """
                         # HELP katalon_testsuites_info Test Suites Information
-                        # TYPE katalon_testsuites_info gauge
+                        
                         # HELP katalon_testsuite_info Test Suite Information
-                        # TYPE katalon_testsuite_info gauge
+                      
                         # HELP katalon_testcase_info Test Case Information
-                        # TYPE katalon_testcase_info gauge
+                       
                         """
 
                     xmlFiles.eachWithIndex { filePath, index ->

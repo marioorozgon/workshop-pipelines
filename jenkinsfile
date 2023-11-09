@@ -53,20 +53,20 @@ def parseXml(String xmlContent) {
     return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
 }
 
-def constructPrometheusMetrics(Map metrics) {
+def constructPrometheusMetrics(Map metrics, String uniqueId) {
     def metricData = ''
 
     // Métricas de testsuites
-    metricData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\"} 1\n"
+    metricData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\",unique_id=\"${uniqueId}\"} 1\n"
 
     // Métricas de testsuite
     metrics.testsuite.each { ts ->
-        metricData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\"} 1\n"
+        metricData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\",unique_id=\"${uniqueId}\"} 1\n"
     }
 
     // Métricas de testcase
     metrics.testcase.each { tc ->
-        metricData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\""
+        metricData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\",unique_id=\"${uniqueId}\""
         if (tc.status == 'PASSED') {
             metricData += ",result=\"OK\"} 1\n"
         } else {
@@ -143,8 +143,8 @@ spec:
             steps {
                 script {
                     def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+                    def uniqueId = Instant.now().epochSecond
 
-                    // Inicializar la cadena de datos de Prometheus solo con los encabezados
                     def prometheusData = """
 # HELP katalon_testsuites_info Test Suites Information
 # TYPE katalon_testsuites_info gauge
@@ -154,15 +154,12 @@ spec:
 # TYPE katalon_testcase_info gauge
 """
 
-                    // Iterar sobre cada archivo XML y procesar las métricas
                     xmlFiles.each { filePath ->
                         def katalonXml = readFile(filePath)
                         def metrics = parseXml(katalonXml)
 
                         echo "Metrics parsed for ${filePath}: ${metrics}"
-
-                        // Añadir solo las métricas a prometheusData
-                        prometheusData += constructPrometheusMetrics(metrics)
+                        prometheusData += constructPrometheusMetrics(metrics, uniqueId.toString())
                     }
 
                     writeFile(file: 'katalon.prom', text: prometheusData)

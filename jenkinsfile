@@ -140,6 +140,8 @@ spec:
             }
         }
        
+        def uniqueId = 1699522125  // Declara uniqueId fuera del bucle antes de comenzar la iteración
+
         stage('Parse Katalon XML') {
             steps {
                 script {
@@ -159,8 +161,7 @@ spec:
                         def metrics = parseXml(katalonXml)
 
                         echo "Metrics parsed for ${filePath}: ${metrics}"
-                        //def uniqueId = Instant.now().epochSecond
-                        def uniqueId = 1699522125
+             
                         prometheusData += constructPrometheusMetrics(metrics, uniqueId.toString())
 
                         // Agrega una traza para mostrar el nombre del archivo y el valor de uniqueId

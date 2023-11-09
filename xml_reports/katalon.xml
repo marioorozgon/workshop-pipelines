@@ -51,6 +51,7 @@
 				at com.kms.katalon.core.main.TestCaseMain.startTestSuite(TestCaseMain.java:185)
 				at com.kms.katalon.core.main.TestCaseMain$startTestSuite$0.call(Unknown Source)
 				at TempTestSuite1699255247527.run(TempTestSuite1699255247527.groovy:36)]]></system-out>
-      <system-err><![CDATA[]]></system-err>
+      	<system-err><![CDATA[]]></system-err>
+	  </testcase>
    </testsuite>
 </testsuites>

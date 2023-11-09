@@ -53,7 +53,7 @@ def parseXml(String xmlContent) {
     return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
 }
 
-def constructPrometheusData(Map metrics) {
+def constructPrometheusMetrics(Map metrics) {
     def metricData = ''
 
     // Métricas de testsuites

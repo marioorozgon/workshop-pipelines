@@ -54,35 +54,46 @@ def parseXml(String xmlContent) {
 }
 
 def constructPrometheusData(Map metrics) {
-    // Inicia la cadena de texto de Prometheus
-    def prometheusData = """
+    def prometheusData = ''
+
+    // Asegurarse de que las líneas HELP y TYPE se añadan solo una vez
+    def addedMetricTypes = [:]
+
+    // Test Suites Metrics
+    if (!addedMetricTypes.containsKey('testsuites')) {
+        prometheusData += """
 # HELP katalon_testsuites_info Test Suites Information
 # TYPE katalon_testsuites_info gauge
-katalon_testsuites_info{name="${metrics.testsuites.name}",tests="${metrics.testsuites.totalTests}",failures="${metrics.testsuites.totalFailures}",errors="${metrics.testsuites.totalErrors}",time="${metrics.testsuites.totalTime}"} 1
 """
+        addedMetricTypes['testsuites'] = true
+    }
+    prometheusData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\"} 1\n"
 
-    // Agrega la métrica para testsuite, sin hostname e id
+    // Test Suite Metrics
     metrics.testsuite.each { ts ->
-        prometheusData += """
+        if (!addedMetricTypes.containsKey('testsuite')) {
+            prometheusData += """
 # HELP katalon_testsuite_info Test Suite Information
 # TYPE katalon_testsuite_info gauge
-katalon_testsuite_info{name="${ts.name}",tests="${ts.tests}",failures="${ts.failures}",errors="${ts.errors}",time="${ts.time}",skipped="${ts.skipped}",timestamp="${ts.timestamp}"} 1
 """
+            addedMetricTypes['testsuite'] = true
+        }
+        prometheusData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\"} 1\n"
     }
 
-    // HELP y TYPE para testcase solo una vez
-    prometheusData += """
+    // Test Case Metrics
+    metrics.testcase.each { tc ->
+        if (!addedMetricTypes.containsKey('testcase')) {
+            prometheusData += """
 # HELP katalon_testcase_info Test Case Information
 # TYPE katalon_testcase_info gauge
 """
-    
-    // Agrega la métrica para cada testcase sin repetir HELP y TYPE
-    metrics.testcase.each { tc ->
+            addedMetricTypes['testcase'] = true
+        }
         prometheusData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\""
         if (tc.status == 'PASSED') {
             prometheusData += ",result=\"OK\"} 1\n"
         } else {
-            // Agregamos detalles del error o fallo si el estado es ERROR o FAILED
             String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
             prometheusData += ",${detailType}_type=\"${tc[detailType + 'Type']}\",${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} 0\n"
         }

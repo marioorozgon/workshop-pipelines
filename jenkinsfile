@@ -54,38 +54,28 @@ def parseXml(String xmlContent) {
 }
 
 def constructPrometheusData(Map metrics) {
-    def prometheusData = ''
+    def metricData = ''
 
-    // Añadir las líneas HELP y TYPE para cada tipo de métrica una sola vez
-    prometheusData += """
-# HELP katalon_testsuites_info Test Suites Information
-# TYPE katalon_testsuites_info gauge
-"""
-    prometheusData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\"} 1\n"
+    // Métricas de testsuites
+    metricData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\"} 1\n"
 
-    prometheusData += """
-# HELP katalon_testsuite_info Test Suite Information
-# TYPE katalon_testsuite_info gauge
-"""
+    // Métricas de testsuite
     metrics.testsuite.each { ts ->
-        prometheusData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\"} 1\n"
+        metricData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\"} 1\n"
     }
 
-    prometheusData += """
-# HELP katalon_testcase_info Test Case Information
-# TYPE katalon_testcase_info gauge
-"""
+    // Métricas de testcase
     metrics.testcase.each { tc ->
-        prometheusData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\""
+        metricData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\""
         if (tc.status == 'PASSED') {
-            prometheusData += ",result=\"OK\"} 1\n"
+            metricData += ",result=\"OK\"} 1\n"
         } else {
             String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
-            prometheusData += ",${detailType}_type=\"${tc[detailType + 'Type']}\",${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} 0\n"
+            metricData += ",${detailType}_type=\"${tc[detailType + 'Type']}\",${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} 0\n"
         }
     }
 
-    return prometheusData
+    return metricData
 }
 
 pipeline {

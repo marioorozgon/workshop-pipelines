@@ -53,27 +53,38 @@ def parseXml(String xmlContent) {
     return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
 }
 
+def constructPrometheusData(Map metrics) {
+    // Inicia la cadena de texto de Prometheus
+    def prometheusData = """
+# HELP katalon_testsuites_info Test Suites Information
+# TYPE katalon_testsuites_info gauge
+katalon_testsuites_info{name="${metrics.testsuites.name}",tests="${metrics.testsuites.totalTests}",failures="${metrics.testsuites.totalFailures}",errors="${metrics.testsuites.totalErrors}",time="${metrics.testsuites.totalTime}"} 1
+"""
 
-def constructPrometheusData(Map metrics, runId) {
-   def prometheusData = ''
-
-    // Métrica para testsuites
-    prometheusData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\",run_id=\"${runId}\"} 1\n"
-
-    // Métrica para cada testsuite
+    // Agrega la métrica para testsuite, sin hostname e id
     metrics.testsuite.each { ts ->
-        prometheusData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\",run_id=\"${runId}\"} 1\n"
+        prometheusData += """
+# HELP katalon_testsuite_info Test Suite Information
+# TYPE katalon_testsuite_info gauge
+katalon_testsuite_info{name="${ts.name}",tests="${ts.tests}",failures="${ts.failures}",errors="${ts.errors}",time="${ts.time}",skipped="${ts.skipped}",timestamp="${ts.timestamp}"} 1
+"""
     }
 
-    // Métrica para cada testcase
+    // HELP y TYPE para testcase solo una vez
+    prometheusData += """
+# HELP katalon_testcase_info Test Case Information
+# TYPE katalon_testcase_info gauge
+"""
+    
+    // Agrega la métrica para cada testcase sin repetir HELP y TYPE
     metrics.testcase.each { tc ->
-        String baseMetric = "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\",run_id=\"${runId}\""
-
+        prometheusData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\""
         if (tc.status == 'PASSED') {
-            prometheusData += "${baseMetric},result=\"OK\"} 1\n"
+            prometheusData += ",result=\"OK\"} 1\n"
         } else {
+            // Agregamos detalles del error o fallo si el estado es ERROR o FAILED
             String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
-            prometheusData += "${baseMetric},${detailType}_type=\"${tc[detailType + 'Type']}\",${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} 0\n"
+            prometheusData += ",${detailType}_type=\"${tc[detailType + 'Type']}\",${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} 0\n"
         }
     }
 
@@ -128,64 +139,30 @@ spec:
 
     environment {
           PUSHGATEWAY_URL = 'http://localhost:9091' 
-          RUN_ID = "${System.currentTimeMillis()}" // Definir runId en el entorno
     }
 
-        stages {
-
-          stage('List XML Reports') {
-            steps {
-                script {
-                    // Lista el contenido del directorio xml_reports
-                    sh 'ls -la xml_reports'
-                }
-            }
-        }
-
-        stage('Setup') {
-            steps {
-                script {
-                    // Definiendo runId aquí
-                    env.runId = "${System.currentTimeMillis()}"
-                }
-            }
-        }
+    stages {
        
         stage('Parse Katalon XML') {
             steps {
                 script {
-                    // Generar un timestamp único para esta ejecución
-            def runTimestamp = new Date().format("yyyyMMddHHmmss", TimeZone.getTimeZone('UTC'))
-                    // Secciones HELP y TYPE para cada tipo de métrica, añadidas solo una vez
-            def prometheusHelpType = """
-# HELP katalon_testsuites_info Test Suites Information
-# TYPE katalon_testsuites_info gauge
-# HELP katalon_testsuite_info Test Suite Information
-# TYPE katalon_testsuite_info gauge
-# HELP katalon_testcase_info Test Case Information
-# TYPE katalon_testcase_info gauge
-"""
+                    // katalon.xml está en el directorio actual
+                    def katalonXml = readFile('JUnit_Report_GTI_ERROR.xml')
 
-            def prometheusMetricData = ''
+                    // parseXml para parsear el XML
+                    def metrics = parseXml(katalonXml)
 
-            // Lista de archivos XML
-            def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+                    // Imprimir los resultados en la consola
+                    echo "Metrics parsed: ${metrics}"
 
-            // Procesar cada archivo XML
-            xmlFiles.each { filePath ->
-                def katalonXml = readFile(filePath)
-                def metrics = parseXml(katalonXml)
-                echo "Metrics parsed for ${filePath}: ${metrics}"
-                prometheusMetricData += constructPrometheusData(metrics, env.RUN_ID)
-            }
+                    // Construye la cadena de datos para Prometheus con las métricas
+                    def prometheusData = constructPrometheusData(metrics)
 
-            // Combina las secciones HELP/TYPE con los datos de las métricas
-            def prometheusData = prometheusHelpType + prometheusMetricData
+                    // Escribe las métricas en un archivo
+                    writeFile(file: 'katalon.prom', text: prometheusData)
 
-            // Escribe las métricas combinadas en un archivo
-            writeFile(file: 'katalon.prom', text: prometheusData)
-
-            echo "Combined Prometheus data:\n${prometheusData}"
+                    // imprimimos el contenido de 'prometheusData'
+                    echo "Prometheus data:\n${prometheusData}"
                 }
             }
         }
@@ -206,6 +183,6 @@ spec:
                       }
                   }
               }
-          } 
+          }
     }
 }

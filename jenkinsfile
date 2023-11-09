@@ -54,35 +54,22 @@ def parseXml(String xmlContent) {
 }
 
 def constructPrometheusData(Map metrics) {
-    // Inicia la cadena de texto de Prometheus
-    def prometheusData = """
-# HELP katalon_testsuites_info Test Suites Information
-# TYPE katalon_testsuites_info gauge
-katalon_testsuites_info{name="${metrics.testsuites.name}",tests="${metrics.testsuites.totalTests}",failures="${metrics.testsuites.totalFailures}",errors="${metrics.testsuites.totalErrors}",time="${metrics.testsuites.totalTime}"} 1
-"""
+    def prometheusData = ''
 
-    // Agrega la métrica para testsuite, sin hostname e id
+    // Métrica para testsuites
+    prometheusData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\"} 1\n"
+
+    // Métrica para cada testsuite
     metrics.testsuite.each { ts ->
-        prometheusData += """
-# HELP katalon_testsuite_info Test Suite Information
-# TYPE katalon_testsuite_info gauge
-katalon_testsuite_info{name="${ts.name}",tests="${ts.tests}",failures="${ts.failures}",errors="${ts.errors}",time="${ts.time}",skipped="${ts.skipped}",timestamp="${ts.timestamp}"} 1
-"""
+        prometheusData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\"} 1\n"
     }
 
-    // HELP y TYPE para testcase solo una vez
-    prometheusData += """
-# HELP katalon_testcase_info Test Case Information
-# TYPE katalon_testcase_info gauge
-"""
-    
-    // Agrega la métrica para cada testcase sin repetir HELP y TYPE
+    // Métrica para cada testcase
     metrics.testcase.each { tc ->
         prometheusData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\""
         if (tc.status == 'PASSED') {
             prometheusData += ",result=\"OK\"} 1\n"
         } else {
-            // Agregamos detalles del error o fallo si el estado es ERROR o FAILED
             String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
             prometheusData += ",${detailType}_type=\"${tc[detailType + 'Type']}\",${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} 0\n"
         }
@@ -155,7 +142,7 @@ spec:
         stage('Parse Katalon XML') {
             steps {
                 script {
-                    // Inicializa las secciones HELP y TYPE para cada tipo de métrica
+                    // Secciones HELP y TYPE para cada tipo de métrica, añadidas solo una vez
             def prometheusHelpType = """
 # HELP katalon_testsuites_info Test Suites Information
 # TYPE katalon_testsuites_info gauge
@@ -167,21 +154,14 @@ spec:
 
             def prometheusMetricData = ''
 
-            // Lista de archivos XML en la carpeta xml_reports
+            // Lista de archivos XML
             def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
 
-            // Iterar sobre cada archivo XML y procesar las métricas
+            // Procesar cada archivo XML
             xmlFiles.each { filePath ->
-                // Leer el contenido del archivo XML
                 def katalonXml = readFile(filePath)
-
-                // Parsear el XML para obtener las métricas
                 def metrics = parseXml(katalonXml)
-
-                // Imprimir los resultados en la consola
                 echo "Metrics parsed for ${filePath}: ${metrics}"
-
-                // Construye la cadena de datos para Prometheus con las métricas
                 prometheusMetricData += constructPrometheusData(metrics)
             }
 
@@ -191,7 +171,6 @@ spec:
             // Escribe las métricas combinadas en un archivo
             writeFile(file: 'katalon.prom', text: prometheusData)
 
-            // Imprimir el contenido de 'prometheusData'
             echo "Combined Prometheus data:\n${prometheusData}"
                 }
             }

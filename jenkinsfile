@@ -56,40 +56,26 @@ def parseXml(String xmlContent) {
 def constructPrometheusData(Map metrics) {
     def prometheusData = ''
 
-    // Asegurarse de que las líneas HELP y TYPE se añadan solo una vez
-    def addedMetricTypes = [:]
-
-    // Test Suites Metrics
-    if (!addedMetricTypes.containsKey('testsuites')) {
-        prometheusData += """
+    // Añadir las líneas HELP y TYPE para cada tipo de métrica una sola vez
+    prometheusData += """
 # HELP katalon_testsuites_info Test Suites Information
 # TYPE katalon_testsuites_info gauge
 """
-        addedMetricTypes['testsuites'] = true
-    }
     prometheusData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\"} 1\n"
 
-    // Test Suite Metrics
-    metrics.testsuite.each { ts ->
-        if (!addedMetricTypes.containsKey('testsuite')) {
-            prometheusData += """
+    prometheusData += """
 # HELP katalon_testsuite_info Test Suite Information
 # TYPE katalon_testsuite_info gauge
 """
-            addedMetricTypes['testsuite'] = true
-        }
+    metrics.testsuite.each { ts ->
         prometheusData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\"} 1\n"
     }
 
-    // Test Case Metrics
-    metrics.testcase.each { tc ->
-        if (!addedMetricTypes.containsKey('testcase')) {
-            prometheusData += """
+    prometheusData += """
 # HELP katalon_testcase_info Test Case Information
 # TYPE katalon_testcase_info gauge
 """
-            addedMetricTypes['testcase'] = true
-        }
+    metrics.testcase.each { tc ->
         prometheusData += "katalon_testcase_info{name=\"${tc.name}\",time=\"${tc.time}\",status=\"${tc.status}\""
         if (tc.status == 'PASSED') {
             prometheusData += ",result=\"OK\"} 1\n"

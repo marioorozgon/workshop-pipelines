@@ -53,7 +53,7 @@ def parseXml(String xmlContent) {
 }
 
 //Metodo de preparación de datos para envío a prometheus
-def constructPrometheusMetrics(Map metrics, String uniqueId) {
+def constructPrometheusMetrics(Map metrics) {
     def metricData = ''
 
     // Métricas de testsuites
@@ -166,7 +166,7 @@ spec:
 
                         def uniqueId = 1 + index // Se usa el índice como parte del uniqueId que es necesario para cada envío
 
-                        prometheusData += constructPrometheusMetrics(metrics, uniqueId.toString())
+                        prometheusData += constructPrometheusMetrics(metrics)
 
                         // Se agrega una traza para mostrar el nombre del archivo y el valor de uniqueId
                         echo "Processing file: ${filePath}, uniqueId: ${uniqueId}"

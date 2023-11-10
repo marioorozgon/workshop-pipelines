@@ -69,7 +69,7 @@ def constructPrometheusMetrics(Map metrics, String hash) {
 
     // Métricas de testcase con etiqueta de testsuite y su nombre
     metrics.testsuite.each { ts ->
-        ts.testcase.each { tc ->  // Asegúrate de que estás iterando los testcase dentro de cada testsuite
+        ts.testcase.each { tc ->  // Asegúrate de que estás iterando los testcase dentro de cada testsuite correctamente
             def testcaseValue = (tc.status == 'PASSED') ? 0 : 1
             metricData += "katalon_testcase_info{testsuite=\"${ts.name}\", testsuite_name=\"${ts.name}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\""
             

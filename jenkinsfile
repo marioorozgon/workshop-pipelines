@@ -85,8 +85,15 @@ def constructPrometheusMetrics(Map metrics, String hash) {
     return metricData
 }
 
-def generateHash(String input) {
-    return input.hashCode().toString()
+def generateCustomHash() {
+    def jobName = env.JOB_NAME ?: 'UnknownJob'
+    def buildNumber = env.BUILD_NUMBER ?: '0'
+    def currentTime = System.currentTimeMillis().toString()
+
+    def stringToHash = "${jobName}-${buildNumber}-${currentTime}"
+    def hash = stringToHash.hashCode().toString()
+
+    return hash
 }
 
 pipeline {
@@ -144,14 +151,7 @@ spec:
         stage('Generate Hash') {
             steps {
                script {
-                    //Vamos a generar también un timestamp durante la creacion
-                    env.PIPELINE_TIMESTAMP = new java.text.SimpleDateFormat('yyyy-MM-dd HH:mm:ss').format(new Date())
-                    // Obtener el nombre del job de Jenkins
-                    def jobName = env.JOB_NAME
-                    // Generar un hash único para la ejecución basado en el nombre del job
-                    def hash = generateHash(jobName)
-                    env.PIPELINE_HASH = hash
-                    echo "Hash for this run: ${env.PIPELINE_HASH}"
+                    def hash = generateCustomHash()
                 }
             }
         }

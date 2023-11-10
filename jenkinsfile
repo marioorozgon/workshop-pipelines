@@ -86,9 +86,7 @@ def constructPrometheusMetrics(Map metrics, String hash) {
 }
 
 def generateHash(String input) {
-    def md5 = groovy.util.HashingUtilities.createDigest('md5')
-    byte[] hashBytes = md5.digest(input.getBytes())
-    return hashBytes.collect { String.format("%02x", it) }.join('')
+    return input.hashCode().toString()
 }
 
 pipeline {

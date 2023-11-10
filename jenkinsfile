@@ -1,4 +1,3 @@
-//import java.security.MessageDigest
 // Se sacan los metodos de parseo fuera del pipeline 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
@@ -87,8 +86,8 @@ def constructPrometheusMetrics(Map metrics, String hash) {
 }
 
 def generateHash(String input) {
-    MessageDigest md = MessageDigest.getInstance("SHA-256")
-    byte[] hashBytes = md.digest(input.getBytes())
+    def md5 = groovy.util.HashingUtilities.createDigest('md5')
+    byte[] hashBytes = md5.digest(input.getBytes())
     return hashBytes.collect { String.format("%02x", it) }.join('')
 }
 

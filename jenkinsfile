@@ -54,12 +54,12 @@ def parseXml(String xmlContent) {
 }
 
 //Metodo de preparación de datos para envío a prometheus
-def constructPrometheusMetrics(Map metrics) {
+def constructPrometheusMetrics(Map metrics, String hash) {
     def metricData = ''
 
     // Métricas de testsuites
     def testsuitesValue = (metrics.testsuites.totalFailures > 0 || metrics.testsuites.totalErrors > 0) ? 1 : 0
-    metricData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\"} ${testsuitesValue}\n"
+    metricData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",hash=\"${hash}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\"} ${testsuitesValue}\n"
 
     // Métricas de testsuite
     metrics.testsuite.each { ts ->
@@ -184,7 +184,7 @@ spec:
 
                         echo "Metrics parsed for ${filePath}: ${metrics}"
 
-                        prometheusData += constructPrometheusMetrics(metrics)
+                        prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
 
                         // Se agrega una traza para mostrar el nombre del archivo
                         echo "Processing file: ${filePath}"

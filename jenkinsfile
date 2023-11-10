@@ -68,22 +68,17 @@ def constructPrometheusMetrics(Map metrics, String hash) {
     }
 
 
-    // Verificar y procesar métricas de testcase
-    println("Metrics structure: ${metrics}")
-     // Métricas de testcase con etiqueta de testsuite
-    metrics.testsuite.each { ts ->
-    println("Processing testsuite: ${ts.name}")
-        ts.testcase.each { tc ->  // Asegúrate de que cada testsuite tiene su propia lista de testcase
-        println("Processing testcase: ${tc.name}")
-            def testcaseValue = (tc.status == 'PASSED') ? 0 : 1
-            metricData += "katalon_testcase_info{testsuite=\"${ts.name}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\""
-            
-            if (testcaseValue == 0) {
-                metricData += ", result=\"OK\"} ${testcaseValue}\n"
-            } else {
-                String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
-                metricData += ", ${detailType}_type=\"${tc[detailType + 'Type']}\", ${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} ${testcaseValue}\n"
-            }
+    // Métricas de testcase con referencia al testsuite
+    metrics.testcase.each { tc ->
+        def testsuiteName = metrics.testsuite.find { it.tests.contains(tc) }?.name ?: 'Unknown'
+        def testcaseValue = (tc.status == 'PASSED') ? 0 : 1
+        metricData += "katalon_testcase_info{testsuite=\"${testsuiteName}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\""
+        
+        if (testcaseValue == 0) {
+            metricData += ", result=\"OK\"} ${testcaseValue}\n"
+        } else {
+            String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
+            metricData += ", ${detailType}_type=\"${tc[detailType + 'Type']}\", ${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} ${testcaseValue}\n"
         }
     }
 

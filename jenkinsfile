@@ -164,12 +164,12 @@ spec:
 
                         echo "Metrics parsed for ${filePath}: ${metrics}"
 
-                        def uniqueId = 1 + index // Se usa el índice como parte del uniqueId que es necesario para cada envío
+                        //def uniqueId = 1 + index // Se usa el índice como parte del uniqueId que es necesario para cada envío
 
                         prometheusData += constructPrometheusMetrics(metrics)
 
                         // Se agrega una traza para mostrar el nombre del archivo y el valor de uniqueId
-                        echo "Processing file: ${filePath}, uniqueId: ${uniqueId}"
+                        echo "Processing file: ${filePath}"
 
                     }
 

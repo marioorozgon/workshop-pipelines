@@ -59,7 +59,7 @@ def constructPrometheusMetrics(Map metrics, String hash) {
 
     // Métricas de testsuites
     def testsuitesValue = (metrics.testsuites.totalFailures > 0 || metrics.testsuites.totalErrors > 0) ? 1 : 0
-    metricData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",hash=\"${hash}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\"} ${testsuitesValue}, timestamp=\"${env.PIPELINE_TIMESTAMP}\"} 1\n"
+    metricData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\",hash=\"${hash}\",tests=\"${metrics.testsuites.totalTests}\",failures=\"${metrics.testsuites.totalFailures}\",errors=\"${metrics.testsuites.totalErrors}\",time=\"${metrics.testsuites.totalTime}\"} ${testsuitesValue}, timestamp=\"${env.PIPELINE_TIMESTAMP}\"}\n"
 
     // Métricas de testsuite
     metrics.testsuite.each { ts ->

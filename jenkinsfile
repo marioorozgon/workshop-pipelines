@@ -72,18 +72,21 @@ def constructPrometheusMetrics(Map metrics, String hash) {
     // Métricas de testcase con etiqueta de testsuite
     metrics.testsuite.each { ts ->
         metrics.testcase.each { tc ->
-            def testcaseMetric = "katalon_testcase_info{testsuite=\"${ts.name}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\""
-            def testcaseValue = (tc.status == 'PASSED') ? 0 : 1
+            // Verificar si el testcase actual pertenece a este testsuite
+            if (tc.classname.contains(ts.name)) {
+                def testcaseValue = (tc.status == 'PASSED') ? 0 : 1
+                def testcaseMetric = "katalon_testcase_info{testsuite=\"${ts.name}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\""
 
-            if (testcaseValue == 0) {
-                testcaseMetric += ", result=\"OK\"} ${testcaseValue}\n"
-            } else {
-                String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
-                testcaseMetric += ", ${detailType}_type=\"${tc[detailType + 'Type']}\", ${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} ${testcaseValue}\n"
+                if (testcaseValue == 0) {
+                    testcaseMetric += ", result=\"OK\"} ${testcaseValue}\n"
+                } else {
+                    String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
+                    testcaseMetric += ", ${detailType}_type=\"${tc[detailType + 'Type']}\", ${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} ${testcaseValue}\n"
+                }
+
+                metricData += testcaseMetric
+                echo "Testcase metric for ${tc.name} in testsuite ${ts.name}: ${testcaseMetric}"
             }
-
-            metricData += testcaseMetric
-            echo "Testcase metric for ${tc.name} in testsuite ${ts.name}: ${testcaseMetric}"
         }
     }
 

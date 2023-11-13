@@ -55,35 +55,32 @@ def parseXml(String xmlContent) {
 //Metodo de preparación de datos para envío a prometheus
 def constructPrometheusMetrics(Map metrics, String hash) {
     def metricData = ''
-    def existingTestcases = [] // Almacena los nombres de los testcases para verificar duplicados
 
     // Métricas de testsuites
     def testsuitesValue = (metrics.testsuites.totalFailures > 0 || metrics.testsuites.totalErrors > 0) ? 1 : 0
     metricData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\", tests=\"${metrics.testsuites.totalTests}\", failures=\"${metrics.testsuites.totalFailures}\", errors=\"${metrics.testsuites.totalErrors}\", time=\"${metrics.testsuites.totalTime}\", identificador_ejecucion=\"${hash}\", timestamp_ejecucion=\"${env.PIPELINE_TIMESTAMP}\"} ${testsuitesValue}\n"
+    echo "Testsuites metric: ${metricData}"
 
     // Métricas de testsuite
     metrics.testsuite.each { ts ->
         def testsuiteValue = (ts.failures > 0 || ts.errors > 0) ? 1 : 0
         metricData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\"} ${testsuiteValue}\n"
+        echo "Testsuite metric for ${ts.name}: ${metricData}"
     }
+
 
     // Métricas de testcase con etiqueta de testsuite
     metrics.testsuite.each { ts ->
         metrics.testcase.each { tc ->
-            def testcaseIdentifier = "${ts.name}_${tc.name}"
-            if (!existingTestcases.contains(testcaseIdentifier)) {
-                def testcaseValue = (tc.status == 'PASSED') ? 0 : 1
-                metricData += "katalon_testcase_info{testsuite=\"${ts.name}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\""
-                
-                if (testcaseValue == 0) {
-                    metricData += ", result=\"OK\"} ${testcaseValue}\n"
-                } else {
-                    String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
-                    metricData += ", ${detailType}_type=\"${tc[detailType + 'Type']}\", ${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} ${testcaseValue}\n"
-                }
-
-                // Agregar el identificador del testcase a la lista de existentes
-                existingTestcases << testcaseIdentifier
+            def testcaseValue = (tc.status == 'PASSED') ? 0 : 1
+            metricData += "katalon_testcase_info{testsuite=\"${ts.name}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\""
+            
+            if (testcaseValue == 0) {
+                metricData += ", result=\"OK\"} ${testcaseValue}\n"
+            } else {
+                String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
+                metricData += ", ${detailType}_type=\"${tc[detailType + 'Type']}\", ${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} ${testcaseValue}\n"
+                echo "Testcase metric for ${tc.name} in testsuite ${ts.name}: ${testcaseMetric}"
             }
         }
     }
@@ -158,7 +155,7 @@ spec:
         stage('Generate Hash') {
             steps {
                script {
-                     def jobName = env.JOB_NAME ?: 'UnknownJob'
+                    def jobName = env.JOB_NAME ?: 'UnknownJob'
                     def buildNumber = env.BUILD_NUMBER ?: '0'
                     def currentTime = System.currentTimeMillis().toString()
 

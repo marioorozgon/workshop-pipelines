@@ -72,7 +72,7 @@ def constructPrometheusMetrics(Map metrics, String hash) {
     //Metodo de preparación de datos para envío a prometheus
     def constructPrometheusMetrics(Map metrics, String hash) {
         def metricData = ''
-        def processedTestCases = new HashSet<>()
+        //def processedTestCases = new HashSet<>()
 
         // Métricas de testsuites
         def testsuitesValue = (metrics.testsuites.totalFailures > 0 || metrics.testsuites.totalErrors > 0) ? 1 : 0

@@ -23,32 +23,34 @@ def parseXml(String xmlContent) {
         ]
     }
 
-    // Recopilación de las métricas de los testcase
-    def testcaseMetrics = parsedXml.testsuite.testcase.collect { tc ->
-        def tcMetrics = [
-            name: tc.'@name'.text(),
-            time: tc.'@time'.text().toFloat(),
-            status: tc.'@status'.text()
+     // Recopilación de las métricas de los testcase con relación a su testsuite
+    def testcaseMetrics = [:] // Un mapa para agrupar los testcase por testsuite
+    parsedXml.testsuite.each { ts ->
+        def tsName = ts.'@name'.text()
+        testcaseMetrics[tsName] = ts.testcase.collect { tc ->
+            def tcMetrics = [
+                name: tc.'@name'.text(),
+                time: tc.'@time'.text().toFloat(),
+                status: tc.'@status'.text(),
         ]
         
-        // Añadimos los campos adicionales basados en el estado
-        switch (tc.'@status'.text()) {
-            case 'PASSED':
-                tcMetrics['result'] = 'OK'
-                break
-            case 'ERROR':
-                tcMetrics['errorType'] = tc.error.'@type'.text()
-                tcMetrics['errorMessage'] = tc.error.'@message'.text()
-                break
-            case 'FAILED':
-                tcMetrics['failureType'] = tc.failure.'@type'.text()
-                tcMetrics['failureMessage'] = tc.failure.'@message'.text()
-                break
+        // Añadir campos adicionales basados en el estado
+            switch (tc.'@status'.text()) {
+                case 'PASSED':
+                    tcMetrics['result'] = 'OK'
+                    break
+                case 'ERROR':
+                    tcMetrics['errorType'] = tc.error.'@type'.text()
+                    tcMetrics['errorMessage'] = tc.error.'@message'.text()
+                    break
+                case 'FAILED':
+                    tcMetrics['failureType'] = tc.failure.'@type'.text()
+                    tcMetrics['failureMessage'] = tc.failure.'@message'.text()
+                    break
+            }
+            return tcMetrics
         }
-        
-        return tcMetrics
     }
-    // Se retornan: testsuitesMetrics y testsuiteMetrics y testcaseMetrics
     return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
 }
 
@@ -68,11 +70,10 @@ def constructPrometheusMetrics(Map metrics, String hash) {
 
 
     // Métricas de testcase con etiqueta de testsuite
-        metrics.testsuite.each { ts ->
-            // Añadir un echo para el testsuite
-            echo "Procesando testsuite: ${ts.name}"
-
-            metrics.testcase.each { tc ->
+       // Métricas de testcase con referencia al testsuite actual
+    metrics.testsuite.each { ts ->
+        def tsName = ts.name
+        metrics.testcase[tsName]?.each { tc -> // Asegúrate de procesar solo los testcase del testsuite actual
                 def testcaseValue = (tc.status == 'PASSED') ? 0 : 1
                 def testcaseMetric = "katalon_testcase_info{testsuite=\"${ts.name}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\""
 

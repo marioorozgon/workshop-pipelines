@@ -4665,8 +4665,8 @@ com.kms.katalon.core.exception.StepErrorException: Se ha producido un error, dur
          <property name="os" value="Windows Server 2019 64bit"/>
          <property name="katalonVersion" value="8.1.0.208"/>
       </properties>
-      <testcase name="Test Cases/Host/01 - HostRun - Seur8as" time="69.385" classname="Test Cases/Host/01 - HostRun - Seur8as" status="PASSED">
-         <system-out><![CDATA[2023-09-15 18:00:50 - [TEST_CASE][PASSED] - Test Cases/Host/01 - HostRun - Seur8as: Test Cases/Host/01 - HostRun - Seur8as
+      <testcase name="Test Cases/Host/01 - HostRun" time="847.765" classname="Test Cases/Host/01 - HostRun" status="PASSED">
+         <system-out><![CDATA[2023-10-24 08:20:52 - [TEST_CASE][PASSED] - Test Cases/Host/01 - HostRun: Test Cases/Host/01 - HostRun
 
 2023-09-15 18:00:50 - [TEST_STEP][PASSED] - operativaHost = <not implemented yet for class: org.codehaus.groovy.ast.expr.EmptyExpression>: null
 

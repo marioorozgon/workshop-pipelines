@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="SeurPRO" time="704.236" tests="7" failures="5" errors="1">
+<testsuites name="SeurPRO" time="704.236" tests="10" failures="5" errors="1">
    <testsuite name="SeurPRO" tests="7" failures="5" errors="1" time="704.236" skipped="0" timestamp="2023-08-17 11:00:51" hostname="SEU2K19KAT01$ - seu2k19kat01.redseur.local" id="Test Suites/SeurPRO">
       <properties>
          <property name="deviceName" value=""/>

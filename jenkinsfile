@@ -68,12 +68,10 @@ def constructPrometheusMetrics(Map metrics, String hash) {
         metricData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\"} ${testsuiteValue}\n"
     }
 
-
     // Métricas de testcase con etiqueta de testsuite
-       // Métricas de testcase con referencia al testsuite actual
     metrics.testsuite.each { ts ->
         def tsName = ts.name
-        metrics.testcase[tsName]?.each { tc -> // Asegúrate de procesar solo los testcase del testsuite actual
+        metrics.testcase[tsName]?.each { tc -> // testcase del testsuite actual
                 def testcaseValue = (tc.status == 'PASSED') ? 0 : 1
                 def testcaseMetric = "katalon_testcase_info{testsuite=\"${ts.name}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\""
 
@@ -85,9 +83,6 @@ def constructPrometheusMetrics(Map metrics, String hash) {
                 }
 
                 metricData += testcaseMetric
-
-                // Añadir un echo para el testcase
-                echo "Procesando testcase: ${tc.name} en testsuite: ${ts.name}"
             }
         }
     

@@ -55,7 +55,6 @@ def parseXml(String xmlContent) {
 //Metodo de preparación de datos para envío a prometheus
 def constructPrometheusMetrics(Map metrics, String hash) {
     def metricData = ''
-    def processedTestCases = new HashSet<>()
 
     // Métricas de testsuites
     def testsuitesValue = (metrics.testsuites.totalFailures > 0 || metrics.testsuites.totalErrors > 0) ? 1 : 0
@@ -69,30 +68,30 @@ def constructPrometheusMetrics(Map metrics, String hash) {
 
 
     // Métricas de testcase con etiqueta de testsuite
-    metrics.testsuite.each { ts ->
-        metrics.testcase.each { tc ->
-            // Construir una clave única para cada testcase
-            def uniqueTestCaseKey = "${ts.name}-${tc.name}"
+metrics.testsuite.each { ts ->
+    ts.testcase.each { tc -> // Cambio aquí para iterar solo sobre testcases de ts
+        // Construir una clave única para cada testcase
+        def uniqueTestCaseKey = "${ts.name}-${tc.name}"
 
-            // Verificar si el testcase ya ha sido procesado
-            if (!processedTestCases.contains(uniqueTestCaseKey)) {
-                def testcaseValue = (tc.status == 'PASSED') ? 0 : 1
-                def testcaseMetric = "katalon_testcase_info{testsuite=\"${ts.name}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\""
+        // Verificar si el testcase ya ha sido procesado
+        if (!processedTestCases.contains(uniqueTestCaseKey)) {
+            def testcaseValue = (tc.status == 'PASSED') ? 0 : 1
+            def testcaseMetric = "katalon_testcase_info{testsuite=\"${ts.name}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\""
 
-                if (testcaseValue == 0) {
-                    testcaseMetric += ", result=\"OK\"} ${testcaseValue}\n"
-                } else {
-                    String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
-                    testcaseMetric += ", ${detailType}_type=\"${tc[detailType + 'Type']}\", ${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} ${testcaseValue}\n"
-                }
-
-                metricData += testcaseMetric
-
-                // Marcar este testcase como procesado
-                processedTestCases.add(uniqueTestCaseKey)
+            if (testcaseValue == 0) {
+                testcaseMetric += ", result=\"OK\"} ${testcaseValue}\n"
+            } else {
+                String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
+                testcaseMetric += ", ${detailType}_type=\"${tc[detailType + 'Type']}\", ${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} ${testcaseValue}\n"
             }
+
+            metricData += testcaseMetric
+
+            // Marcar este testcase como procesado
+            processedTestCases.add(uniqueTestCaseKey)
         }
     }
+}
 
     return metricData
 }

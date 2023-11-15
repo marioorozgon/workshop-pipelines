@@ -208,7 +208,7 @@ spec:
                     def prometheusData = readFile('katalon.prom').trim()
                     if (prometheusData) {
                         def pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon"
-                        def response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()
+                        def response = sh(script: "curl -X PUT --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()
                         echo "Response from Pushgateway: ${response}"
                     } else {
                         error("Prometheus data está vacío, no envía al Pushgateway")

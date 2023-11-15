@@ -172,7 +172,7 @@ spec:
             steps {
                 script {
                     //Directorio de los xml
-                    def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+                    def xmlFiles = sh(script: "find /home/jenkins/agent/workspace/ -type f -name '*.xml'", returnStdout: true).trim().split('\n')
                     
                     def prometheusData = """
                         # HELP katalon_testsuites_info Test Suites Information

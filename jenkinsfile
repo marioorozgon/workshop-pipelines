@@ -55,17 +55,17 @@ def parseXml(String xmlContent) {
 }
 
 //Metodo de preparación de datos para envío a prometheus
-def constructPrometheusMetrics(Map metrics, String hash, String timestamp) {
+def constructPrometheusMetrics(Map metrics, String hash) {
     def metricData = ''
 
     // Métricas de testsuites
     def testsuitesValue = (metrics.testsuites.totalFailures > 0 || metrics.testsuites.totalErrors > 0) ? 1 : 0
-    metricData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\", tests=\"${metrics.testsuites.totalTests}\", failures=\"${metrics.testsuites.totalFailures}\", errors=\"${metrics.testsuites.totalErrors}\", time=\"${metrics.testsuites.totalTime}\", hash=\"${hash}\", unique_timestamp=\"${timestamp}\"} ${testsuitesValue}\n"
+    metricData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\", tests=\"${metrics.testsuites.totalTests}\", failures=\"${metrics.testsuites.totalFailures}\", errors=\"${metrics.testsuites.totalErrors}\", time=\"${metrics.testsuites.totalTime}\", hash=\"${hash}\", timestamp_execute=\"${env.PIPELINE_TIMESTAMP}\"} ${testsuitesValue}\n"
 
     // Métricas de testsuite
     metrics.testsuite.each { ts ->
         def testsuiteValue = (ts.failures > 0 || ts.errors > 0) ? 1 : 0
-        metricData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\", hash=\"${hash}\", unique_timestamp=\"${timestamp}\"} ${testsuiteValue}\n"
+        metricData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\", hash=\"${hash}\"} ${testsuiteValue}\n"
     }
 
     // Métricas de testcase con etiqueta de testsuite
@@ -73,7 +73,7 @@ def constructPrometheusMetrics(Map metrics, String hash, String timestamp) {
         def tsName = ts.name
         metrics.testcase[tsName]?.each { tc -> // testcase del testsuite actual
                 def testcaseValue = (tc.status == 'PASSED') ? 0 : 1
-                def testcaseMetric = "katalon_testcase_info{testsuite=\"${ts.name}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\", hash=\"${hash}\", unique_timestamp=\"${timestamp}\""
+                def testcaseMetric = "katalon_testcase_info{testsuite=\"${ts.name}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\", hash=\"${hash}\""
 
 
                 if (testcaseValue == 0) {
@@ -149,7 +149,7 @@ spec:
 
     environment {
         // otras variables de entorno
-        PIPELINE_TIMESTAMP = "${new Date().format('yyyyMMddHHmmssSSS')}"
+        PIPELINE_TIMESTAMP = "${new Date().format('yyyy-MM-dd HH:mm:ss')}"
     }
 
         stages {
@@ -189,7 +189,7 @@ spec:
 
                         echo "Metrics parsed for ${filePath}: ${metrics}"
 
-                        prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH, env.PIPELINE_TIMESTAMP)
+                        prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
 
                         // Se agrega una traza para mostrar el nombre del archivo
                         echo "Processing file: ${filePath}"
@@ -208,7 +208,7 @@ spec:
                     def prometheusData = readFile('katalon.prom').trim()
                     if (prometheusData) {
                         def pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon/hash/${env.PIPELINE_HASH}"
-                        def response = sh(script: "curl -X PUT --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()
+                        def response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()
                         echo "Response from Pushgateway: ${response}"
                     } else {
                         error("Prometheus data está vacío, no envía al Pushgateway")

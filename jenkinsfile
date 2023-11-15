@@ -149,7 +149,7 @@ spec:
 
     environment {
         // otras variables de entorno
-        PIPELINE_TIMESTAMP = "${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+        PIPELINE_TIMESTAMP = "${new Date().format('yyyy-MM-dd HH:mm:ss.SSS')}"
     }
 
         stages {

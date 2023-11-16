@@ -102,7 +102,7 @@ def generateCustomHash() {
     return hash
 }
 
-node ('seu2k19kat01.redseur.local') { 
+node { 
 
 	stage ('Preparación') {
         script {

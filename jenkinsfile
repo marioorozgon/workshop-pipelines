@@ -4,11 +4,11 @@ def parseXml(String xmlContent) {
     def parsedXml = new XmlParser().parseText(xmlContent)
 
     def testsuitesMetrics = [
-        name: parsedXml.@name,
-        totalTests: parsedXml.@tests.toInteger(),
-        totalFailures: parsedXml.@failures.toInteger(),
-        totalErrors: parsedXml.@errors.toInteger(),
-        totalTime: parsedXml.@time.toFloat()
+        name: parsedXml.attribute('name'),
+        totalTests: parsedXml.attribute('tests').toString().toInteger(),
+        totalFailures: parsedXml.attribute('failures').toString().toInteger(),
+        totalErrors: parsedXml.attribute('errors').toString().toInteger(),
+        totalTime: parsedXml.attribute('time').toString().toFloat()
     ]
 
     def testsuiteNodes = parsedXml.children().findAll { it.name() == 'testsuite' }
@@ -17,33 +17,33 @@ def parseXml(String xmlContent) {
 
     testsuiteNodes.each { tsNode ->
         def tsMetrics = [
-            name: tsNode.@name,
-            tests: tsNode.@tests.toInteger(),
-            failures: tsNode.@failures.toInteger(),
-            errors: tsNode.@errors.toInteger(),
-            time: tsNode.@time.toFloat(),
-            skipped: tsNode.@skipped.toInteger(),
-            timestamp: tsNode.@timestamp
+            name: tsNode.attribute('name'),
+            tests: tsNode.attribute('tests').toString().toInteger(),
+            failures: tsNode.attribute('failures').toString().toInteger(),
+            errors: tsNode.attribute('errors').toString().toInteger(),
+            time: tsNode.attribute('time').toString().toFloat(),
+            skipped: tsNode.attribute('skipped').toString().toInteger(),
+            timestamp: tsNode.attribute('timestamp')
         ]
         testsuiteMetrics.add(tsMetrics)
 
         def tcMetricsList = tsNode.children().findAll { it.name() == 'testcase' }.collect { tcNode ->
             def tcMetrics = [
-                name: tcNode.@name,
-                time: tcNode.@time.toFloat(),
-                status: tcNode.@status
+                name: tcNode.attribute('name'),
+                time: tcNode.attribute('time').toString().toFloat(),
+                status: tcNode.attribute('status')
             ]
-            switch (tcNode.@status) {
+            switch (tcNode.attribute('status')) {
                 case 'PASSED':
                     tcMetrics['result'] = 'OK'
                     break
                 case 'ERROR':
-                    tcMetrics['errorType'] = tcNode.'error'.@type
-                    tcMetrics['errorMessage'] = tcNode.'error'.@message
+                    tcMetrics['errorType'] = tcNode.children().find { it.name() == 'error' }?.attribute('type')
+                    tcMetrics['errorMessage'] = tcNode.children().find { it.name() == 'error' }?.attribute('message')
                     break
                 case 'FAILED':
-                    tcMetrics['failureType'] = tcNode.'failure'.@type
-                    tcMetrics['failureMessage'] = tcNode.'failure'.@message
+                    tcMetrics['failureType'] = tcNode.children().find { it.name() == 'failure' }?.attribute('type')
+                    tcMetrics['failureMessage'] = tcNode.children().find { it.name() == 'failure' }?.attribute('message')
                     break
             }
             return tcMetrics

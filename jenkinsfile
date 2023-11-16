@@ -127,60 +127,45 @@ node {
         }
      }
 
-     stage ('Imprimir Directorios') {
+     stage('Parse Katalon XML') {
         script {
-            echo "Directorio actual:"
-            sh 'pwd'
+        // Directorio de los archivos XML
+        def xmlDirectory = 'C:\\Users\\mario.orozco\\Desktop\\workspace\\DevOps_INTERNO\\workshop-pipelines\\xml_reports'
+
+        // Comando para listar archivos XML usando PowerShell
+        def xmlFilesOutput = bat(script: "powershell -Command \"Get-ChildItem '${xmlDirectory}' -Filter '*.xml' -Recurse | % { $_.FullName }\"", returnStdout: true).trim()
+
+        if (xmlFilesOutput) {
+            // Dividir la salida en un array de nombres de archivos
+            def xmlFiles = xmlFilesOutput.split('\\\\r?\\\\n')
+            echo "Archivos XML encontrados: ${xmlFiles.size()}"
+
+            def prometheusData = """
+                # HELP katalon_testsuites_info Test Suites Information
+                # TYPE katalon_testsuites_info gauge
+                # HELP katalon_testsuite_info Test Suite Information
+                # TYPE katalon_testsuite_info gauge
+                # HELP katalon_testcase_info Test Case Information
+                # TYPE katalon_testcase_info gauge
+                """
+
+            xmlFiles.eachWithIndex { filePath, index ->
+                def katalonXml = readFile(filePath)
+                def metrics = parseXml(katalonXml)
+
+                echo "Metrics parsed for ${filePath}: ${metrics}"
+
+                prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
+
+                // Se agrega una traza para mostrar el nombre del archivo
+                echo "Processing file: ${filePath}"
+            }
+
+            writeFile(file: 'katalon.prom', text: prometheusData)
+            echo "Combined Prometheus data:\n${prometheusData}"
+        } else {
+            echo "No se encontraron archivos XML en ${xmlDirectory}"
         }
     }
-
-     stage('Parse Katalon XML') {
-        script { 
-
-            //Para LINUX/UNIX
-            // Ruta al directorio de archivos XML
-            //def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
-            
-            // Imprimir la estructura del directorio padre para verificar
-        sh 'ls -l /home/jenkins/agent/workspace/seur/xml_reports'
-
-        // Ruta al directorio de archivos XML
-        def xmlDirectory = '/home/jenkins/agent/workspace/seur/xml_reports'
-
-        // Ejecutar el comando find y manejar el posible error
-        def xmlFilesOutput = sh(script: "find ${xmlDirectory} -name '*.xml' || true", returnStdout: true).trim()
-
-            if (xmlFiles) {
-                def xmlFiles = xmlFilesOutput.split('\\r?\\n')
-                echo "Archivos XML encontrados: ${xmlFiles.size()}"
-
-                def prometheusData = """
-                 # HELP katalon_testsuites_info Test Suites Information
-                 # TYPE katalon_testsuites_info gauge
-                 # HELP katalon_testsuite_info Test Suite Information
-                 # TYPE katalon_testsuite_info gauge
-                 # HELP katalon_testcase_info Test Case Information
-                 # TYPE katalon_testcase_info gauge
-                 """
-		 
-             xmlFiles.eachWithIndex { filePath, index ->
-                 def katalonXml = readFile(filePath)
-                 def metrics = parseXml(katalonXml)
-		 
-                 echo "Metrics parsed for ${filePath}: ${metrics}"
-		 
-                 prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
-		 
-                 // Se agrega una traza para mostrar el nombre del archivo
-                 echo "Processing file: ${filePath}"
-		 
-             }
-		 
-             writeFile(file: 'katalon.prom', text: prometheusData)
-             echo "Combined Prometheus data:\n${prometheusData}"  
-            } else {
-              echo "No se encontraron archivos XML en ${xmlDirectory}"
-            }          
-         }
-    }
+  }
 }

@@ -131,34 +131,42 @@ node ('seu2k19kat01.redseur.local') {
 
      stage('Parse Katalon XML') {
         script {
+        // Directorio de los archivos XML
+        def xmlDirectory = 'C:\\Jenkins\\workspace\\Katalon_GTI_PRE\\Reports\\20231115_090057\\GTI\\20231115_090058'
 
-              //Directorio de los xml
-		 	 def xmlFiles = bat(script: "powershell -Command \"Get-ChildItem 'C:\\Jenkins\\workspace\\Katalon_GTI_PRE\\Reports\\20231115_090057\\GTI\\20231115_090058' -Filter '*.xml' -Recurse | % { $_.FullName }\"", returnStdout: true).trim().split('\\r?\\n')
-             
-             def prometheusData = """
-                 # HELP katalon_testsuites_info Test Suites Information
-                 # TYPE katalon_testsuites_info gauge
-                 # HELP katalon_testsuite_info Test Suite Information
-                 # TYPE katalon_testsuite_info gauge
-                 # HELP katalon_testcase_info Test Case Information
-                 # TYPE katalon_testcase_info gauge
-                 """
-		 
-             xmlFiles.eachWithIndex { filePath, index ->
-                 def katalonXml = readFile(filePath)
-                 def metrics = parseXml(katalonXml)
-		 
-                 echo "Metrics parsed for ${filePath}: ${metrics}"
-		 
-                 prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
-		 
-                 // Se agrega una traza para mostrar el nombre del archivo
-                 echo "Processing file: ${filePath}"
-		 
-             }
-		 
-             writeFile(file: 'katalon.prom', text: prometheusData)
-             echo "Combined Prometheus data:\n${prometheusData}"
-         }
+        // Comando para listar archivos XML usando PowerShell
+        def xmlFilesOutput = bat(script: "powershell -Command \"Get-ChildItem '${xmlDirectory}' -Filter '*.xml' -Recurse | % { $_.FullName }\"", returnStdout: true).trim()
+
+        if (xmlFilesOutput) {
+            // Dividir la salida en un array de nombres de archivos
+            def xmlFiles = xmlFilesOutput.split('\\\\r?\\\\n')
+            echo "Archivos XML encontrados: ${xmlFiles.size()}"
+
+            def prometheusData = """
+                # HELP katalon_testsuites_info Test Suites Information
+                # TYPE katalon_testsuites_info gauge
+                # HELP katalon_testsuite_info Test Suite Information
+                # TYPE katalon_testsuite_info gauge
+                # HELP katalon_testcase_info Test Case Information
+                # TYPE katalon_testcase_info gauge
+                """
+
+            xmlFiles.eachWithIndex { filePath, index ->
+                def katalonXml = readFile(filePath)
+                def metrics = parseXml(katalonXml)
+
+                echo "Metrics parsed for ${filePath}: ${metrics}"
+
+                prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
+
+                // Se agrega una traza para mostrar el nombre del archivo
+                echo "Processing file: ${filePath}"
+            }
+
+            writeFile(file: 'katalon.prom', text: prometheusData)
+            echo "Combined Prometheus data:\n${prometheusData}"
+        } else {
+            echo "No se encontraron archivos XML en ${xmlDirectory}"
+        }
     }
 }

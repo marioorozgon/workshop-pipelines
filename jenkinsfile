@@ -4,44 +4,51 @@ def parseXml(String xmlContent) {
     def parsedXml = new XmlParser().parseText(xmlContent)
 
     def testsuitesMetrics = [
-        name: parsedXml.@name.text(),
-        totalTests: parsedXml.@tests.text().toInteger(),
-        totalFailures: parsedXml.@failures.text().toInteger(),
-        totalErrors: parsedXml.@errors.text().toInteger(),
-        totalTime: parsedXml.@time.text().toFloat()
+        name: parsedXml.@name,
+        totalTests: parsedXml.@tests.toInteger(),
+        totalFailures: parsedXml.@failures.toInteger(),
+        totalErrors: parsedXml.@errors.toInteger(),
+        totalTime: parsedXml.@time.toFloat()
     ]
 
-    def testsuiteMetrics = []
-    def testcaseMetrics = [:]
-
-    parsedXml.testsuite.each { ts ->
-        def tsMetrics = [
-            name: ts.@name.text(),
-            tests: ts.@tests.text().toInteger(),
-            failures: ts.@failures.text().toInteger(),
-            errors: ts.@errors.text().toInteger(),
-            time: ts.@time.text().toFloat(),
-            skipped: ts.@skipped.text().toInteger(),
-            timestamp: ts.@timestamp.text(),
-            hostname: ts.@hostname.text(),
-            id: ts.@id.text()
+    def testsuiteMetrics = parsedXml.testsuite.collect {
+        [
+            name: it.@name,
+            tests: it.@tests.toInteger(),
+            failures: it.@failures.toInteger(),
+            errors: it.@errors.toInteger(),
+            time: it.@time.toFloat(),
+            skipped: it.@skipped.toInteger(),
+            timestamp: it.@timestamp
         ]
-        testsuiteMetrics << tsMetrics
-
-        ts.testcase.each { tc ->
-            def tcMetrics = [
-                name: tc.@name.text(),
-                time: tc.@time.text().toFloat(),
-                classname: tc.@classname.text(),
-                status: tc.@status.text()
-            ]
-            if (!testcaseMetrics[tsMetrics.name]) {
-                testcaseMetrics[tsMetrics.name] = []
-            }
-            testcaseMetrics[tsMetrics.name] << tcMetrics
-        }
     }
 
+    def testcaseMetrics = [:]
+    parsedXml.testsuite.each { ts ->
+        def tsName = ts.@name
+        testcaseMetrics[tsName] = ts.testcase.collect { tc ->
+            def tcMetrics = [
+                name: tc.@name,
+                time: tc.@time.toFloat(),
+                status: tc.@status
+            ]
+        
+            switch (tc.@status) {
+                case 'PASSED':
+                    tcMetrics['result'] = 'OK'
+                    break
+                case 'ERROR':
+                    tcMetrics['errorType'] = tc.error.@type
+                    tcMetrics['errorMessage'] = tc.error.@message
+                    break
+                case 'FAILED':
+                    tcMetrics['failureType'] = tc.failure.@type
+                    tcMetrics['failureMessage'] = tc.failure.@message
+                    break
+            }
+            return tcMetrics
+        }
+    }
     return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
 }
 

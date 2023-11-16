@@ -146,8 +146,10 @@ node {
      stage('Parse Katalon XML') {
         script { 
 
-            def xmlDirectory = 'C:\\Users\\mario.orozco\\Desktop\\workspace\\DevOps_INTERNO\\workshop-pipelines\\xml_reports'
-            def xmlFilesOutput = bat(script: "powershell -Command \"Get-ChildItem '${xmlDirectory}' -Filter '*.xml' -Recurse | % { $_.FullName }\"", returnStdout: true).trim()
+            // Ruta al directorio de archivos XML
+            def xmlDirectory = '/home/jenkins/agent/workspace/seur/xml_reports'
+
+            def xmlFilesOutput = sh(script: "find ${xmlDirectory} -name '*.xml'", returnStdout: true).trim()
 
             if (xmlFilesOutput) {
                 def xmlFiles = xmlFilesOutput.split('\\r?\\n')

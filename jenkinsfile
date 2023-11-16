@@ -127,6 +127,17 @@ node {
         }
      }
 
+     stage('Debug Stage') {
+        script {
+            echo "Iniciando depuración..."
+
+            // Directorio de los archivos XML
+             def xmlDirectory = 'C:\\Users\\mario.orozco\\Desktop\\workspace\\DevOps_INTERNO\\workshop-pipelines\\xml_reports'
+
+            echo "Finalizando depuración..."
+        }
+    }
+
      stage('Parse Katalon XML') {
         script {
         // Directorio de los archivos XML

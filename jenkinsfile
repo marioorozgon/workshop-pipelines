@@ -148,7 +148,8 @@ node {
         def xmlDirectory = 'C:\\Users\\mario.orozco\\Desktop\\workspace\\DevOps_INTERNO\\workshop-pipelines\\xml_reports'
 
         // Comando para listar archivos XML usando PowerShell
-        def command = "powershell -Command \"Get-ChildItem '${xmlDirectory}' -Filter '*.xml' -Recurse | % { $_.FullName }\""
+        def command = "powershell -Command \"Get-ChildItem '${xmlDirectory}' -Filter '*.xml' -Recurse | ForEach-Object { \$_ .FullName }\""
+
         def xmlFilesOutput = bat(script: command, returnStdout: true).trim()
 
         if (xmlFilesOutput) {

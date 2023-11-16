@@ -1,4 +1,4 @@
-// Se sacan los metodos de parseo fuera del pipeline 
+// Las funciones de parseo van fuera del node 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
     // Se sacan las métricas directamente del elemento testsuites
@@ -10,7 +10,7 @@ def parseXml(String xmlContent) {
         totalTime: parsedXml.'@time'.text().toFloat()
     ]
 
-    // Aquí por ahora asumimos que sólo hay un testsuite por testsuites, si hay más a futuro, se necesitará iterar
+    // Se sacan las métricas directamente del elemento testsuite
     def testsuiteMetrics = parsedXml.testsuite.collect {
         [
             name: it.'@name'.text(),
@@ -90,6 +90,7 @@ def constructPrometheusMetrics(Map metrics, String hash) {
     return metricData
 }
 
+//Generación de HASH como identificador único de ejecución de pipeline
 def generateCustomHash() {
     def jobName = env.JOB_NAME ?: 'UnknownJob'
     def buildNumber = env.BUILD_NUMBER ?: '0'
@@ -105,7 +106,7 @@ node ('seu2k19kat01.redseur.local') {
 
 	stage ('Preparación') {
         script {
-            // Definir una variable de entorno
+            // Variable de entorno
             env.PIPELINE_TIMESTAMP = new Date().format('yyyy-MM-dd HH:mm:ss')
         }
     }
@@ -129,44 +130,68 @@ node ('seu2k19kat01.redseur.local') {
         }
      }
 
-     stage('Parse Katalon XML') {
+    stage('Parse Katalon XML') {
         script {
-        // Directorio de los archivos XML
-        def xmlDirectory = 'C:\\Jenkins\\workspace\\Katalon_GTI_PRE\\Reports\\20231115_090057\\GTI\\20231115_090058'
+            // Directorio TEMPORAL DE PRUEBAS para leer los archivos XML
+            def xmlDirectory = 'C:\\Jenkins\\workspace\\Katalon_GTI_PRE\\Reports\\20231115_090057\\GTI\\20231115_090058'
 
-        // Comando para listar archivos XML usando PowerShell
-        def xmlFilesOutput = bat(script: "powershell -Command \"Get-ChildItem '${xmlDirectory}' -Filter '*.xml' -Recurse | % { $_.FullName }\"", returnStdout: true).trim()
+            // Se Listan los archivos XML usando PowerShell
+            def command = "powershell -Command \"Get-ChildItem '${xmlDirectory}' -Filter '*.xml' -Recurse | ForEach-Object { \$_ .FullName }\""
 
-        if (xmlFilesOutput) {
-            // Dividir la salida en un array de nombres de archivos
-            def xmlFiles = xmlFilesOutput.split('\\\\r?\\\\n')
-            echo "Archivos XML encontrados: ${xmlFiles.size()}"
+            // Se ejecuta el comando
+            def xmlFilesOutput = bat(script: command, returnStdout: true).trim()
 
-            def prometheusData = """
-                # HELP katalon_testsuites_info Test Suites Information
-                # TYPE katalon_testsuites_info gauge
-                # HELP katalon_testsuite_info Test Suite Information
-                # TYPE katalon_testsuite_info gauge
-                # HELP katalon_testcase_info Test Case Information
-                # TYPE katalon_testcase_info gauge
-                """
+            if (xmlFilesOutput) {
+                // Se divide la salida en un array de nombres de archivos
+                def xmlFiles = xmlFilesOutput.split('\\r?\\n')
+                echo "Archivos XML encontrados: ${xmlFiles.size()}"
 
-            xmlFiles.eachWithIndex { filePath, index ->
-                def katalonXml = readFile(filePath)
-                def metrics = parseXml(katalonXml)
+                def prometheusData = """
+                    # HELP katalon_testsuites_info Test Suites Information
+                    # TYPE katalon_testsuites_info gauge
+                    # HELP katalon_testsuite_info Test Suite Information
+                    # TYPE katalon_testsuite_info gauge
+                    # HELP katalon_testcase_info Test Case Information
+                    # TYPE katalon_testcase_info gauge
+                    """
 
-                echo "Metrics parsed for ${filePath}: ${metrics}"
+                xmlFiles.eachWithIndex { filePath, index ->
+                    def katalonXml = readFile(filePath)
+                    def metrics = parseXml(katalonXml)
 
-                prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
+                    echo "Metrics parsed for ${filePath}: ${metrics}"
 
-                // Se agrega una traza para mostrar el nombre del archivo
-                echo "Processing file: ${filePath}"
+                    prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
+
+                    // Se agrega una traza para mostrar el nombre del archivo
+                    echo "Processing file: ${filePath}"
+                }
+
+                writeFile(file: 'katalon.prom', text: prometheusData)
+                echo "Prometheus data:\n${prometheusData}"
+            } else {
+                echo "No se encontraron archivos XML en ${xmlDirectory}"
             }
-
-            writeFile(file: 'katalon.prom', text: prometheusData)
-            echo "Combined Prometheus data:\n${prometheusData}"
-        } else {
-            echo "No se encontraron archivos XML en ${xmlDirectory}"
         }
     }
+
+// El envío a Prometheus por ahora está comentado hasta su implantación
+/*
+    stage('Send to Prometheus') {
+        steps {
+            script {
+                def prometheusData = readFile('katalon.prom').trim()
+                if (prometheusData) {
+                    //Aquí se pondrá la url de envío al pushgateway - se deja la de pruebas a modo de ejemplo (IMPORTANTE /${env.PIPELINE_HASH})
+                    def pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon/hash/${env.PIPELINE_HASH}"
+                    def response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()
+                    echo "Response from Pushgateway: ${response}"
+                } else {
+                    error("Prometheus data está vacío, no envía al Pushgateway")
+                }
+            }
+        }
+    }
+*/
+
 }

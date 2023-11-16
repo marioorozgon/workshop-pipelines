@@ -1,10 +1,9 @@
-// Las funciones de parseo van fuera del node 
-def parseXml(String xmlContent) {
-    return 0
-}
-
-
 node { 
+
+    // Las funciones de parseo van fuera del node 
+    def parseXml(String xmlContent) {
+        return 0
+    }
 
 //	stage ('katalon_GTI- SCM') {
 //		checkout([$class: 'GitSCM', branches: [[name: '*/preproduccion']], doGenerateSubmoduleConfigurations: false, userRemoteConfigs: [[credentialsId: 'Admin_GitLab', url: 'https://git.seur.es/testing/gti']]]) 

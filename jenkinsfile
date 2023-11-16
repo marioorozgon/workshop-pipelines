@@ -134,11 +134,11 @@ node {
         }
     }
 
-    stage('Prueba Comando Bat Simple') {
+    stage('Prueba Comando SH Simple') {
         script {
-            echo "Ejecutando comando bat simple..."
-            def output = bat(script: "echo Hello World", returnStdout: true).trim()
-            echo "Salida del comando bat: ${output}"
+            echo "Ejecutando comando sh simple..."
+            def output = sh(script: "echo Hello World", returnStdout: true).trim()
+            echo "Salida del comando sh: ${output}"
         }
     }
 

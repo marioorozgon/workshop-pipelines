@@ -134,6 +134,15 @@ node {
         }
     }
 
+    stage('Prueba Comando Bat Simple') {
+        script {
+            echo "Ejecutando comando bat simple..."
+            def output = bat(script: "echo Hello World", returnStdout: true).trim()
+            echo "Salida del comando bat: ${output}"
+        }
+    }
+
+
      stage('Parse Katalon XML') {
         script { 
 

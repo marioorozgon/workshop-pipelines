@@ -127,16 +127,19 @@ node {
         }
      }
 
-     stage('Parse Katalon XML') {
+     stage ('Imprimir Directorios') {
         script {
-
-            // Directorio actual
             echo "Directorio actual:"
             sh 'pwd'
 
-            // Directorio de ficheros
             echo "Contenido del directorio /home/jenkins/agent/workspace/seur/xml_reports/:"
-            sh 'ls -l /home/jenkins/agent/workspace/seur/xml_reports/'
+            sh 'ls -l /home/jenkins/agent/workspace/seur/xml_reports/ || true'
+        }
+    }
+
+     stage('Parse Katalon XML') {
+        script {
+
              //Directorio de los xml
              def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
              

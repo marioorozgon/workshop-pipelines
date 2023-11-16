@@ -146,12 +146,11 @@ node {
      stage('Parse Katalon XML') {
         script { 
 
+            //Para LINUX/UNIX
             // Ruta al directorio de archivos XML
-            def xmlDirectory = '/home/jenkins/agent/workspace/seur/xml_reports'
+            def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
 
-            def xmlFilesOutput = sh(script: "find ${xmlDirectory} -name '*.xml'", returnStdout: true).trim()
-
-            if (xmlFilesOutput) {
+            if (xmlFiles) {
                 def xmlFiles = xmlFilesOutput.split('\\r?\\n')
                 echo "Archivos XML encontrados: ${xmlFiles.size()}"
 

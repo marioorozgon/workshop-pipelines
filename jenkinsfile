@@ -1,54 +1,53 @@
 import groovy.util.XmlParser
 // Se sacan los metodos de parseo fuera del pipeline 
-// Se sacan los metodos de parseo fuera del pipeline 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlParser().parseText(xmlContent)
 
     // Se sacan las métricas directamente del elemento testsuites
     def testsuitesMetrics = [
-        name: parsedXml.'@name'.text(),
-        totalTests: parsedXml.'@tests'.text().toInteger(),
-        totalFailures: parsedXml.'@failures'.text().toInteger(),
-        totalErrors: parsedXml.'@errors'.text().toInteger(),
-        totalTime: parsedXml.'@time'.text().toFloat()
+        name: parsedXml.attribute('name'),
+        totalTests: parsedXml.attribute('tests').toString().toInteger(),
+        totalFailures: parsedXml.attribute('failures').toString().toInteger(),
+        totalErrors: parsedXml.attribute('errors').toString().toInteger(),
+        totalTime: parsedXml.attribute('time').toString().toFloat()
     ]
 
     // Procesamiento de testsuite
     def testsuiteMetrics = parsedXml.testsuite.collect {
         [
-            name: it.'@name'.text(),
-            tests: it.'@tests'.text().toInteger(),
-            failures: it.'@failures'.text().toInteger(),
-            errors: it.'@errors'.text().toInteger(),
-            time: it.'@time'.text().toFloat(),
-            skipped: it.'@skipped'.text().toInteger(),
-            timestamp: it.'@timestamp'.text()
+            name: it.attribute('name'),
+            tests: it.attribute('tests').toString().toInteger(),
+            failures: it.attribute('failures').toString().toInteger(),
+            errors: it.attribute('errors').toString().toInteger(),
+            time: it.attribute('time').toString().toFloat(),
+            skipped: it.attribute('skipped').toString().toInteger(),
+            timestamp: it.attribute('timestamp')
         ]
     }
 
     // Recopilación de las métricas de los testcase
     def testcaseMetrics = [:]
     parsedXml.testsuite.each { ts ->
-        def tsName = ts.'@name'.text()
+        def tsName = ts.attribute('name')
         testcaseMetrics[tsName] = ts.testcase.collect { tc ->
             def tcMetrics = [
-                name: tc.'@name'.text(),
-                time: tc.'@time'.text().toFloat(),
-                status: tc.'@status'.text()
+                name: tc.attribute('name'),
+                time: tc.attribute('time').toString().toFloat(),
+                status: tc.attribute('status')
             ]
 
             // Control de campos adicionales basados en el estado
-            switch (tc.'@status'.text()) {
+            switch (tc.attribute('status')) {
                 case 'PASSED':
                     tcMetrics['result'] = 'OK'
                     break
                 case 'ERROR':
-                    tcMetrics['errorType'] = tc.error.'@type'.text()
-                    tcMetrics['errorMessage'] = tc.error.'@message'.text()
+                    tcMetrics['errorType'] = tc.error.attribute('type')
+                    tcMetrics['errorMessage'] = tc.error.attribute('message')
                     break
                 case 'FAILED':
-                    tcMetrics['failureType'] = tc.failure.'@type'.text()
-                    tcMetrics['failureMessage'] = tc.failure.'@message'.text()
+                    tcMetrics['failureType'] = tc.failure.attribute('type')
+                    tcMetrics['failureMessage'] = tc.failure.attribute('message')
                     break
             }
             return tcMetrics

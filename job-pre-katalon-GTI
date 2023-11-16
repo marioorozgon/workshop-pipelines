@@ -132,14 +132,6 @@ node ('seu2k19kat01.redseur.local') {
      stage('Parse Katalon XML') {
         script {
 
-            // Directorio actual
-            echo "Directorio actual:"
-            sh 'pwd'
-
-            // Directorio de ficheros
-            echo "Contenido del directorio /home/jenkins/agent/workspace/seur/xml_reports/:"
-            sh 'ls -l /home/jenkins/agent/workspace/seur/xml_reports/'
-
               //Directorio de los xml
 		 	 def xmlFiles = bat(script: "powershell -Command \"Get-ChildItem 'C:\\Jenkins\\workspace\\Katalon_GTI_PRE\\Reports\\20231115_090057\\GTI\\20231115_090058' -Filter '*.xml' -Recurse | % { $_.FullName }\"", returnStdout: true).trim().split('\\r?\\n')
              

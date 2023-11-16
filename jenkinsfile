@@ -4,51 +4,53 @@ def parseXml(String xmlContent) {
     def parsedXml = new XmlParser().parseText(xmlContent)
 
     def testsuitesMetrics = [
-        name: parsedXml.attributes().get('name'),
-        totalTests: parsedXml.attributes().get('tests').toInteger(),
-        totalFailures: parsedXml.attributes().get('failures').toInteger(),
-        totalErrors: parsedXml.attributes().get('errors').toInteger(),
-        totalTime: parsedXml.attributes().get('time').toFloat()
+        name: parsedXml.@name,
+        totalTests: parsedXml.@tests.toInteger(),
+        totalFailures: parsedXml.@failures.toInteger(),
+        totalErrors: parsedXml.@errors.toInteger(),
+        totalTime: parsedXml.@time.toFloat()
     ]
 
+    def testsuiteNodes = parsedXml.children().findAll { it.name() == 'testsuite' }
     def testsuiteMetrics = []
-    parsedXml.'testsuite'.each { ts ->
+    def testcaseMetrics = [:]
+
+    testsuiteNodes.each { tsNode ->
         def tsMetrics = [
-            name: ts.attributes().get('name'),
-            tests: ts.attributes().get('tests').toInteger(),
-            failures: ts.attributes().get('failures').toInteger(),
-            errors: ts.attributes().get('errors').toInteger(),
-            time: ts.attributes().get('time').toFloat(),
-            skipped: ts.attributes().get('skipped').toInteger(),
-            timestamp: ts.attributes().get('timestamp')
+            name: tsNode.@name,
+            tests: tsNode.@tests.toInteger(),
+            failures: tsNode.@failures.toInteger(),
+            errors: tsNode.@errors.toInteger(),
+            time: tsNode.@time.toFloat(),
+            skipped: tsNode.@skipped.toInteger(),
+            timestamp: tsNode.@timestamp
         ]
         testsuiteMetrics.add(tsMetrics)
 
-        def tcMetricsList = []
-        ts.'testcase'.each { tc ->
+        def tcMetricsList = tsNode.children().findAll { it.name() == 'testcase' }.collect { tcNode ->
             def tcMetrics = [
-                name: tc.attributes().get('name'),
-                time: tc.attributes().get('time').toFloat(),
-                status: tc.attributes().get('status')
+                name: tcNode.@name,
+                time: tcNode.@time.toFloat(),
+                status: tcNode.@status
             ]
-            // Control de campos adicionales basados en el estado
-            switch (tc.attributes().get('status')) {
+            switch (tcNode.@status) {
                 case 'PASSED':
                     tcMetrics['result'] = 'OK'
                     break
                 case 'ERROR':
-                    tcMetrics['errorType'] = tc.'error'.attributes().get('type')
-                    tcMetrics['errorMessage'] = tc.'error'.attributes().get('message')
+                    tcMetrics['errorType'] = tcNode.'error'.@type
+                    tcMetrics['errorMessage'] = tcNode.'error'.@message
                     break
                 case 'FAILED':
-                    tcMetrics['failureType'] = tc.'failure'.attributes().get('type')
-                    tcMetrics['failureMessage'] = tc.'failure'.attributes().get('message')
+                    tcMetrics['failureType'] = tcNode.'failure'.@type
+                    tcMetrics['failureMessage'] = tcNode.'failure'.@message
                     break
             }
-            tcMetricsList.add(tcMetrics)
+            return tcMetrics
         }
         testcaseMetrics[tsMetrics.name] = tcMetricsList
     }
+
     return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
 }
 

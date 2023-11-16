@@ -1,3 +1,5 @@
+node ('seu2k19kat01.redseur.local') { 
+	
 // Se sacan los metodos de parseo fuera del pipeline 
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
@@ -129,8 +131,8 @@ def generateCustomHash() {
 
      stage('Parse Katalon XML') {
         script {
-             //Directorio de los xml
-             def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+              //Directorio de los xml
+		 	 def xmlFiles = bat(script: "powershell -Command \"Get-ChildItem 'C:\\Jenkins\\workspace\\Katalon_GTI_PRE\\Reports\\20231115_090057\\GTI\\20231115_090058' -Filter '*.xml' -Recurse | % { $_.FullName }\"", returnStdout: true).trim().split('\\r?\\n')
              
              def prometheusData = """
                  # HELP katalon_testsuites_info Test Suites Information
@@ -158,3 +160,4 @@ def generateCustomHash() {
              echo "Combined Prometheus data:\n${prometheusData}"
          }
     }
+}

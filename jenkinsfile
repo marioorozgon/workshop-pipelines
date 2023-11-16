@@ -4,51 +4,44 @@ def parseXml(String xmlContent) {
     def parsedXml = new XmlParser().parseText(xmlContent)
 
     def testsuitesMetrics = [
-        name: parsedXml.attribute('name'),
-        totalTests: parsedXml.attribute('tests').toString().toInteger(),
-        totalFailures: parsedXml.attribute('failures').toString().toInteger(),
-        totalErrors: parsedXml.attribute('errors').toString().toInteger(),
-        totalTime: parsedXml.attribute('time').toString().toFloat()
+        name: parsedXml.@name.text(),
+        totalTests: parsedXml.@tests.text().toInteger(),
+        totalFailures: parsedXml.@failures.text().toInteger(),
+        totalErrors: parsedXml.@errors.text().toInteger(),
+        totalTime: parsedXml.@time.text().toFloat()
     ]
 
-    def testsuiteMetrics = parsedXml.testsuite.collect {
-        [
-            name: it.attribute('name'),
-            tests: it.attribute('tests').toString().toInteger(),
-            failures: it.attribute('failures').toString().toInteger(),
-            errors: it.attribute('errors').toString().toInteger(),
-            time: it.attribute('time').toString().toFloat(),
-            skipped: it.attribute('skipped').toString().toInteger(),
-            timestamp: it.attribute('timestamp')
-        ]
-    }
-
+    def testsuiteMetrics = []
     def testcaseMetrics = [:]
-    parsedXml.testsuite.each { ts ->
-        def tsName = ts.attribute('name')
-        testcaseMetrics[tsName] = ts.testcase.collect { tc ->
-            def tcMetrics = [
-                name: tc.attribute('name'),
-                time: tc.attribute('time').toString().toFloat(),
-                status: tc.attribute('status'),
-            ]
 
-            switch (tc.attribute('status')) {
-                case 'PASSED':
-                    tcMetrics['result'] = 'OK'
-                    break
-                case 'ERROR':
-                    tcMetrics['errorType'] = tc.error.attribute('type')
-                    tcMetrics['errorMessage'] = tc.error.attribute('message')
-                    break
-                case 'FAILED':
-                    tcMetrics['failureType'] = tc.failure.attribute('type')
-                    tcMetrics['failureMessage'] = tc.failure.attribute('message')
-                    break
+    parsedXml.testsuite.each { ts ->
+        def tsMetrics = [
+            name: ts.@name.text(),
+            tests: ts.@tests.text().toInteger(),
+            failures: ts.@failures.text().toInteger(),
+            errors: ts.@errors.text().toInteger(),
+            time: ts.@time.text().toFloat(),
+            skipped: ts.@skipped.text().toInteger(),
+            timestamp: ts.@timestamp.text(),
+            hostname: ts.@hostname.text(),
+            id: ts.@id.text()
+        ]
+        testsuiteMetrics << tsMetrics
+
+        ts.testcase.each { tc ->
+            def tcMetrics = [
+                name: tc.@name.text(),
+                time: tc.@time.text().toFloat(),
+                classname: tc.@classname.text(),
+                status: tc.@status.text()
+            ]
+            if (!testcaseMetrics[tsMetrics.name]) {
+                testcaseMetrics[tsMetrics.name] = []
             }
-            return tcMetrics
+            testcaseMetrics[tsMetrics.name] << tcMetrics
         }
     }
+
     return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
 }
 

@@ -90,7 +90,7 @@ def constructPrometheusMetrics(Map metrics, String hash) {
     return metricData
 }
 
-/*@NonCPS
+@NonCPS
 def generateCustomHash() {
     def jobName = env.JOB_NAME ?: 'UnknownJob'
     def buildNumber = env.BUILD_NUMBER ?: '0'
@@ -99,8 +99,9 @@ def generateCustomHash() {
     def stringToHash = "${jobName}-${buildNumber}-${currentTime}"
     def hash = stringToHash.hashCode().toString()
 
+    env.PIPELINE_HASH = hash
     return hash
-}*/
+}
 
 pipeline {
     agent {
@@ -158,13 +159,7 @@ spec:
         stage('Generate Hash') {
             steps {
                script {
-                     def jobName = env.JOB_NAME ?: 'UnknownJob'
-                    def buildNumber = env.BUILD_NUMBER ?: '0'
-                    def currentTime = System.currentTimeMillis().toString()
-
-                    def stringToHash = "${jobName}-${buildNumber}-${currentTime}"
-                    def hash = sh(script: "echo -n ${stringToHash} | sha256sum | cut -d' ' -f1", returnStdout: true).trim()
-                    env.PIPELINE_HASH = hash
+                    generateCustomHash()
                 }
             }
         }

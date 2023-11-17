@@ -90,7 +90,7 @@ def constructPrometheusMetrics(Map metrics, String hash) {
     return metricData
 }
 
-@NonCPS
+/*@NonCPS
 def generateCustomHash() {
     def jobName = env.JOB_NAME ?: 'UnknownJob'
     def buildNumber = env.BUILD_NUMBER ?: '0'
@@ -100,7 +100,7 @@ def generateCustomHash() {
     def hash = stringToHash.hashCode().toString()
 
     return hash
-}
+}*/
 
 pipeline {
     agent {
@@ -154,7 +154,7 @@ spec:
     }
 
         stages {
-        @NonCPS    
+           
         stage('Generate Hash') {
             steps {
                script {
@@ -168,7 +168,7 @@ spec:
                 }
             }
         }
-        @NonCPS    
+          
         stage('Parse Katalon XML') {
             steps {
                 script {
@@ -202,7 +202,7 @@ spec:
                 }
             }
         }
-        @NonCPS
+        
         stage('Send to Prometheus') {
               steps {
                   script {

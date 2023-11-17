@@ -205,6 +205,7 @@ spec:
               steps {
                   script {
                     def prometheusData = readFile('katalon.prom').trim()
+                    echo "Datos a enviar a Prometheus: \n${prometheusData}" // Agregar esta línea
                     if (prometheusData) {
                         def pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon/hash/${env.PIPELINE_HASH}"
                         def response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()

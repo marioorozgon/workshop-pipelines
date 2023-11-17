@@ -103,6 +103,7 @@ def generateCustomHash() {
     return hash
 }
 
+@NonCPS
 def processXmlAndGenerateMetrics(def xmlFiles) {
     def prometheusData = """
         # HELP katalon_testsuites_info Test Suites Information

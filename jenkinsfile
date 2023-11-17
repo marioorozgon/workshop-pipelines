@@ -108,20 +108,20 @@ def processXmlAndGenerateMetrics(def xmlFiles) {
     def prometheusData = """
         # HELP katalon_testsuites_info Test Suites Information
         # TYPE katalon_testsuites_info gauge
-        # HELP katalon_testsuite_info Test Suite Information
-        # TYPE katalon_testsuite_info gauge
-        # HELP katalon_testcase_info Test Case Information
-        # TYPE katalon_testcase_info gauge
-        """
+    """
 
     xmlFiles.each { filePath ->
         def katalonXmlContent = readFile(filePath)
         def metrics = parseXml(katalonXmlContent)
 
-        echo "Metrics parsed for ${filePath}: ${metrics}"
+        // Aquí asegúrate de que los nombres y valores de las métricas se formatean correctamente
+        def suiteName = metrics.testsuites.name.replaceAll('[^\\w]', '_') // Reemplaza caracteres no alfanuméricos
+        def suiteTests = metrics.testsuites.totalTests
+        def suiteFailures = metrics.testsuites.totalFailures
+        def suiteErrors = metrics.testsuites.totalErrors
+        def suiteTime = metrics.testsuites.totalTime
 
-        prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
-        echo "Processing file: ${filePath}"
+        prometheusData += "katalon_testsuites_info{name=\"${suiteName}\", tests=\"${suiteTests}\", failures=\"${suiteFailures}\", errors=\"${suiteErrors}\", time=\"${suiteTime}\", hash=\"${env.PIPELINE_HASH}\"} 1\n"
     }
 
     return prometheusData
@@ -205,7 +205,6 @@ spec:
               steps {
                   script {
                     def prometheusData = readFile('katalon.prom').trim()
-                    echo "Datos a enviar a Prometheus: \n${prometheusData}" // Agregar esta línea
                     if (prometheusData) {
                         def pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon/hash/${env.PIPELINE_HASH}"
                         def response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()

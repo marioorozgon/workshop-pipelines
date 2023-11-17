@@ -104,8 +104,8 @@ def generateCustomHash() {
 }
 
 @NonCPS
-def processXmlAndGenerateMetrics(String xmlDirectory, def xmlFiles) {
-   def prometheusData = """
+def processXmlAndGenerateMetrics(def xmlFiles) {
+    def prometheusData = """
         # HELP katalon_testsuites_info Test Suites Information
         # TYPE katalon_testsuites_info gauge
         # HELP katalon_testsuite_info Test Suite Information
@@ -115,8 +115,8 @@ def processXmlAndGenerateMetrics(String xmlDirectory, def xmlFiles) {
         """
 
     xmlFiles.each { filePath ->
-        def katalonXml = readFile(filePath)
-        def metrics = parseXml(katalonXml)
+        def katalonXmlContent = readFile(filePath)
+        def metrics = parseXml(katalonXmlContent)
 
         echo "Metrics parsed for ${filePath}: ${metrics}"
 
@@ -124,8 +124,7 @@ def processXmlAndGenerateMetrics(String xmlDirectory, def xmlFiles) {
         echo "Processing file: ${filePath}"
     }
 
-    writeFile(file: 'katalon.prom', text: prometheusData)
-    echo "Prometheus data written to: katalon.prom"
+    return prometheusData
 }
 
 pipeline {
@@ -193,7 +192,11 @@ spec:
             steps {
                 script {
                     def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
-                    processXmlAndGenerateMetrics('/home/jenkins/agent/workspace/seur/xml_reports', xmlFiles)
+                    def prometheusData = processXmlAndGenerateMetrics(xmlFiles)
+
+                    // Escribe el archivo en un directorio con permisos de escritura
+                    writeFile(file: "${env.WORKSPACE}/katalon.prom", text: prometheusData)
+                    echo "Prometheus data written to: ${env.WORKSPACE}/katalon.prom"
                 }
             }
         }

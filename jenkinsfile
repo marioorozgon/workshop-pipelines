@@ -103,7 +103,6 @@ def generateCustomHash() {
     return hash
 }
 
-@NonCPS
 def processXmlAndGenerateMetrics(String xmlDirectory) {
     def xmlFiles = sh(script: "ls ${xmlDirectory}/*.xml", returnStdout: true).trim().split('\n')
     

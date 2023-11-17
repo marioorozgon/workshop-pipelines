@@ -192,7 +192,8 @@ spec:
         stage('Parse Katalon XML') {
             steps {
                 script {
-                    processXmlAndGenerateMetrics('/home/jenkins/agent/workspace/seur/xml_reports')
+                    def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+                    processXmlAndGenerateMetrics('/home/jenkins/agent/workspace/seur/xml_reports', xmlFiles)
                 }
             }
         }

@@ -103,7 +103,7 @@ def generateCustomHash() {
     return hash
 }
 
-@NonCPS
+
 def processXmlAndGenerateMetrics(def xmlFiles) {
     def prometheusData = """
         # HELP katalon_testsuites_info Test Suites Information
@@ -204,7 +204,7 @@ spec:
               steps {
                   script {
                     def prometheusData = readFile('katalon.prom').trim()
-                    echo "Contenido de katalon.prom:\n${prometheusData}" // Agregado para depuración
+                    echo "\n${prometheusData}" // Agregado para depuración
 
                     if (prometheusData) {
                         def pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon/hash/${env.PIPELINE_HASH}"

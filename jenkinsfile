@@ -149,6 +149,8 @@ node () {
      }
      stage('Parse Katalon XML') {
         script {
+            echo "Directorio actual: ${pwd()}"
+            sh 'ls -la' // Lista los archivos en el directorio actual para depuración
             readDirectory()        
         }
      }

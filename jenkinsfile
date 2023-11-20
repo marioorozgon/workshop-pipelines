@@ -150,6 +150,7 @@ node () {
     def xmlFilesOutput
 
     stage('Read XML Directory') {
+        sh 'ls -la'
         xmlFilesOutput = findFiles(glob: '**/xml_reports/**/*.xml')
     }
 

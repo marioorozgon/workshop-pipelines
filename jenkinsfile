@@ -200,7 +200,7 @@ spec:
             }
         }
         
-        stage('Send to Prometheus') {
+  /*      stage('Send to Prometheus') {
               steps {
                   script {
                     def prometheusData = readFile('katalon.prom').trim()
@@ -213,6 +213,6 @@ spec:
                     }
                   }
               }
-          } 
+          } */
     }
 }

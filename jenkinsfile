@@ -1,60 +1,58 @@
-import groovy.util.XmlParser
-// Se sacan los metodos de parseo fuera del pipeline 
+@NonCPS
 def parseXml(String xmlContent) {
-    def parsedXml = new XmlParser().parseText(xmlContent)
-
-    def testsuitesMetrics = [
-        name: parsedXml.attribute('name'),
-        totalTests: parsedXml.attribute('tests').toString().toInteger(),
-        totalFailures: parsedXml.attribute('failures').toString().toInteger(),
-        totalErrors: parsedXml.attribute('errors').toString().toInteger(),
-        totalTime: parsedXml.attribute('time').toString().toFloat()
-    ]
-
-    def testsuiteNodes = parsedXml.children().findAll { it.name() == 'testsuite' }
-    def testsuiteMetrics = []
-    def testcaseMetrics = [:]
-
-    testsuiteNodes.each { tsNode ->
-        def tsMetrics = [
-            name: tsNode.attribute('name'),
-            tests: tsNode.attribute('tests').toString().toInteger(),
-            failures: tsNode.attribute('failures').toString().toInteger(),
-            errors: tsNode.attribute('errors').toString().toInteger(),
-            time: tsNode.attribute('time').toString().toFloat(),
-            skipped: tsNode.attribute('skipped').toString().toInteger(),
-            timestamp: tsNode.attribute('timestamp')
+	def parsedXml = new XmlSlurper().parseText(xmlContent)
+	// Se sacan las métricas directamente del elemento testsuites
+	def testsuitesMetrics = [
+		name: parsedXml.'@name'.text(),
+		totalTests: parsedXml.'@tests'.text().toInteger(),
+		totalFailures: parsedXml.'@failures'.text().toInteger(),
+		totalErrors: parsedXml.'@errors'.text().toInteger(),
+		totalTime: parsedXml.'@time'.text().toFloat()
+	]
+	// Se sacan las métricas directamente del elemento testsuite
+    def testsuiteMetrics = parsedXml.testsuite.collect {
+        [
+            name: it.'@name'.text(),
+            tests: it.'@tests'.text().toInteger(),
+            failures: it.'@failures'.text().toInteger(),
+            errors: it.'@errors'.text().toInteger(),
+            time: it.'@time'.text().toFloat(),
+            skipped: it.'@skipped'.text().toInteger(),
+            timestamp: it.'@timestamp'.text()
         ]
-        testsuiteMetrics.add(tsMetrics)
-
-        def tcMetricsList = tsNode.children().findAll { it.name() == 'testcase' }.collect { tcNode ->
+    }
+	// Recopilación de las métricas de los testcase con relación a su testsuite
+    def testcaseMetrics = [:] // Un mapa para agrupar los testcase por testsuite
+    parsedXml.testsuite.each { ts ->
+        def tsName = ts.'@name'.text()
+        testcaseMetrics[tsName] = ts.testcase.collect { tc ->
             def tcMetrics = [
-                name: tcNode.attribute('name'),
-                time: tcNode.attribute('time').toString().toFloat(),
-                status: tcNode.attribute('status')
-            ]
-            switch (tcNode.attribute('status')) {
+                name: tc.'@name'.text(),
+                time: tc.'@time'.text().toFloat(),
+                status: tc.'@status'.text(),
+        ]
+        
+            // Control de campos adicionales basados en el estado
+            switch (tc.'@status'.text()) {
                 case 'PASSED':
                     tcMetrics['result'] = 'OK'
                     break
                 case 'ERROR':
-                    tcMetrics['errorType'] = tcNode.children().find { it.name() == 'error' }?.attribute('type')
-                    tcMetrics['errorMessage'] = tcNode.children().find { it.name() == 'error' }?.attribute('message')
+                    tcMetrics['errorType'] = tc.error.'@type'.text()
+                    tcMetrics['errorMessage'] = tc.error.'@message'.text()
                     break
                 case 'FAILED':
-                    tcMetrics['failureType'] = tcNode.children().find { it.name() == 'failure' }?.attribute('type')
-                    tcMetrics['failureMessage'] = tcNode.children().find { it.name() == 'failure' }?.attribute('message')
+                    tcMetrics['failureType'] = tc.failure.'@type'.text()
+                    tcMetrics['failureMessage'] = tc.failure.'@message'.text()
                     break
             }
             return tcMetrics
         }
-        testcaseMetrics[tsMetrics.name] = tcMetricsList
     }
-
     return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
 }
 
-//Metodo de preparación de datos para envío a prometheus
+@NonCPS
 def constructPrometheusMetrics(Map metrics, String hash) {
     def metricData = ''
 
@@ -90,6 +88,7 @@ def constructPrometheusMetrics(Map metrics, String hash) {
     return metricData
 }
 
+@NonCPS
 def generateCustomHash() {
     def jobName = env.JOB_NAME ?: 'UnknownJob'
     def buildNumber = env.BUILD_NUMBER ?: '0'
@@ -98,5 +97,60 @@ def generateCustomHash() {
     def stringToHash = "${jobName}-${buildNumber}-${currentTime}"
     def hash = stringToHash.hashCode().toString()
 
+    env.PIPELINE_HASH = hash
     return hash
 }
+
+@NonCPS
+def parseAndGenerateMetrics(def xmlFilesOutput) {
+    //def xmlFileList = xmlFilesOutput.split('\\r?\\n')
+    def prometheusData = """
+        # HELP katalon_testsuites_info Test Suites Information
+        # TYPE katalon_testsuites_info gauge
+        # HELP katalon_testsuite_info Test Suite Information
+        # TYPE katalon_testsuite_info gauge
+        # HELP katalon_testcase_info Test Case Information
+        # TYPE katalon_testcase_info gauge
+        """
+
+    xmlFilesOutput.each { filePath ->
+        def katalonXmlContent = readFile(filePath)
+        def metrics = parseXml(katalonXmlContent)
+
+        echo "Metrics parsed for ${filePath}: ${metrics}"
+
+        prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
+        echo "Processing file: ${filePath}"
+    }
+
+    return prometheusData
+}
+
+@NonCPS
+def readDirectory() {
+    def xmlDirectory = '/home/jenkins/agent/workspace/seur/xml_reports/'
+    echo "readDirectory directorio: ${xmlDirectory}"
+    def xmlFilesOutput = findFiles(glob: '**/*.xml') 
+    echo """${files[0].name} ${files[0].path} ${files[0].directory} ${files[0].length} ${files[0].lastModified}"""
+
+}
+
+node () {
+
+    stage ('Preparación') {
+        script {
+            env.PIPELINE_TIMESTAMP = new Date().format('yyyy-MM-dd HH:mm:ss')
+        }
+    }
+    stage('Generate Hash') {
+        script {
+           generateCustomHash()
+        }
+     }
+     stage('Parse Katalon XML') {
+        script {
+            readDirectory()        
+        }
+     }
+}
+

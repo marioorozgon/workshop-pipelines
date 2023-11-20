@@ -130,9 +130,8 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
 def readDirectory() {
     def xmlDirectory = '/home/jenkins/agent/workspace/seur/xml_reports/'
     echo "readDirectory directorio: ${xmlDirectory}"
-    def xmlFilesOutput = findFiles(glob: '**/*.xml') 
-    echo """${files[0].name} ${files[0].path} ${files[0].directory} ${files[0].length} ${files[0].lastModified}"""
-
+    def xmlFiles = findFiles(glob: "${xmlDirectory}**/*.xml") 
+    return xmlFiles.collect { it.path }
 }
 
 node () {
@@ -149,9 +148,13 @@ node () {
      }
      stage('Parse Katalon XML') {
         script {
-            echo "Directorio actual: ${pwd()}"
-            sh 'ls -la' // Lista los archivos en el directorio actual para depuración
-            readDirectory()        
+            def xmlFilesOutput = readDirectory()
+            if (xmlFilesOutput.size() > 0) {
+                def prometheusData = parseAndGenerateMetrics(xmlFilesOutput)
+                echo "Prometheus Data: ${prometheusData}"
+            } else {
+                echo "No XML files found in the directory."
+            }      
         }
      }
 }

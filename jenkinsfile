@@ -1,15 +1,16 @@
 @NonCPS
 def parseXml(String xmlContent) {
-	def parsedXml = new XmlSlurper().parseText(xmlContent)
-	// Se sacan las métricas directamente del elemento testsuites
-	def testsuitesMetrics = [
-		name: parsedXml.'@name'.text(),
-		totalTests: parsedXml.'@tests'.text().toInteger(),
-		totalFailures: parsedXml.'@failures'.text().toInteger(),
-		totalErrors: parsedXml.'@errors'.text().toInteger(),
-		totalTime: parsedXml.'@time'.text().toFloat()
-	]
-	// Se sacan las métricas directamente del elemento testsuite
+    def parsedXml = new XmlSlurper().parseText(xmlContent)
+    // Se sacan las métricas directamente del elemento testsuites
+    def testsuitesMetrics = [
+        name: parsedXml.'@name'.text(),
+        totalTests: parsedXml.'@tests'.text().toInteger(),
+        totalFailures: parsedXml.'@failures'.text().toInteger(),
+        totalErrors: parsedXml.'@errors'.text().toInteger(),
+        totalTime: parsedXml.'@time'.text().toFloat()
+    ]
+
+    // Aquí por ahora asumimos que sólo hay un testsuite por testsuites, si hay más a futuro, se necesitará iterar
     def testsuiteMetrics = parsedXml.testsuite.collect {
         [
             name: it.'@name'.text(),
@@ -21,7 +22,8 @@ def parseXml(String xmlContent) {
             timestamp: it.'@timestamp'.text()
         ]
     }
-	// Recopilación de las métricas de los testcase con relación a su testsuite
+
+     // Recopilación de las métricas de los testcase con relación a su testsuite
     def testcaseMetrics = [:] // Un mapa para agrupar los testcase por testsuite
     parsedXml.testsuite.each { ts ->
         def tsName = ts.'@name'.text()
@@ -102,8 +104,7 @@ def generateCustomHash() {
 }
 
 @NonCPS
-def parseAndGenerateMetrics(def xmlFilesOutput) {
-    //def xmlFileList = xmlFilesOutput.split('\\r?\\n')
+def generatePrometheusData(def metricsList, String hash) {
     def prometheusData = """
         # HELP katalon_testsuites_info Test Suites Information
         # TYPE katalon_testsuites_info gauge
@@ -113,44 +114,114 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
         # TYPE katalon_testcase_info gauge
         """
 
-    xmlFilesOutput.each { filePath ->
-        def katalonXmlContent = readFile(filePath)
-        def metrics = parseXml(katalonXmlContent)
-
-        echo "Metrics parsed for ${filePath}: ${metrics}"
-
-        prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
-        echo "Processing file: ${filePath}"
+    metricsList.each { metrics ->
+        prometheusData += constructPrometheusMetrics(metrics, hash)
     }
 
     return prometheusData
 }
 
-@NonCPS
-def readDirectory() {
-    def xmlDirectory = '/home/jenkins/agent/workspace/seur/xml_reports/'
-    echo "readDirectory directorio: ${xmlDirectory}"
-    def xmlFilesOutput = findFiles(glob: '**/*.xml') 
-    echo """${files[0].name} ${files[0].path} ${files[0].directory} ${files[0].length} ${files[0].lastModified}"""
+def processXmlAndExtractMetrics(def xmlFiles) {
+    def metricsList = []
 
+    xmlFiles.each { filePath ->
+        def katalonXmlContent = readFile(filePath) // Leer el archivo XML
+        def metrics = parseXml(katalonXmlContent) // Analizar el contenido XML
+        metricsList.add(metrics)
+        echo "Metrics extracted for ${filePath}"
+    }
+
+    return metricsList
 }
 
-node () {
-
-    stage ('Preparación') {
-        script {
-            env.PIPELINE_TIMESTAMP = new Date().format('yyyy-MM-dd HH:mm:ss')
+pipeline {
+    agent {
+        kubernetes {
+            defaultContainer 'jdk'
+            yaml '''
+apiVersion: v1
+kind: Pod
+spec:
+  containers:
+    - name: jdk
+      image: docker.io/eclipse-temurin:20.0.1_9-jdk
+      command:
+        - cat
+      tty: true
+      volumeMounts:
+        - name: m2-cache
+          mountPath: /root/.m2
+    - name: podman
+      image: quay.io/containers/podman:v4.5.1
+      command:
+        - cat
+      tty: true
+      securityContext:
+        runAsUser: 0
+        privileged: true
+    - name: kubectl
+      image: docker.io/bitnami/kubectl:1.27.3
+      command:
+        - cat
+      tty: true
+      securityContext:
+        runAsUser: 0
+        privileged: true
+  volumes:
+    - name: m2-cache
+      hostPath:
+        path: /data/m2-cache
+        type: DirectoryOrCreate
+    - name: shared-data
+      hostPath:
+        path: /path/to/shared/folder
+        type: DirectoryOrCreate
+'''
         }
     }
-    stage('Generate Hash') {
-        script {
-           generateCustomHash()
-        }
-     }
-     stage('Parse Katalon XML') {
-        script {
-            readDirectory()        
-        }
-     }
-}
 
+    environment {
+        // otras variables de entorno
+        PIPELINE_TIMESTAMP = "${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+    }
+
+        stages {
+           
+        stage('Generate Hash') {
+            steps {
+               script {
+                    generateCustomHash()
+                }
+            }
+        }
+          
+        stage('Parse Katalon XML') {
+            steps {
+                script {
+                    def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+                    def metricsList = processXmlAndExtractMetrics(xmlFiles)
+                    def prometheusData = generatePrometheusData(metricsList, env.PIPELINE_HASH)
+                    writeFile(file: 'katalon.prom', text: prometheusData)
+                    echo "Combined Prometheus data:\n${prometheusData}"
+                }
+            }
+        }
+        
+        stage('Send to Prometheus') {
+              steps {
+                  script {
+                    def prometheusData = readFile('katalon.prom').trim()
+                    echo "Contenido de katalon.prom:\n${prometheusData}" // Agregado para depuración
+
+                    if (prometheusData) {
+                        def pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon/hash/${env.PIPELINE_HASH}"
+                        def response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()
+                        echo "Response from Pushgateway: ${response}"
+                    } else {
+                        error("Prometheus data está vacío, no envía al Pushgateway")
+                    }
+                  }
+              }
+          } 
+    }
+}

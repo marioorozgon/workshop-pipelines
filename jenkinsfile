@@ -146,15 +146,19 @@ node () {
            generateCustomHash()
         }
      }
+
+     stage('Read XML Directory') {
+        xmlFilesOutput = findFiles(glob: '/home/jenkins/agent/workspace/seur/xml_reports/**/*.xml')
+    }
      stage('Parse Katalon XML') {
         script {
-            def xmlFilesOutput = readDirectory()
             if (xmlFilesOutput.size() > 0) {
-                def prometheusData = parseAndGenerateMetrics(xmlFilesOutput)
+                def xmlFilePaths = xmlFilesOutput.collect { it.path }
+                def prometheusData = parseAndGenerateMetrics(xmlFilePaths)
                 echo "Prometheus Data: ${prometheusData}"
             } else {
                 echo "No XML files found in the directory."
-            }      
+            }     
         }
      }
 }

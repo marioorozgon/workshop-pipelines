@@ -147,20 +147,22 @@ node () {
         }
      }
 
-     
-     stage('Parse Katalon XML') {
+    def xmlFilesOutput
+
+    stage('Read XML Directory') {
+        xmlFilesOutput = findFiles(glob: '**/xml_reports/**/*.xml')
+    }
+
+    stage('Parse Katalon XML') {
         script {
-            echo "Directorio actual: ${pwd()}"
-            sh 'ls -la' // Lista los archivos en el directorio actual para depuración
-            readDirectory()
-          
             if (xmlFilesOutput.size() > 0) {
-                def prometheusData = parseAndGenerateMetrics(xmlFilesOutput)
+                def xmlFilePaths = xmlFilesOutput.collect { it.path }
+                def prometheusData = parseAndGenerateMetrics(xmlFilePaths)
                 echo "Prometheus Data: ${prometheusData}"
             } else {
                 echo "No XML files found in the directory."
-            }      
+            }
         }
-     }
+    }
 }
 

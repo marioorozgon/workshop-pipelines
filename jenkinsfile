@@ -103,8 +103,8 @@ def generateCustomHash() {
     return hash
 }
 
-
-def processXmlAndGenerateMetrics(def xmlFiles) {
+@NonCPS
+def generatePrometheusData(def metricsList, String hash) {
     def prometheusData = """
         # HELP katalon_testsuites_info Test Suites Information
         # TYPE katalon_testsuites_info gauge
@@ -114,19 +114,25 @@ def processXmlAndGenerateMetrics(def xmlFiles) {
         # TYPE katalon_testcase_info gauge
         """
 
-    xmlFiles.each { filePath ->
-        def katalonXmlContent = readFile(filePath) // Leer el archivo XML
-        def metrics = parseXml(katalonXmlContent) // Analizar el contenido XML
-
-        //echo "Metrics parsed for ${filePath}: ${metrics}"
-
-        prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
-        echo "Processing file: ${filePath}"
+    metricsList.each { metrics ->
+        prometheusData += constructPrometheusMetrics(metrics, hash)
     }
 
     return prometheusData
 }
 
+def processXmlAndExtractMetrics(def xmlFiles) {
+    def metricsList = []
+
+    xmlFiles.each { filePath ->
+        def katalonXmlContent = readFile(filePath) // Leer el archivo XML
+        def metrics = parseXml(katalonXmlContent) // Analizar el contenido XML
+        metricsList.add(metrics)
+        echo "Metrics extracted for ${filePath}"
+    }
+
+    return metricsList
+}
 
 pipeline {
     agent {
@@ -193,7 +199,8 @@ spec:
             steps {
                 script {
                     def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
-                    def prometheusData = processXmlAndGenerateMetrics(xmlFiles)
+                    def metricsList = processXmlAndExtractMetrics(xmlFiles)
+                    def prometheusData = generatePrometheusData(metricsList, env.PIPELINE_HASH)
                     writeFile(file: 'katalon.prom', text: prometheusData)
                     echo "Combined Prometheus data:\n${prometheusData}"
                 }
@@ -204,7 +211,7 @@ spec:
               steps {
                   script {
                     def prometheusData = readFile('katalon.prom').trim()
-                    echo "\n${prometheusData}" // Agregado para depuración
+                    echo "Contenido de katalon.prom:\n${prometheusData}" // Agregado para depuración
 
                     if (prometheusData) {
                         def pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon/hash/${env.PIPELINE_HASH}"

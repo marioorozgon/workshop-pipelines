@@ -118,7 +118,7 @@ def processXmlAndGenerateMetrics(def xmlFiles) {
         def katalonXmlContent = readFile(filePath) // Leer el archivo XML
         def metrics = parseXml(katalonXmlContent) // Analizar el contenido XML
 
-        echo "Metrics parsed for ${filePath}: ${metrics}"
+        //echo "Metrics parsed for ${filePath}: ${metrics}"
 
         prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
         echo "Processing file: ${filePath}"
@@ -204,6 +204,8 @@ spec:
               steps {
                   script {
                     def prometheusData = readFile('katalon.prom').trim()
+                    echo "Contenido de katalon.prom:\n${prometheusData}" // Agregado para depuración
+
                     if (prometheusData) {
                         def pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon/hash/${env.PIPELINE_HASH}"
                         def response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()

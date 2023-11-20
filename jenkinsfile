@@ -158,13 +158,16 @@ node () {
 
     stage('Parse Katalon XML') {
         script {
-            if (xmlFilesOutput.size() > 0) {
-                def xmlFilePaths = xmlFilesOutput.collect { it.path }
-                def prometheusData = parseAndGenerateMetrics(xmlFilePaths)
-                echo "Prometheus Data: ${prometheusData}"
-            } else {
-                echo "No XML files found in the directory."
-            }
+            echo "Directorio actual (Groovy): ${pwd()}"
+                    sh 'echo "Directorio actual (Shell): $(pwd)"'
+                    sh 'ls -la'
+                    def xmlFilesOutput = readDirectory()
+                    if (xmlFilesOutput.size() > 0) {
+                        def prometheusData = parseAndGenerateMetrics(xmlFilesOutput)
+                        echo "Prometheus Data: ${prometheusData}"
+                    } else {
+                        echo "No XML files found in the directory."
+                    }
         }
     }
 }

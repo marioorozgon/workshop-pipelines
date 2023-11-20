@@ -150,6 +150,8 @@ node () {
     def xmlFilesOutput
 
     stage('Read XML Directory') {
+        echo "Directorio actual (Groovy): ${pwd()}"
+        sh 'echo "Directorio actual (Shell): $(pwd)"'
         sh 'ls -la'
         xmlFilesOutput = findFiles(glob: '**/xml_reports/**/*.xml')
     }

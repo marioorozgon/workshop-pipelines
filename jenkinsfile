@@ -126,11 +126,11 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
     return prometheusData
 }
 
-
+@NonCPS
 def readDirectory() {
     def xmlDirectory = '/home/jenkins/agent/workspace/seur/xml_reports/'
     echo "readDirectory directorio: ${xmlDirectory}"
-    def xmlFiles = findFiles(glob: "${xmlDirectory}**/*.xml") 
+    def xmlFiles = findFiles(glob: "${xmlDirectory}/**/*.xml")
     return xmlFiles.collect { it.path }
 }
 

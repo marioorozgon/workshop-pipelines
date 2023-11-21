@@ -148,11 +148,11 @@ node () {
      }
 
     stage('Read XML Directory') {
-        script {
+       script {
             echo "Directorio actual (Groovy): ${pwd()}"
             sh 'echo "Directorio actual (Shell): $(pwd)"'
             sh 'ls -la'
-            xmlFilesOutput = findFiles(glob: '/home/jenkins/agent/workspace/seur/xml_reports/**/*.xml')
+            xmlFilesOutput = findFiles(glob: 'xml_reports/**/*.xml')
         }
     }
 

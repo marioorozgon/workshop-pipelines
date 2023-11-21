@@ -151,6 +151,10 @@ node () {
     stage('Read XML Directory') {
        script {
             def xmlFilesOutput = readDirectory()
+            echo "Archivos XML encontrados:"
+            for (file in xmlFilesOutput) {
+                echo "Archivo: ${file}"
+            }
         }
     }
 

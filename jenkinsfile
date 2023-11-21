@@ -126,7 +126,6 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
     return prometheusData
 }
 
-@NonCPS
 def readDirectory() {
     echo "Directorio actual (Groovy): ${pwd()}"
     sh 'echo "Directorio actual (Shell): $(pwd)"'

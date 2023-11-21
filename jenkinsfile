@@ -128,10 +128,11 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
 
 @NonCPS
 def readDirectory() {
-    def xmlDirectory = '/home/jenkins/agent/workspace/seur/xml_reports/'
-    echo "readDirectory directorio: ${xmlDirectory}"
-    def xmlFiles = findFiles(glob: "${xmlDirectory}/**/*.xml")
-    return xmlFiles.collect { it.path }
+    echo "Directorio actual (Groovy): ${pwd()}"
+    sh 'echo "Directorio actual (Shell): $(pwd)"'
+    sh 'ls -la'
+    xmlFilesOutput = findFiles(glob: 'xml_reports/**/*.xml')
+    return xmlFilesOutput
 }
 
 node () {
@@ -149,10 +150,7 @@ node () {
 
     stage('Read XML Directory') {
        script {
-            echo "Directorio actual (Groovy): ${pwd()}"
-            sh 'echo "Directorio actual (Shell): $(pwd)"'
-            sh 'ls -la'
-            xmlFilesOutput = findFiles(glob: 'xml_reports/**/*.xml')
+            def xmlFilesOutput = readDirectory()
         }
     }
 

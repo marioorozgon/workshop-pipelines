@@ -129,7 +129,7 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
 def readDirectory() {
     echo "Directorio actual (Groovy): ${pwd()}"
     sh 'echo "Directorio actual (Shell): $(pwd)"'
-    sh 'ls -la xml_reports'
+    sh 'ls -la'
     xmlFilesOutput = findFiles(glob: 'xml_reports/**/*.xml')
     return xmlFilesOutput
 }

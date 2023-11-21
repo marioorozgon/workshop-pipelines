@@ -128,7 +128,7 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
 
 def readDirectory() {
     echo "Directorio actual (Groovy): ${pwd()}"
-    sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+    def xmlFilesOutput = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
     xmlFilesOutput = findFiles(glob: 'xml_reports/**/*.xml')
     return xmlFilesOutput
 }
@@ -148,7 +148,9 @@ node () {
 
     stage('Read XML Directory') {
        script {
-            def xmlFilesOutput = readDirectory()
+           // def xmlFilesOutput = readDirectory()
+           //Directorio de los xml
+                    def xmlFilesOutput = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
             echo "Archivos XML encontrados:"
             for (file in xmlFilesOutput) {
                 echo "Archivo: ${file}"

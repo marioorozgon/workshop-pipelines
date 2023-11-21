@@ -1,57 +1,93 @@
-@NonCPS
+import groovy.util.XmlParser
+// Se sacan los metodos de parseo fuera del pipeline 
 def parseXml(String xmlContent) {
-    def parsedXml = new XmlSlurper().parseText(xmlContent)
-    // Se sacan las métricas directamente del elemento testsuites
+    def parsedXml = new XmlParser().parseText(xmlContent)
+
     def testsuitesMetrics = [
-        name: parsedXml.'@name'.text(),
-        totalTests: parsedXml.'@tests'.text().toInteger(),
-        totalFailures: parsedXml.'@failures'.text().toInteger(),
-        totalErrors: parsedXml.'@errors'.text().toInteger(),
-        totalTime: parsedXml.'@time'.text().toFloat()
+        name: parsedXml.attribute('name'),
+        totalTests: parsedXml.attribute('tests').toString().toInteger(),
+        totalFailures: parsedXml.attribute('failures').toString().toInteger(),
+        totalErrors: parsedXml.attribute('errors').toString().toInteger(),
+        totalTime: parsedXml.attribute('time').toString().toFloat()
     ]
 
-    // Aquí por ahora asumimos que sólo hay un testsuite por testsuites, si hay más a futuro, se necesitará iterar
-    def testsuiteMetrics = parsedXml.testsuite.collect {
-        [
-            name: it.'@name'.text(),
-            tests: it.'@tests'.text().toInteger(),
-            failures: it.'@failures'.text().toInteger(),
-            errors: it.'@errors'.text().toInteger(),
-            time: it.'@time'.text().toFloat(),
-            skipped: it.'@skipped'.text().toInteger(),
-            timestamp: it.'@timestamp'.text()
-        ]
-    }
+    def testsuiteNodes = parsedXml.children().findAll { it.name() == 'testsuite' }
+    def testsuiteMetrics = []
+    def testcaseMetrics = [:]
 
-     // Recopilación de las métricas de los testcase con relación a su testsuite
-    def testcaseMetrics = [:] // Un mapa para agrupar los testcase por testsuite
-    parsedXml.testsuite.each { ts ->
-        def tsName = ts.'@name'.text()
-        testcaseMetrics[tsName] = ts.testcase.collect { tc ->
-            def tcMetrics = [
-                name: tc.'@name'.text(),
-                time: tc.'@time'.text().toFloat(),
-                status: tc.'@status'.text(),
+    testsuiteNodes.each { tsNode ->
+        def tsMetrics = [
+            name: tsNode.attribute('name'),
+            tests: tsNode.attribute('tests').toString().toInteger(),
+            failures: tsNode.attribute('failures').toString().toInteger(),
+            errors: tsNode.attribute('errors').toString().toInteger(),
+            time: tsNode.attribute('time').toString().toFloat(),
+            skipped: tsNode.attribute('skipped').toString().toInteger(),
+            timestamp: tsNode.attribute('timestamp')
         ]
-        
-            // Control de campos adicionales basados en el estado
-            switch (tc.'@status'.text()) {
+        testsuiteMetrics.add(tsMetrics)
+
+        def tcMetricsList = tsNode.children().findAll { it.name() == 'testcase' }.collect { tcNode ->
+            def tcMetrics = [
+                name: tcNode.attribute('name'),
+                time: tcNode.attribute('time').toString().toFloat(),
+                status: tcNode.attribute('status')
+            ]
+            switch (tcNode.attribute('status')) {
                 case 'PASSED':
                     tcMetrics['result'] = 'OK'
                     break
                 case 'ERROR':
-                    tcMetrics['errorType'] = tc.error.'@type'.text()
-                    tcMetrics['errorMessage'] = tc.error.'@message'.text()
+                    tcMetrics['errorType'] = tcNode.children().find { it.name() == 'error' }?.attribute('type')
+                    tcMetrics['errorMessage'] = tcNode.children().find { it.name() == 'error' }?.attribute('message')
                     break
                 case 'FAILED':
-                    tcMetrics['failureType'] = tc.failure.'@type'.text()
-                    tcMetrics['failureMessage'] = tc.failure.'@message'.text()
+                    tcMetrics['failureType'] = tcNode.children().find { it.name() == 'failure' }?.attribute('type')
+                    tcMetrics['failureMessage'] = tcNode.children().find { it.name() == 'failure' }?.attribute('message')
                     break
             }
             return tcMetrics
         }
+        testcaseMetrics[tsMetrics.name] = tcMetricsList
     }
+
     return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
+}
+
+//Metodo de preparación de datos para envío a prometheus
+def constructPrometheusMetrics(Map metrics, String hash) {
+    def metricData = ''
+
+    // Métricas de testsuites
+    def testsuitesValue = (metrics.testsuites.totalFailures > 0 || metrics.testsuites.totalErrors > 0) ? 1 : 0
+    metricData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\", tests=\"${metrics.testsuites.totalTests}\", failures=\"${metrics.testsuites.totalFailures}\", errors=\"${metrics.testsuites.totalErrors}\", time=\"${metrics.testsuites.totalTime}\", hash=\"${hash}\", timestamp_execute=\"${env.PIPELINE_TIMESTAMP}\"} ${testsuitesValue}\n"
+
+    // Métricas de testsuite
+    metrics.testsuite.each { ts ->
+        def testsuiteValue = (ts.failures > 0 || ts.errors > 0) ? 1 : 0
+        metricData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\", hash=\"${hash}\"} ${testsuiteValue}\n"
+    }
+
+    // Métricas de testcase con etiqueta de testsuite
+    metrics.testsuite.each { ts ->
+        def tsName = ts.name
+        metrics.testcase[tsName]?.each { tc -> // testcase del testsuite actual
+                def testcaseValue = (tc.status == 'PASSED') ? 0 : 1
+                def testcaseMetric = "katalon_testcase_info{testsuite=\"${ts.name}\", name=\"${tc.name}\", time=\"${tc.time}\", status=\"${tc.status}\", hash=\"${hash}\""
+
+
+                if (testcaseValue == 0) {
+                    testcaseMetric += ", result=\"OK\"} ${testcaseValue}\n"
+                } else {
+                    String detailType = tc.status == 'ERROR' ? 'error' : 'failure'
+                    testcaseMetric += ", ${detailType}_type=\"${tc[detailType + 'Type']}\", ${detailType}_message=\"${tc[detailType + 'Message'].replaceAll('"', '\\"')}\"} ${testcaseValue}\n"
+                }
+
+                metricData += testcaseMetric
+            }
+        }
+    
+    return metricData
 }
 
 pipeline {
@@ -100,15 +136,74 @@ spec:
         }
     }
 
+    environment {
+        // otras variables de entorno
+        PIPELINE_TIMESTAMP = "${new Date().format('yyyy-MM-dd HH:mm:ss')}"
+    }
+
         stages {
 
         stage('Generate Hash') {
             steps {
                script {
-                    
+                     def jobName = env.JOB_NAME ?: 'UnknownJob'
+                    def buildNumber = env.BUILD_NUMBER ?: '0'
+                    def currentTime = System.currentTimeMillis().toString()
+
+                    def stringToHash = "${jobName}-${buildNumber}-${currentTime}"
+                    def hash = sh(script: "echo -n ${stringToHash} | sha256sum | cut -d' ' -f1", returnStdout: true).trim()
+                    env.PIPELINE_HASH = hash
                 }
             }
         }
+
+        stage('Parse Katalon XML') {
+            steps {
+                script {
+                    //Directorio de los xml
+                    def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+                    
+                    def prometheusData = """
+                        # HELP katalon_testsuites_info Test Suites Information
+                        # TYPE katalon_testsuites_info gauge
+                        # HELP katalon_testsuite_info Test Suite Information
+                        # TYPE katalon_testsuite_info gauge
+                        # HELP katalon_testcase_info Test Case Information
+                        # TYPE katalon_testcase_info gauge
+                        """
+
+                    xmlFiles.eachWithIndex { filePath, index ->
+                        def katalonXml = readFile(filePath)
+                        def metrics = parseXml(katalonXml)
+
+                        echo "Metrics parsed for ${filePath}: ${metrics}"
+
+                        prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
+
+                        // Se agrega una traza para mostrar el nombre del archivo
+                        echo "Processing file: ${filePath}"
+
+                    }
+
+                    writeFile(file: 'katalon.prom', text: prometheusData)
+                    echo "Combined Prometheus data:\n${prometheusData}"
+                }
+            }
+        }
+
+        stage('Send to Prometheus') {
+              steps {
+                  script {
+                    def prometheusData = readFile('katalon.prom').trim()
+                    if (prometheusData) {
+                        def pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon/hash/${env.PIPELINE_HASH}"
+                        def response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()
+                        echo "Response from Pushgateway: ${response}"
+                    } else {
+                        error("Prometheus data está vacío, no envía al Pushgateway")
+                    }
+                  }
+              }
+          } 
     }
 }
-

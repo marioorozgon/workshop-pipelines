@@ -148,24 +148,17 @@ node () {
      }
 
     stage('Read XML Directory') {
-        echo "Directorio actual (Groovy): ${pwd()}"
-        sh 'echo "Directorio actual (Shell): $(pwd)"'
-        sh 'ls -la'
-        xmlFilesOutput = findFiles(glob: '**/xml_reports/**/*.xml')
+        script {
+            echo "Directorio actual (Groovy): ${pwd()}"
+            sh 'echo "Directorio actual (Shell): $(pwd)"'
+            sh 'ls -la'
+            xmlFilesOutput = findFiles(glob: '/home/jenkins/agent/workspace/seur/xml_reports/**/*.xml')
+        }
     }
 
     stage('Parse Katalon XML') {
         script {
-            echo "Directorio actual (Groovy): ${pwd()}"
-                    sh 'echo "Directorio actual (Shell): $(pwd)"'
-                    sh 'ls -la'
-                    def xmlFilesOutput = readDirectory()
-                    if (xmlFilesOutput.size() > 0) {
-                        def prometheusData = parseAndGenerateMetrics(xmlFilesOutput)
-                        echo "Prometheus Data: ${prometheusData}"
-                    } else {
-                        echo "No XML files found in the directory."
-                    }
+           
         }
     }
 }

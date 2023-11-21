@@ -129,7 +129,7 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
 def readDirectory() {
     echo "Directorio actual (Groovy): ${pwd()}"
     sh 'echo "Directorio actual (Shell): $(pwd)"'
-    sh 'ls -la'
+    sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
     xmlFilesOutput = findFiles(glob: 'xml_reports/**/*.xml')
     return xmlFilesOutput
 }

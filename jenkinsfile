@@ -150,10 +150,10 @@ node () {
        script {
            // def xmlFilesOutput = readDirectory()
            //Directorio de los xml
-                    def xmlFilesOutput = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+            def xmlFilesOutput = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
             echo "Archivos XML encontrados:"
-            for (file in xmlFilesOutput) {
-                echo "Archivo: ${file}"
+            xmlFiles.eachWithIndex { filePath, index ->
+                    echo "Processing file: ${filePath}"
             }
         }
     }

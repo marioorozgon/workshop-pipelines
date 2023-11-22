@@ -134,7 +134,7 @@ def readDirectory() {
     return xmlFilesOutput
 }
 
-    node ('seu2k19kat01.redseur.local') {
+    node () {
                 println "Hola 1"
                 stage ('PreparaciÃ³n') {
                     script {

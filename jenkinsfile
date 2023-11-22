@@ -134,86 +134,34 @@ def readDirectory() {
     return xmlFilesOutput
 }
 
-pipeline {
-    agent {
-        kubernetes {
-            defaultContainer 'jdk'
-            yaml '''
-apiVersion: v1
-kind: Pod
-spec:
-  containers:
-    - name: jdk
-      image: docker.io/eclipse-temurin:20.0.1_9-jdk
-      command:
-        - cat
-      tty: true
-      volumeMounts:
-        - name: m2-cache
-          mountPath: /root/.m2
-    - name: podman
-      image: quay.io/containers/podman:v4.5.1
-      command:
-        - cat
-      tty: true
-      securityContext:
-        runAsUser: 0
-        privileged: true
-    - name: kubectl
-      image: docker.io/bitnami/kubectl:1.27.3
-      command:
-        - cat
-      tty: true
-      securityContext:
-        runAsUser: 0
-        privileged: true
-  volumes:
-    - name: m2-cache
-      hostPath:
-        path: /data/m2-cache
-        type: DirectoryOrCreate
-    - name: shared-data
-      hostPath:
-        path: /path/to/shared/folder
-        type: DirectoryOrCreate
-'''
-        }
-    }
 
-   stages {
-    stage('Parse Katalon XML') {
-            steps {
-                script {
-                    // Ejecuta el comando 'ls' y almacena la salida
-                    xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
-                    // Muestra la salida del comando 'ls'
-                    echo "Archivos XML encontrados: ${xmlFiles.join(', ')}"
+
+    node () {
+                println "Hola 1"
+                stage ('PreparaciÃ³n') {
+                    script {
+                        env.PIPELINE_TIMESTAMP = new Date().format('yyyy-MM-dd HH:mm:ss')
+                        println "Antes sh ${env.PIPELINE_TIMESTAMP}"
+                        echo "${env.PIPELINE_TIMESTAMP}"
+                    }
                 }
-            }
-        }
-              
-                   // xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
-                   // echo "Archivos XML encontrados: ${xmlFiles.join(', ')}"
-
-                    /*echo "Directorio de trabajo actual:"
-                    sh 'pwd'
-                    echo "Listando el contenido del directorio de trabajo actual:"
-                    sh 'ls -l'
-                    echo "Listando el contenido de la ruta base de los archivos XML:"
-                    sh 'ls -l /home/jenkins/agent/workspace/seur/xml_reports'
-                    echo "Buscando archivos XML en el directorio de trabajo actual y subdirectorios:"
-                    sh 'find . -name "*.xml"'*/
-
-                        /*xmlDirectory = '/home/jenkins/agent/workspace/seur/xml_reports'
-                        echo "Directorio: ${xmlDirectory}"
-
-                        xmlFiles = findFiles(glob: "${xmlDirectory}/*JUnit_Report*.xml")
-                         xmlFiles.each { file ->
-                            echo "Procesando archivo: ${file}"
-                            katalonXml = readFile(file.path)
+                println "Hola 2"
+                stage('Generate Hash') {
+                    script {
+                       env.PIPELINE_HASH = generateCustomHash()
+                       //sh "echo ${env.PIPELINE_HASH}"
+                    }
+                }
+                
+                stage('Parse Katalon XML') {
+                    script {
+                        withCredentials([file(credentialsId: 'katalon-test-001', variable: 'secretFile')]) {
+                            sh 'cat $secretFile > junit.xml'
+                            katalonXml = readFile("junit.xml")
+                            katalonXml = "junit.xml"
                             parseXml(katalonXml)
-                        }*/
-                    
+                        }
+                    }
                 }
         
-        }
+    }

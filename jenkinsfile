@@ -182,8 +182,10 @@ spec:
 
    stages {
     stage('Parse Katalon XML') {
+        steps{
         script{
                 xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+        }
         }
               
                    // xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')

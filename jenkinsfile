@@ -185,6 +185,8 @@ spec:
         steps{
         script{
                 xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+                        echo "Archivos XML encontrados: ${xmlFiles.join(', ')}"
+
         }
         }
               

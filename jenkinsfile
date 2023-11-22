@@ -154,12 +154,15 @@ def readDirectory() {
                 stage('Parse Katalon XML') {
                     println "Hola 3"
                     script {
-                        echo "Antes del Directorio"
-                        xmlDirectory = 'C:\\Jenkins\\workspace\\Katalon_GTI_PRE\\Reports\\20231115_090057\\GTI\\20231115_090058'
-                        echo "directorio: ${xmlDirectory}"
-xmlFiles = bat(script: "dir /s /b \"${xmlDirectory}\\*.xml\"", returnStdout: true).trim().split('\n')
-                        katalonXml = readFile("C:\\Jenkins\\workspace\\Katalon_GTI_PRE\\Reports\\20231115_090057\\GTI\\20231115_090058\\JUnit_Report.xml")
-                        parseXml(katalonXml)
+                        xmlDirectory = '/home/jenkins/agent/workspace/seur/xml_reports'
+                        echo "Directorio: ${xmlDirectory}"
+
+                        xmlFiles = findFiles(glob: "${xmlDirectory}/*JUnit_Report*.xml")
+                         xmlFiles.each { file ->
+                            echo "Procesando archivo: ${file}"
+                            katalonXml = readFile(file.path)
+                            parseXml(katalonXml)
+                        }
                     }
                 }
         

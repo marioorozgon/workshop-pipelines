@@ -153,6 +153,8 @@ def readDirectory() {
                 
                 stage('Parse Katalon XML') {
                     println "Hola 3"
+                    xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+                    echo "ficheros: " xmlFiles
 
                     echo "Directorio de trabajo actual:"
                     sh 'pwd'

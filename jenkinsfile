@@ -155,13 +155,13 @@ def readDirectory() {
                 
                 stage('Parse Katalon XML') {
                     script {
-                        withCredentials([file(credentialsId: 'katalon-test-001', variable: 'secretFile')]) {
-                            sh 'cat $secretFile > junit.xml'
-                            katalonXml = readFile("junit.xml")
-                            katalonXml = "junit.xml"
-                            parseXml(katalonXml)
-                        }
-                    }
+        withCredentials([file(credentialsId: 'katalon-test-001', variable: 'secretFile')]) {
+            sh 'cat $secretFile > junit.xml'
+            def katalonXmlContent = readFile("junit.xml")
+            echo "Contenido del archivo XML: ${katalonXmlContent}"
+            parseXml(katalonXmlContent)
+        }
+    }
                 }
         
     }

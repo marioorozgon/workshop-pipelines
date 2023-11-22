@@ -181,10 +181,7 @@ spec:
     }
 
    stages {
-                
-                
-                stage('Parse Katalon XML') {
-                    println "Hola 3"
+    stage('Parse Katalon XML') {
                     sh 'pwd'
                     sh 'ls -l /var/jenkins_home/workspace/seur'
                     sh 'ls -l /var/jenkins_home/workspace/seur/xml_reports'

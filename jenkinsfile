@@ -153,6 +153,8 @@ def readDirectory() {
                 
                 stage('Parse Katalon XML') {
                     println "Hola 3"
+                    sh 'ls -l /home/jenkins/agent/workspace/seur/'
+                    sh 'ls -l /home/jenkins/agent/workspace/seur/xml_reports'
                     xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
                     echo "Archivos XML encontrados: ${xmlFiles.join(', ')}"
 

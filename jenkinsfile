@@ -157,7 +157,7 @@ def readDirectory() {
                     script {
         withCredentials([file(credentialsId: 'katalon-test-001', variable: 'secretFile')]) {
             sh 'cat $secretFile > junit.xml'
-            def katalonXmlContent = readFile("junit.xml")
+           katalonXmlContent = readFile("junit.xml")
             echo "Contenido del archivo XML: ${katalonXmlContent}"
             parseXml(katalonXmlContent)
         }

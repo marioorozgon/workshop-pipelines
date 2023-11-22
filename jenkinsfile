@@ -156,7 +156,7 @@ def readDirectory() {
                 stage('Parse Katalon XML') {
                     script {
                         withCredentials([file(credentialsId: 'katalon-test-001', variable: 'secretFile')]) {
-                            sh 'cat $secretFile > junit.xml'
+                            //sh 'cat $secretFile > junit.xml'
                             
                             // Usar findFiles para buscar el archivo junit.xml
                             foundFiles = findFiles(glob: 'junit.xml')

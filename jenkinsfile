@@ -181,21 +181,7 @@ spec:
     }
 
    stages {
-                println "Hola 1"
-                stage ('PreparaciÃ³n') {
-                    script {
-                        env.PIPELINE_TIMESTAMP = new Date().format('yyyy-MM-dd HH:mm:ss')
-                        println "Antes sh ${env.PIPELINE_TIMESTAMP}"
-                        echo "${env.PIPELINE_TIMESTAMP}"
-                    }
-                }
-                println "Hola 2"
-                stage('Generate Hash') {
-                    script {
-                       env.PIPELINE_HASH = generateCustomHash()
-                       //sh "echo ${env.PIPELINE_HASH}"
-                    }
-                }
+                
                 
                 stage('Parse Katalon XML') {
                     println "Hola 3"

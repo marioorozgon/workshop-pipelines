@@ -154,16 +154,16 @@ def readDirectory() {
                 stage('Parse Katalon XML') {
                     println "Hola 3"
                     xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
-                    echo "ficheros: " xmlFiles
+                    echo "Archivos XML encontrados: ${xmlFiles.join(', ')}"
 
-                    echo "Directorio de trabajo actual:"
+                    /*echo "Directorio de trabajo actual:"
                     sh 'pwd'
                     echo "Listando el contenido del directorio de trabajo actual:"
                     sh 'ls -l'
                     echo "Listando el contenido de la ruta base de los archivos XML:"
                     sh 'ls -l /home/jenkins/agent/workspace/seur/xml_reports'
                     echo "Buscando archivos XML en el directorio de trabajo actual y subdirectorios:"
-                    sh 'find . -name "*.xml"'
+                    sh 'find . -name "*.xml"'*/
 
                         xmlDirectory = '/home/jenkins/agent/workspace/seur/xml_reports'
                         echo "Directorio: ${xmlDirectory}"

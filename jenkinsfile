@@ -180,7 +180,7 @@ spec:
         }
     }
 
-    node () {
+   
                 println "Hola 1"
                 stage ('PreparaciÃ³n') {
                     script {
@@ -226,5 +226,5 @@ spec:
                     
                 }
         
-    }
+    
 }

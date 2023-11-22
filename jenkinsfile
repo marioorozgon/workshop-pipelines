@@ -182,12 +182,14 @@ spec:
 
    stages {
     stage('Parse Katalon XML') {
-        steps{
-        
-                xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
-                        echo "Archivos XML encontrados: ${xmlFiles.join(', ')}"
-
-        
+            steps {
+                script {
+                    // Ejecuta el comando 'ls' y almacena la salida
+                    def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+                    // Muestra la salida del comando 'ls'
+                    echo "Archivos XML encontrados: ${xmlFiles.join(', ')}"
+                }
+            }
         }
               
                    // xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')

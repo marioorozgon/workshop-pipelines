@@ -130,7 +130,6 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
                 stage ('PreparaciÃ³n') {
                     script {
                         env.PIPELINE_TIMESTAMP = new Date().format('yyyy-MM-dd HH:mm:ss')
-                        println "Antes sh ${env.PIPELINE_TIMESTAMP}"
                         echo "${env.PIPELINE_TIMESTAMP}"
                     }
                 }
@@ -138,7 +137,7 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
                 stage('Generate Hash') {
                     script {
                        env.PIPELINE_HASH = generateCustomHash()
-                       //sh "echo ${env.PIPELINE_HASH}"
+                       echo "${env.PIPELINE_HASH}"
                     }
                 }
                 
@@ -159,7 +158,12 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
                             echo "Archivo encontrado: ${xmlFilePath}"
 
                             katalonXmlContent = readFile(xmlFilePath)
-                            parseXml(katalonXmlContent)
+                            parsedResults = parseXml(katalonXmlContent)
+
+                            echo "Metrics parsed: ${parsedResults}"
+
+                            prometheusData += constructPrometheusMetrics(parsedResults, env.PIPELINE_HASH)
+
                         }
                     }
                 }

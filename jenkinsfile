@@ -1,4 +1,5 @@
 // Se sacan los metodos de parseo fuera del pipeline 
+@NonCps
 def parseXml(String xmlContent) {
     def parsedXml = new XmlSlurper().parseText(xmlContent)
     // Se sacan las métricas directamente del elemento testsuites
@@ -55,6 +56,7 @@ def parseXml(String xmlContent) {
 }
 
 //Metodo de preparación de datos para envío a prometheus
+@NonCps
 def constructPrometheusMetrics(Map metrics, String hash) {
     def metricData = ''
 
@@ -146,12 +148,12 @@ spec:
         stage('Generate Hash') {
             steps {
                script {
-                     def jobName = env.JOB_NAME ?: 'UnknownJob'
-                    def buildNumber = env.BUILD_NUMBER ?: '0'
-                    def currentTime = System.currentTimeMillis().toString()
+                    jobName = env.JOB_NAME ?: 'UnknownJob'
+                    buildNumber = env.BUILD_NUMBER ?: '0'
+                    currentTime = System.currentTimeMillis().toString()
 
-                    def stringToHash = "${jobName}-${buildNumber}-${currentTime}"
-                    def hash = sh(script: "echo -n ${stringToHash} | sha256sum | cut -d' ' -f1", returnStdout: true).trim()
+                    stringToHash = "${jobName}-${buildNumber}-${currentTime}"
+                    hash = sh(script: "echo -n ${stringToHash} | sha256sum | cut -d' ' -f1", returnStdout: true).trim()
                     env.PIPELINE_HASH = hash
                 }
             }
@@ -161,9 +163,9 @@ spec:
             steps {
                 script {
                     //Directorio de los xml
-                    def xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
+                    xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
                     
-                    def prometheusData = """
+                    prometheusData = """
                         # HELP katalon_testsuites_info Test Suites Information
                         # TYPE katalon_testsuites_info gauge
                         # HELP katalon_testsuite_info Test Suite Information
@@ -173,8 +175,8 @@ spec:
                         """
 
                     xmlFiles.eachWithIndex { filePath, index ->
-                        def katalonXml = readFile(filePath)
-                        def metrics = parseXml(katalonXml)
+                        katalonXml = readFile(filePath)
+                        metrics = parseXml(katalonXml)
 
                         echo "Metrics parsed for ${filePath}: ${metrics}"
 
@@ -194,10 +196,10 @@ spec:
         stage('Send to Prometheus') {
               steps {
                   script {
-                    def prometheusData = readFile('katalon.prom').trim()
+                    prometheusData = readFile('katalon.prom').trim()
                     if (prometheusData) {
-                        def pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon/hash/${env.PIPELINE_HASH}"
-                        def response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()
+                        pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon/hash/${env.PIPELINE_HASH}"
+                        response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()
                         echo "Response from Pushgateway: ${response}"
                     } else {
                         error("Prometheus data está vacío, no envía al Pushgateway")

@@ -179,5 +179,19 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
                         }
                     }
                 }
+                stage('Send to Prometheus') {
+                    steps {
+                        script {
+                            prometheusData = readFile('katalon.prom').trim()
+                            if (prometheusData) {
+                                pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon/hash/${env.PIPELINE_HASH}"
+                                response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()
+                                echo "Response from Pushgateway: ${response}"
+                            } else {
+                                error("Prometheus data está vacío, no envía al Pushgateway")
+                            }
+                        }
+                    }
+                }
         
     }

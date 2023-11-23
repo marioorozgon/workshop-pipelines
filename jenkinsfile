@@ -173,6 +173,9 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
 
                             prometheusData += constructPrometheusMetrics(parsedResults, env.PIPELINE_HASH)
 
+                            writeFile(file: 'katalon.prom', text: prometheusData)
+                            echo "Combined Prometheus data:\n${prometheusData}"
+
                         }
                     }
                 }

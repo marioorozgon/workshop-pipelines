@@ -1,17 +1,15 @@
-// Se sacan los metodos de parseo fuera del pipeline 
 @NonCPS
 def parseXml(String xmlContent) {
-    def parsedXml = new XmlSlurper().parseText(xmlContent)
-    // Se sacan las métricas directamente del elemento testsuites
-    def testsuitesMetrics = [
-        name: parsedXml.'@name'.text(),
-        totalTests: parsedXml.'@tests'.text().toInteger(),
-        totalFailures: parsedXml.'@failures'.text().toInteger(),
-        totalErrors: parsedXml.'@errors'.text().toInteger(),
-        totalTime: parsedXml.'@time'.text().toFloat()
-    ]
-
-    // Aquí por ahora asumimos que sólo hay un testsuite por testsuites, si hay más a futuro, se necesitará iterar
+def parsedXml = new XmlSlurper().parseText(xmlContent)
+// Se sacan las mÃ©tricas directamente del elemento testsuites
+def testsuitesMetrics = [
+name: parsedXml.'@name'.text(),
+totalTests: parsedXml.'@tests'.text().toInteger(),
+totalFailures: parsedXml.'@failures'.text().toInteger(),
+totalErrors: parsedXml.'@errors'.text().toInteger(),
+totalTime: parsedXml.'@time'.text().toFloat()
+]
+// Se sacan las mÃ©tricas directamente del elemento testsuite
     def testsuiteMetrics = parsedXml.testsuite.collect {
         [
             name: it.'@name'.text(),
@@ -23,8 +21,7 @@ def parseXml(String xmlContent) {
             timestamp: it.'@timestamp'.text()
         ]
     }
-
-     // Recopilación de las métricas de los testcase con relación a su testsuite
+// RecopilaciÃ³n de las mÃ©tricas de los testcase con relaciÃ³n a su testsuite
     def testcaseMetrics = [:] // Un mapa para agrupar los testcase por testsuite
     parsedXml.testsuite.each { ts ->
         def tsName = ts.'@name'.text()
@@ -55,22 +52,21 @@ def parseXml(String xmlContent) {
     return [testsuites: testsuitesMetrics, testsuite: testsuiteMetrics, testcase: testcaseMetrics]
 }
 
-//Metodo de preparación de datos para envío a prometheus
 @NonCPS
 def constructPrometheusMetrics(Map metrics, String hash) {
     def metricData = ''
 
-    // Métricas de testsuites
+    // MÃ©tricas de testsuites
     def testsuitesValue = (metrics.testsuites.totalFailures > 0 || metrics.testsuites.totalErrors > 0) ? 1 : 0
     metricData += "katalon_testsuites_info{name=\"${metrics.testsuites.name}\", tests=\"${metrics.testsuites.totalTests}\", failures=\"${metrics.testsuites.totalFailures}\", errors=\"${metrics.testsuites.totalErrors}\", time=\"${metrics.testsuites.totalTime}\", hash=\"${hash}\", timestamp_execute=\"${env.PIPELINE_TIMESTAMP}\"} ${testsuitesValue}\n"
 
-    // Métricas de testsuite
+    // MÃ©tricas de testsuite
     metrics.testsuite.each { ts ->
         def testsuiteValue = (ts.failures > 0 || ts.errors > 0) ? 1 : 0
         metricData += "katalon_testsuite_info{name=\"${ts.name}\",tests=\"${ts.tests}\",failures=\"${ts.failures}\",errors=\"${ts.errors}\",time=\"${ts.time}\",skipped=\"${ts.skipped}\",timestamp=\"${ts.timestamp}\", hash=\"${hash}\"} ${testsuiteValue}\n"
     }
 
-    // Métricas de testcase con etiqueta de testsuite
+    // MÃ©tricas de testcase con etiqueta de testsuite
     metrics.testsuite.each { ts ->
         def tsName = ts.name
         metrics.testcase[tsName]?.each { tc -> // testcase del testsuite actual
@@ -92,75 +88,80 @@ def constructPrometheusMetrics(Map metrics, String hash) {
     return metricData
 }
 
-    environment {
-        // otras variables de entorno
-        PIPELINE_TIMESTAMP = "${new Date().format('yyyy-MM-dd HH:mm:ss')}"
-    }
+@NonCPS
+def generateCustomHash() {
+    def jobName = env.JOB_NAME ?: 'UnknownJob'
+    def buildNumber = env.BUILD_NUMBER ?: '0'
+    def currentTime = System.currentTimeMillis().toString()
 
-node () {
-        stages {
+    def stringToHash = "${jobName}-${buildNumber}-${currentTime}"
+    def hash = stringToHash.hashCode().toString()
 
-        stage('Generate Hash') {
-            steps {
-               script {
-                    jobName = env.JOB_NAME ?: 'UnknownJob'
-                    buildNumber = env.BUILD_NUMBER ?: '0'
-                    currentTime = System.currentTimeMillis().toString()
-
-                    stringToHash = "${jobName}-${buildNumber}-${currentTime}"
-                    hash = sh(script: "echo -n ${stringToHash} | sha256sum | cut -d' ' -f1", returnStdout: true).trim()
-                    env.PIPELINE_HASH = hash
-                }
-            }
-        }
-
-        stage('Parse Katalon XML') {
-            steps {
-                script {
-                    //Directorio de los xml
-                    xmlFiles = sh(script: "ls /home/jenkins/agent/workspace/seur/xml_reports/*.xml", returnStdout: true).trim().split('\n')
-                    
-                    prometheusData = """
-                        # HELP katalon_testsuites_info Test Suites Information
-                        # TYPE katalon_testsuites_info gauge
-                        # HELP katalon_testsuite_info Test Suite Information
-                        # TYPE katalon_testsuite_info gauge
-                        # HELP katalon_testcase_info Test Case Information
-                        # TYPE katalon_testcase_info gauge
-                        """
-
-                    xmlFiles.eachWithIndex { filePath, index ->
-                        katalonXml = readFile(filePath)
-                        metrics = parseXml(katalonXml)
-
-                        echo "Metrics parsed for ${filePath}: ${metrics}"
-
-                        prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
-
-                        // Se agrega una traza para mostrar el nombre del archivo
-                        echo "Processing file: ${filePath}"
-
-                    }
-
-                    writeFile(file: 'katalon.prom', text: prometheusData)
-                    echo "Combined Prometheus data:\n${prometheusData}"
-                }
-            }
-        }
-
-        stage('Send to Prometheus') {
-              steps {
-                  script {
-                    prometheusData = readFile('katalon.prom').trim()
-                    if (prometheusData) {
-                        pushgatewayUrl = "http://pushgateway-prometheus-pushgateway.default.svc.cluster.local:9091/metrics/job/katalon/hash/${env.PIPELINE_HASH}"
-                        response = sh(script: "curl -X POST --data-binary @katalon.prom ${pushgatewayUrl}", returnStdout: true).trim()
-                        echo "Response from Pushgateway: ${response}"
-                    } else {
-                        error("Prometheus data está vacío, no envía al Pushgateway")
-                    }
-                  }
-              }
-          } 
-    }
+    return hash
 }
+
+@NonCPS
+def parseAndGenerateMetrics(def xmlFilesOutput) {
+    //def xmlFileList = xmlFilesOutput.split('\\r?\\n')
+    def prometheusData = """
+        # HELP katalon_testsuites_info Test Suites Information
+        # TYPE katalon_testsuites_info gauge
+        # HELP katalon_testsuite_info Test Suite Information
+        # TYPE katalon_testsuite_info gauge
+        # HELP katalon_testcase_info Test Case Information
+        # TYPE katalon_testcase_info gauge
+        """
+
+    xmlFilesOutput.each { filePath ->
+        def katalonXmlContent = readFile(filePath)
+        def metrics = parseXml(katalonXmlContent)
+
+        echo "Metrics parsed for ${filePath}: ${metrics}"
+
+        prometheusData += constructPrometheusMetrics(metrics, env.PIPELINE_HASH)
+        echo "Processing file: ${filePath}"
+    }
+
+    return prometheusData
+}
+
+    node () {
+                println "Hola 1"
+                stage ('PreparaciÃ³n') {
+                    script {
+                        env.PIPELINE_TIMESTAMP = new Date().format('yyyy-MM-dd HH:mm:ss')
+                        println "Antes sh ${env.PIPELINE_TIMESTAMP}"
+                        echo "${env.PIPELINE_TIMESTAMP}"
+                    }
+                }
+                println "Hola 2"
+                stage('Generate Hash') {
+                    script {
+                       env.PIPELINE_HASH = generateCustomHash()
+                       //sh "echo ${env.PIPELINE_HASH}"
+                    }
+                }
+                
+                stage('Parse Katalon XML') {
+                    script {
+                        withCredentials([file(credentialsId: 'katalon-test-001', variable: 'secretFile')]) {
+                            sh 'cat $secretFile > junit.xml'
+                            
+                            // findFiles para buscar junit.xml
+                            foundFiles = findFiles(glob: 'junit.xml')
+                            if (foundFiles.length == 0) {
+                                echo "Archivo junit.xml no encontrado"
+                                return
+                            }
+
+                            //path del primer archivo encontrado
+                            xmlFilePath = foundFiles[0].path
+                            echo "Archivo encontrado: ${xmlFilePath}"
+
+                            katalonXmlContent = readFile(xmlFilePath)
+                            parseXml(katalonXmlContent)
+                        }
+                    }
+                }
+        
+    }

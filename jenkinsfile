@@ -180,7 +180,6 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
                     }
                 }
                 stage('Send to Prometheus') {
-                    steps {
                         script {
                             prometheusData = readFile('katalon.prom').trim()
                             if (prometheusData) {
@@ -191,7 +190,6 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
                                 error("Prometheus data está vacío, no envía al Pushgateway")
                             }
                         }
-                    }
                 }
         
     }

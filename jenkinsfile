@@ -92,57 +92,12 @@ def constructPrometheusMetrics(Map metrics, String hash) {
     return metricData
 }
 
-pipeline {
-    agent {
-        kubernetes {
-            defaultContainer 'jdk'
-            yaml '''
-apiVersion: v1
-kind: Pod
-spec:
-  containers:
-    - name: jdk
-      image: docker.io/eclipse-temurin:20.0.1_9-jdk
-      command:
-        - cat
-      tty: true
-      volumeMounts:
-        - name: m2-cache
-          mountPath: /root/.m2
-    - name: podman
-      image: quay.io/containers/podman:v4.5.1
-      command:
-        - cat
-      tty: true
-      securityContext:
-        runAsUser: 0
-        privileged: true
-    - name: kubectl
-      image: docker.io/bitnami/kubectl:1.27.3
-      command:
-        - cat
-      tty: true
-      securityContext:
-        runAsUser: 0
-        privileged: true
-  volumes:
-    - name: m2-cache
-      hostPath:
-        path: /data/m2-cache
-        type: DirectoryOrCreate
-    - name: shared-data
-      hostPath:
-        path: /path/to/shared/folder
-        type: DirectoryOrCreate
-'''
-        }
-    }
-
     environment {
         // otras variables de entorno
         PIPELINE_TIMESTAMP = "${new Date().format('yyyy-MM-dd HH:mm:ss')}"
     }
 
+node () {
         stages {
 
         stage('Generate Hash') {

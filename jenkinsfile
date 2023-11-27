@@ -127,24 +127,15 @@ def parseAndGenerateMetrics(def xmlFilesOutput) {
 
     node () {
 
-                //Se dejan comentados metodos originales katalon 
-                //stage ('katalon_GTI- SCM') {
- 	            //    checkout([$class: 'GitSCM', branches: [[name: '*/preproduccion']], doGenerateSubmoduleConfigurations: false, userRemoteConfigs: [[credentialsId: 'Admin_GitLab', url: 'https://git.seur.es/testing/gti']]]) 
-	            //} 
-
-	            //stage ('katalon_GTI - Build') {
-                //    bat 'F:\\Katalon_Studio_Engine_Windows_64-8.1.0\\katalonc.exe -noSplash -runMode=console -projectPath="C:\\Jenkins\\workspace\\katalon_gti_pre\\GTI.prj" -retry=0 -testSuitePath="Test Suites/GTI" -executionProfile="default" -browserType="Chrome" -apiKey="c4e2bb00-7501-4a41-a22b-f5fb239efc6f" --config -proxy.auth.option=NO_PROXY -proxy.system.option=NO_PROXY -proxy.system.applyToDesiredCapabilities=true'
-	            //} 
-
-
-                println "Hola 1"
-                stage ('PreparaciÃ³n') {
+                //Stage para tener timestamp de ejecucion
+                stage ('Preparación') {
                     script {
                         env.PIPELINE_TIMESTAMP = new Date().format('yyyy-MM-dd HH:mm:ss')
                         echo "${env.PIPELINE_TIMESTAMP}"
                     }
                 }
-                println "Hola 2"
+                
+                //Stage para tener hash de ejecucion
                 stage('Generate Hash') {
                     script {
                        env.PIPELINE_HASH = generateCustomHash()
